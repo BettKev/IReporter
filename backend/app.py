@@ -35,7 +35,7 @@ jwt.init_app(app)
 
 from views import *
 
-# app.register_blueprint(user_bp)
+app.register_blueprint(user_bp)
 # app.register_blueprint(auth_bp)
 # app.register_blueprint(red_flag_bp)
 # app.register_blueprint(intervension_bp)
