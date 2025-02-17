@@ -198,19 +198,19 @@ def index():
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
     </tr>
     <tr>
-    <td><code>/red_flag/<int:red_flag_id></code></td>
+    <td><code>/red_flag/red_flag_id</code></td>
     <td>GET</td>
     <td>Fetch a single Red Flag</td>
     <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
     </tr>
     <tr>
-    <td><code>/red_flag/<int:red_flag_id></code></td>
+    <td><code>/red_flag/red_flag_id</code></td>
     <td>PATCH</td>
     <td>Update a Red Flag</td>
     <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
     </tr>
     <tr>
-    <td><code>/red_flag/<int:red_flag_id></code></td>
+    <td><code>/red_flag/red_flag_id</code></td>
     <td>DELETE</td>
     <td>Delete a Red Flag.</td>
     <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
@@ -240,19 +240,19 @@ def index():
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
     </tr>
     <tr>
-    <td><code>/intervension/<int:intervension_id></code></td>
+    <td><code>/intervension/intervension_id</code></td>
     <td>GET</td>
     <td>Fetch a single Intervension</td>
     <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
     </tr>
     <tr>
-    <td><code>/intervension/<int:intervension_id></code></td>
+    <td><code>/intervension/intervension_id</code></td>
     <td>PATCH</td>
     <td>Update an Intervension</td>
     <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
     </tr>
     <tr>
-    <td><code>/intervension/<int:intervension_id></code></td>
+    <td><code>/intervension/intervension_id</code></td>
     <td>DELETE</td>
     <td>Delete an Intervension.</td>
     <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
