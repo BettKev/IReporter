@@ -201,19 +201,19 @@ def index():
     <td><code>/red_flag/red_flag_id</code></td>
     <td>GET</td>
     <td>Fetch a single Red Flag</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Red Flags</span></td>
     </tr>
     <tr>
     <td><code>/red_flag/red_flag_id</code></td>
     <td>PATCH</td>
     <td>Update a Red Flag</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Red Flags</span></td>
     </tr>
     <tr>
     <td><code>/red_flag/red_flag_id</code></td>
     <td>DELETE</td>
     <td>Delete a Red Flag.</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Red Flags</span></td>
     </tr>
     </table>
     </div>
@@ -243,26 +243,26 @@ def index():
     <td><code>/intervension/intervension_id</code></td>
     <td>GET</td>
     <td>Fetch a single Intervension</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Intervensions</span></td>
     </tr>
     <tr>
     <td><code>/intervension/intervension_id</code></td>
     <td>PATCH</td>
     <td>Update an Intervension</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Intervensions</span></td>
     </tr>
     <tr>
     <td><code>/intervension/intervension_id</code></td>
     <td>DELETE</td>
     <td>Delete an Intervension.</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Intervensions</span></td>
     </tr>
     </table>
     </div>
 
     <div class="footer">
-    <p>For any questions or support, contact us at <a href=''>support@volunteerapi.com</a></p>
-    <p>&copy; 2025 Volunteer Matching API</p>
+    <p>For any questions or support, contact us at <a href=''>iregisterweb@gmail.com</a></p>
+    <p>&copy; 2025 iRegister API</p>
     </div>
     </div>
     </body>
