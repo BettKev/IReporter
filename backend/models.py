@@ -13,7 +13,7 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    profile_picture = db.Column(db.LargeBinary)
+    profile_picture = db.Column(db.LargeBinary, nullable=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
@@ -26,7 +26,6 @@ class Users(db.Model):
 class Red_Flags(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.LargeBinary)  
@@ -38,11 +37,10 @@ class Red_Flags(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)    
 
 
-# Intervensions Table
-class Intervensions(db.Model):
+# Interventions Table
+class Interventions(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.LargeBinary)  
@@ -60,7 +58,7 @@ class Admins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    profile_picture = db.Column(db.LargeBinary)
+    profile_picture = db.Column(db.LargeBinary, nullable=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
