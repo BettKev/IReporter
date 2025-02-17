@@ -23,7 +23,7 @@ app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///iRegister.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 migrate = Migrate(app, db)
 db.init_app(app)
 
