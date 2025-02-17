@@ -168,7 +168,7 @@ def index():
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
     </tr>
     <tr>
-    <td><code>/user/<int:user_id></code></td>
+    <td><code>/user/user_id</code></td>
     <td>DELETE</td>
     <td>Deletes user account.</td>
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
