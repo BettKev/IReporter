@@ -20,6 +20,7 @@ class Users(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)  
     
     red_flags = db.relationship('Red_Flags', backref='users', lazy=True)
+    intervensions = db.relationship('Interventions', backref='users', lazy=True)
 
 # Red_Flags Table
 class Red_Flags(db.Model):
@@ -59,6 +60,7 @@ class Admins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
+    profile_picture = db.Column(db.LargeBinary)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
