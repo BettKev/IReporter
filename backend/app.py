@@ -124,8 +124,8 @@ def index():
     </head>
     <body>
     <div class="container">
-    <h1>Volunteer Matching API Documentation</h1>
-    <p>Welcome to the Volunteer Matching API! This API helps organizations and volunteers connect through projects. Below is a list of available endpoints with their usage details.</p>
+    <h1>iRegister API Documentation</h1>
+    <p>Welcome to the iRegister API! This API helps participate in the improvement of their society. Below is a list of available endpoints with their usage details.</p>
 
     <div class="section">
     <h2>Authentication</h2>
