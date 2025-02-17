@@ -50,7 +50,7 @@ def index():
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volunteer Matching API Documentation</title>
+    <title>iRegister API Documentation</title>
     <style>
     body {
     Arial, sans-serif;
