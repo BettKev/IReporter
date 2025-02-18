@@ -433,9 +433,7 @@ def update_info():
 
     else:
         return jsonify({"error": "Details Not Updated"}), 406
-
-
-
+# done 
 # LOG OUT CURRENT USER
 @auth_bp.route("/logout", methods=["DELETE"])
 @jwt_required()
