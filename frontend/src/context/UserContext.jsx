@@ -1,0 +1,247 @@
+import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+export const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
+    
+  const navigate = useNavigate();
+  const [authToken, setAuthToken] = useState(() =>
+    sessionStorage.getItem("token")
+  );
+
+  const [current_user, setCurrentUser] = useState(null);
+  const [current_admin, setCurrentAdmin] = useState(null);
+  const [users, setUsers] = useState([])
+  const [onChange, setOnChange] = useState(true);
+
+// LOGIN
+  const login = (email, password) => {
+    toast.loading("Logging you in ... ");
+    fetch("/login", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((resp) => resp.json())
+      .then((response) => {
+        if (response.access_token) {
+          toast.dismiss();
+          sessionStorage.setItem("token", response.access_token);
+          setAuthToken(response.access_token);
+
+          fetch("/current_user", {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${response.access_token}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              console.log(response); 
+
+              if (response.is_admin) {
+                setCurrentAdmin(response); 
+              } else {
+                setCurrentUser(response);               }
+            });
+
+          toast.success("Successfully Logged in");
+          navigate("/");
+        } else if (response.error) {
+          toast.dismiss();
+          toast.error(response.error);
+        } else {
+          toast.dismiss();
+          toast.error("Failed to login");
+        }
+      });
+  };
+
+
+  // LOG OUT
+  const logout = () => {
+    toast.loading("Logging out ... ");
+    fetch("/logout", {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((response) => {
+        console.log(response);
+
+        if (response.success) {
+          sessionStorage.removeItem("token");
+          setAuthToken(null);
+          setCurrentUser(null);
+          setCurrentAdmin(null);
+
+          toast.dismiss();
+          toast.success("Successfully Logged out");
+
+          navigate("/");
+        }
+      });
+  };
+
+
+// FETCHING ALL USERS
+  useEffect(() => {
+    fetch("/users", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setUsers(response);
+        console.log(response)
+      });
+  }, []);
+
+
+  // FETCH CURRENT USER
+  useEffect(() => {
+    if (authToken) {
+      fetchCurrentUser();
+    }
+  }, [authToken,onChange]);
+
+  const fetchCurrentUser = () => {
+    fetch("/current_user", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.is_admin) {
+          setCurrentAdmin(response);
+        } else {
+          setCurrentUser(response);
+        }
+      });
+  };
+
+
+  // ADD USER
+  const addUser = (first_name, last_name, phone, email, password) => {
+    toast.loading("Registering ... ");
+    fetch("/user", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        first_name,
+        last_name,
+        phone,
+        email,
+        password,
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((response) => {
+        if (response.success) {
+           toast.dismiss();
+           toast.success("User added successfully");
+           navigate("/login");
+        } else if (response.error) {
+           toast.dismiss();
+           toast.error(response.error);
+        }
+     })
+     
+  };
+
+
+    // UPDATE  USER
+    const updateUser = (updated_phone, updated_email, updated_password) => {
+      fetch("/user/update", {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({
+          phone: updated_phone,
+          email: updated_email,
+          password: updated_password || "",
+        }),
+      })
+        .then((resp) => resp.json())
+        .then((response) => {
+          if (response.success) {
+            toast.success("Updated successfully");
+            setOnChange(!onChange);
+            navigate("/profile");
+          } else if (response.error) {
+            toast.error("Details Not Updated");
+          } else {
+            alert("Failed to update");
+          }
+        })
+        .catch((error) => console.error("Error updating entry:", error));
+      console.log("Updating entry");
+    };
+
+
+// DELETE USER
+const deleteUser = (userId) => {
+    toast.loading("Deleting user...");
+    
+    fetch(`/user/${userId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${authToken}`, 
+      },
+    })
+      .then((resp) => resp.json())
+      .then((response) => {
+       
+        if (response.success) {
+          toast.dismiss(); 
+          toast.success(response.success);
+          
+          const updatedUsers = users.filter(user => user.id !== userId); 
+          setUsers(updatedUsers); 
+        } else if (response.error) {
+          toast.dismiss();
+          toast.error(response.error); 
+        } else {
+          toast.dismiss();
+          toast.error("Failed to delete"); 
+        }
+      })
+      .catch((error) => {
+        toast.dismiss(); 
+        toast.error("Network error or failed to connect to server");
+        console.error("Error deleting user:", error); 
+      });
+  };
+  
+
+    const data = {
+      authToken,
+      current_user,
+      current_admin,
+      users,
+      login,
+      logout,
+      addUser,
+      updateUser,
+      deleteUser,
+    };
+  
+    return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
+
+}
