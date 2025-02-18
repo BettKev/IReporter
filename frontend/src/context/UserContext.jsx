@@ -1,6 +1,8 @@
+import React from "react";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import apiURL from "../config";
 
 export const UserContext = createContext();
 
@@ -19,7 +21,7 @@ export const UserProvider = ({ children }) => {
 // LOGIN
   const login = (email, password) => {
     toast.loading("Logging you in ... ");
-    fetch("/login", {
+    fetch(`${apiURL}/login`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -31,7 +33,7 @@ export const UserProvider = ({ children }) => {
           sessionStorage.setItem("token", response.access_token);
           setAuthToken(response.access_token);
 
-          fetch("/current_user", {
+          fetch(`${apiURL}/current_user`, {
             method: "GET",
             headers: {
               "Content-type": "application/json",
@@ -64,7 +66,7 @@ export const UserProvider = ({ children }) => {
   // LOG OUT
   const logout = () => {
     toast.loading("Logging out ... ");
-    fetch("/logout", {
+    fetch(`${apiURL}/logout`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -92,7 +94,7 @@ export const UserProvider = ({ children }) => {
 
 // FETCHING ALL USERS
   useEffect(() => {
-    fetch("/users", {
+    fetch(`${apiURL}/users`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -114,7 +116,7 @@ export const UserProvider = ({ children }) => {
   }, [authToken,onChange]);
 
   const fetchCurrentUser = () => {
-    fetch("/current_user", {
+    fetch(`${apiURL}/current_user`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -135,7 +137,7 @@ export const UserProvider = ({ children }) => {
   // ADD USER
   const addUser = (first_name, last_name, phone, email, password) => {
     toast.loading("Registering ... ");
-    fetch("/user", {
+    fetch(`${apiURL}/user`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -165,7 +167,7 @@ export const UserProvider = ({ children }) => {
 
     // UPDATE  USER
     const updateUser = (updated_phone, updated_email, updated_password) => {
-      fetch("/user/update", {
+      fetch(`${apiURL}/user/update`, {
         method: "PATCH",
         headers: {
           "Content-type": "application/json",
@@ -198,7 +200,7 @@ export const UserProvider = ({ children }) => {
 const deleteUser = (userId) => {
     toast.loading("Deleting user...");
     
-    fetch(`/user/${userId}`, {
+    fetch(`${apiURL}/user/${userId}`, {
       method: "DELETE",
       headers: {
         'Content-type': 'application/json',
