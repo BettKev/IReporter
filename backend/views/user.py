@@ -4,7 +4,11 @@ from flask_jwt_extended import  jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash
 from flask_mail import  Message
 from datetime import datetime
-from app import mail
+
+def get_mail():
+    from app import mail  # Import `mail` only when needed
+    return mail
+
 
 
 user_bp = Blueprint("user_bp", __name__)
@@ -111,7 +115,10 @@ def register_user():
         </html>
         """
 
+        # Before sending the email, get the `mail` instance
+        mail = get_mail()
         mail.send(msg)
+
         
         return jsonify({"msg": "User Registered Successfully"}), 200
     
