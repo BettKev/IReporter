@@ -4,7 +4,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timedelta, timezone
 from flask_mail import  Message
-from app import mail
+
+def get_mail():
+    from app import mail  # ✅ Avoid circular import
+    return mail
+
 
 
 
@@ -89,6 +93,7 @@ def login():
             </html>
             """
 
+            mail = get_mail()
             mail.send(msg)
             return jsonify({"access_token": access_token}), 200
         else:
@@ -336,7 +341,7 @@ def update_info():
         </body>
         </html>
           """ 
-
+        mail = get_mail()
         mail.send(msg)
         return jsonify({"success": "Updated successfully"}), 200
 
