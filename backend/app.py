@@ -23,7 +23,7 @@ app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///iRegister.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 migrate = Migrate(app, db)
 db.init_app(app)
 
@@ -35,7 +35,7 @@ jwt.init_app(app)
 
 from views import *
 
-# app.register_blueprint(user_bp)
+app.register_blueprint(user_bp)
 # app.register_blueprint(auth_bp)
 # app.register_blueprint(red_flag_bp)
 # app.register_blueprint(intervension_bp)
@@ -50,7 +50,7 @@ def index():
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volunteer Matching API Documentation</title>
+    <title>iRegister API Documentation</title>
     <style>
     body {
     Arial, sans-serif;
@@ -124,8 +124,8 @@ def index():
     </head>
     <body>
     <div class="container">
-    <h1>Volunteer Matching API Documentation</h1>
-    <p>Welcome to the Volunteer Matching API! This API helps organizations and volunteers connect through projects. Below is a list of available endpoints with their usage details.</p>
+    <h1>iRegister API Documentation</h1>
+    <p>Welcome to the iRegister API! This API helps participate in the improvement of their society. Below is a list of available endpoints with their usage details.</p>
 
     <div class="section">
     <h2>Authentication</h2>
@@ -168,7 +168,7 @@ def index():
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
     </tr>
     <tr>
-    <td><code>/user/<int:user_id></code></td>
+    <td><code>/user/user_id</code></td>
     <td>DELETE</td>
     <td>Deletes user account.</td>
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
@@ -198,22 +198,22 @@ def index():
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
     </tr>
     <tr>
-    <td><code>/red_flag/<int:red_flag_id></code></td>
+    <td><code>/red_flag/red_flag_id</code></td>
     <td>GET</td>
     <td>Fetch a single Red Flag</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Red Flags</span></td>
     </tr>
     <tr>
-    <td><code>/red_flag/<int:red_flag_id></code></td>
+    <td><code>/red_flag/red_flag_id</code></td>
     <td>PATCH</td>
     <td>Update a Red Flag</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Red Flags</span></td>
     </tr>
     <tr>
-    <td><code>/red_flag/<int:red_flag_id></code></td>
+    <td><code>/red_flag/red_flag_id</code></td>
     <td>DELETE</td>
     <td>Delete a Red Flag.</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Red Flags</span></td>
     </tr>
     </table>
     </div>
@@ -240,29 +240,29 @@ def index():
     <td><span class="auth-required">âœ”ï¸ JWT</span></td>
     </tr>
     <tr>
-    <td><code>/intervension/<int:intervension_id></code></td>
+    <td><code>/intervension/intervension_id</code></td>
     <td>GET</td>
     <td>Fetch a single Intervension</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Intervensions</span></td>
     </tr>
     <tr>
-    <td><code>/intervension/<int:intervension_id></code></td>
+    <td><code>/intervension/intervension_id</code></td>
     <td>PATCH</td>
     <td>Update an Intervension</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Intervensions</span></td>
     </tr>
     <tr>
-    <td><code>/intervension/<int:intervension_id></code></td>
+    <td><code>/intervension/intervension_id</code></td>
     <td>DELETE</td>
     <td>Delete an Intervension.</td>
-    <td><span class="auth-required">âœ”ï¸ Volunteer</span></td>
+    <td><span class="auth-required">âœ”ï¸ Intervensions</span></td>
     </tr>
     </table>
     </div>
 
     <div class="footer">
-    <p>For any questions or support, contact us at <a href=''>support@volunteerapi.com</a></p>
-    <p>&copy; 2025 Volunteer Matching API</p>
+    <p>For any questions or support, contact us at <a href=''>iregisterweb@gmail.com</a></p>
+    <p>&copy; 2025 iRegister API</p>
     </div>
     </div>
     </body>
