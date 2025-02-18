@@ -224,12 +224,14 @@ def update_info():
             data = request.get_json()
             phone = data.get("phone", admin.phone)
             email = data.get("email", admin.email)
-            profile_picture = data.get("profile_picture", admin.profile_picture)
+            profile_picture = data.get('profile_picture', admin.profile_picture) 
             new_password = data.get("password")
 
             check_admin_phone = Admins.query.filter_by(phone=phone and id!=admin.id).first()
             check_admin_email = Admins.query.filter_by(email=email and id!=admin.id).first()
-            check_user_profile_picture = Admins.query.filter_by(profile_picture=profile_picture and id!=user.id).first()
+            check_admin_profile_picture = Admins.query.filter_by(profile_picture=profile_picture and id!=admin.id).first()
+            
+
 
             if check_admin_phone:
               
@@ -239,9 +241,8 @@ def update_info():
               
               return jsonify({"error": "Email already in use"}), 400
             
-            if check_user_profile_picture:
+            if check_admin_profile_picture:
                 return jsonify({"error": "Picture already in use"}), 400
-
 
             if new_password:
               if (check_password_hash(admin.password, new_password)):
@@ -252,7 +253,8 @@ def update_info():
 
         admin.phone = phone
         admin.email = email
-        admin.profile_picture = profile_picture
+        if profile_picture != admin.profile_picture: 
+            admin.profile_picture = profile_picture
 
         if new_password:
             admin.password = new_password_hash
@@ -264,82 +266,73 @@ def update_info():
         <!DOCTYPE html>
         <html lang="en">
         <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Account Details Updated</title>
-            <style>
-                body {{
-                    font-family: Arial, sans-serif;
-                    background-color: #f4f4f9;
-                    margin: 0;
-                    padding: 0;
-                }}
-                .container {{
-                    width: 100%;
-                    max-width: 600px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    background-color: #ffffff;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                }}
-                .header {{
-                    text-align: center;
-                    padding-bottom: 20px;
-                }}
-                .header h1 {{
-                    color: #11172b;
-                    font-size: 24px;
-                }}
-                .body-content {{
-                    font-size: 16px;
-                    line-height: 1.6;
-                    margin-bottom: 20px;
-                }}
-                .footer {{
-                    font-size: 14px;
-                    color: #777;
-                    text-align: center;
-                }}
-                .cta-button {{
-                    display: inline-block;
-                    padding: 10px 20px;
-                    background-color: #1E90FF;
-                    color: #ffffff;
-                    text-decoration: none;
-                    border-radius: 5px;
-                    font-weight: bold;
-                }}
-            </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Account Details Updated</title>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0;
+            }}
+            .container {{
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }}
+            .header {{
+                text-align: center;
+                padding-bottom: 20px;
+            }}
+            .header h1 {{
+                color: #11172b;
+                font-size: 24px;
+            }}
+            .body-content {{
+                font-size: 16px;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }}
+            .footer {{
+                font-size: 14px;
+                color: #777;
+                text-align: center;
+            }}
+        </style>
         </head>
         <body>
-            <div class="container">
-                <div class="header">
-                    <h1>Account Details Updated</h1>
-                </div>
-                <div class="body-content">
-                    <p>Hello {admin.first_name} {admin.last_name},</p>
-                    <p>Your account details have been successfully updated:</p>
-                    <ul>
-                        {f"<li><strong>Phone:</strong> {admin.phone}</li>" if phone != admin.phone else ""}
-                        {f"<li><strong>Email:</strong> {admin.email}</li>" if email != admin.email else ""}
-                        {f"<li><strong>Profile Picture:</strong> {admin.profile_picture}</li>" if profile_picture != admin.profile_picture  else ""}
-                        {f"<li><strong>Password:</strong> Your password has been updated.</li>" if new_password else ""}
-                    </ul>
-                    <p>If you did not initiate these changes, please contact us immediately.</p>
-                    <p>Thank you for using iRegister!</p>
-                </div>
-                <div class="footer">
-                    <p><i>Sent on: {current_date}</i></p>
-                </div>
+        <div class="container">
+            <div class="header">
+                <h1>Account Details Updated</h1>
             </div>
+            <div class="body-content">
+                <p>Hello {admin.first_name} {admin.last_name},</p>
+                <p>Your account details have been successfully updated:</p>
+                <ul>
+                    {f"<li><strong>Phone:</strong> {admin.phone}</li>" if phone != admin.phone else ""}
+                    {f"<li><strong>Email:</strong> {admin.email}</li>" if email != admin.email else ""}
+                    {f"<li><strong>Profile Picture:</strong> {admin.profile_picture}</li>" if profile_picture != admin.profile_picture else ""}
+                    {f"<li><strong>Password:</strong> Your password has been updated.</li>" if new_password else ""}
+                </ul>
+                <p>If you did not initiate these changes, please contact us immediately.</p>
+                <p>Thank you for using iRegister!</p>
+            </div>
+            <div class="footer">
+                <p><i>Sent on: {current_date}</i></p>
+            </div>
+        </div>
         </body>
         </html>
-          """ 
+        """
 
         mail.send(msg)
         return jsonify({"success": "Updated successfully"}), 200
-
+        
     elif claims.get("is_user"):
          user = Users.query.get(current_user_id)
 
@@ -348,12 +341,13 @@ def update_info():
             data = request.get_json()
             phone = data.get("phone", user.phone)
             email = data.get("email", user.email)
-            profile_picture = data.get('profile_picture', user.profile_picture)
+            profile_picture = data.get("profile_picture", user.profile_picture)
             new_password = data.get("password")
 
             check_user_phone = Users.query.filter_by(phone=phone and id!=user.id).first()
             check_user_email = Users.query.filter_by(phone=phone and id!=user.id).first()
-            check_user_profile_picture = Users.query.filter_by(profile_picture=profile_picture and id!=user.id).first()
+            # check_user_profile_picture = Users.query.filter_by(profile_picture=profile_picture and id!=user.id).first()
+
 
             if check_user_phone:
                 return jsonify({"error": "Phone already in use"}), 400
@@ -361,20 +355,25 @@ def update_info():
             if check_user_email:
                 return jsonify({"error": "Email already in use"}), 400
             
-            if check_user_profile_picture:
-                return jsonify({"error": "Picture already in use"}), 400
+            # if check_user_profile_picture:
+            #     return jsonify({"error": "Picture already in use"}), 400
 
 
+            # Check if the password is provided and if it's not the same as the current one
             if new_password:
                 if check_password_hash(user.password, new_password):
                     return jsonify({"error": "Password not changed"}), 400
+                
 
             new_password_hash = generate_password_hash(new_password)
 
             
             user.phone = phone
             user.email = email
-            user.profile_picture = profile_picture
+
+            if profile_picture != user.profile_picture: 
+                user.profile_picture = profile_picture
+
             if new_password:
                 user.password = new_password_hash
             db.session.commit()
@@ -422,15 +421,6 @@ def update_info():
                         color: #777;
                         text-align: center;
                     }}
-                    .cta-button {{
-                        display: inline-block;
-                        padding: 10px 20px;
-                        background-color: #1E90FF;
-                        color: #ffffff;
-                        text-decoration: none;
-                        border-radius: 5px;
-                        font-weight: bold;
-                    }}
                 </style>
             </head>
             <body>
@@ -444,7 +434,7 @@ def update_info():
                         <ul>
                             {f"<li><strong>Phone:</strong> {user.phone}</li>" if phone != user.phone else ""}
                             {f"<li><strong>Email:</strong> {user.email}</li>" if email != user.email else ""}
-                            {f"<li><strong>Profile Picture:</strong> {user.profile_picture}</li>" if profile_picture != user.profile_picture  else ""}
+                            {f"<li><strong>Profile Picture:</strong> {user.profile_picture}</li>" if profile_picture != user.profile_picture else ""}
                             {f"<li><strong>Password:</strong> Your password has been updated.</li>" if new_password else ""}
                         </ul>
                         <p>If you did not initiate these changes, please contact us immediately.</p>
@@ -456,10 +446,11 @@ def update_info():
                 </div>
             </body>
             </html>
-            """ 
+            """
 
             mail.send(msg)
             return jsonify({"success": "Updated successfully"}), 200
+            
     else:
         return jsonify({"error": "Details Not Updated"}), 406
 
