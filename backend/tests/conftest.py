@@ -8,7 +8,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 from models import db, Users, Admins, TokenBlocklist
-from views.auth import auth_bp  # ✅ This is fine
+from views.auth import auth_bp  
 
 @pytest.fixture
 def app():
