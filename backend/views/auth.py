@@ -334,7 +334,8 @@ def update_info():
 
         
     elif claims.get("is_user"):
-        user = Users.query.get(current_user_id)
+        user = db.session.get(Users, current_user_id)
+
 
         if user:
             data = request.get_json()
