@@ -13,7 +13,7 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    profile_picture = db.Column(db.String, nullable=True)
+    profile_picture = db.Column(db.String(512), nullable=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
@@ -28,8 +28,8 @@ class Red_Flags(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    image = db.Column(db.LargeBinary)  
-    video = db.Column(db.LargeBinary)  
+    image = db.Column(db.String(512), nullable=True)  
+    video = db.Column(db.String(512), nullable=True)  
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     location = db.Column(db.String(255))  
 
@@ -43,8 +43,8 @@ class Interventions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    image = db.Column(db.LargeBinary)  
-    video = db.Column(db.LargeBinary)  
+    image = db.Column(db.String(512), nullable=True)  
+    video = db.Column(db.String(512), nullable=True)  
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     location = db.Column(db.String(255))  
 
@@ -58,10 +58,19 @@ class Admins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    profile_picture = db.Column(db.LargeBinary, nullable=True)
+    profile_picture = db.Column(db.String(512), nullable=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
+
+# Comments Table
+class Comments(db.Model):
+ 
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    comment = db.Column(db.String(512), nullable=False)
+       
     
 
 # TokenBlocklist Table

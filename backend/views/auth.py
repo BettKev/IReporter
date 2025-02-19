@@ -233,7 +233,7 @@ def update_info():
             phone = data.get("phone", admin.phone)
             email = data.get("email", admin.email)
             profile_picture = data.get('profile_picture', admin.profile_picture) 
-            new_password = data.get("password")  # only update if provided
+            new_password = data.get("password")  
 
             check_admin_phone = Admins.query.filter_by(phone=phone and  id!=admin.id).first()
             check_admin_email = Admins.query.filter_by(email=email and id!=admin.id).first()
