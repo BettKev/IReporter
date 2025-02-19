@@ -166,7 +166,8 @@ def login():
             </body>
             </html>
             """
-
+            
+            mail = get_mail()
             mail.send(msg)
             return jsonify({"access_token": access_token}), 200
         else:

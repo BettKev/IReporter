@@ -14,6 +14,7 @@ export default function Navbar() {
         <div className="Navbar-links flex-grow flex justify-center space-x-6">
             <Link to="/" className="text-white text-lg hover:text-purple-600">Home</Link>
             <Link to="/about" className="text-white text-lg hover:text-purple-600">About</Link>
+            <Link to="/contacts" className="text-white text-lg hover:text-purple-600">Contact</Link>
           </div>
       </div>
     </nav>
