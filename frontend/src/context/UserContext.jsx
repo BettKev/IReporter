@@ -45,13 +45,15 @@ export const UserProvider = ({ children }) => {
               console.log(response); 
 
               if (response.is_admin) {
-                setCurrentAdmin(response); 
+                setCurrentAdmin(response);
+                navigate("/adminprofile")  
               } else {
-                setCurrentUser(response);               }
+                setCurrentUser(response);
+                navigate("/userprofile")                 }
             });
 
           toast.success("Successfully Logged in");
-          navigate("/");
+          // navigate("/");
         } else if (response.error) {
           toast.dismiss();
           toast.error(response.error);
