@@ -135,7 +135,7 @@ export const UserProvider = ({ children }) => {
 
 
   // ADD USER
-  const addUser = (first_name, last_name, phone, email, password) => {
+  const addUser = (first_name, last_name, phone, email, password, profile_picture = null) => {
     toast.loading("Registering ... ");
     fetch(`${apiURL}/user`, {
       method: "POST",
@@ -148,25 +148,31 @@ export const UserProvider = ({ children }) => {
         phone,
         email,
         password,
+        profile_picture,
       }),
     })
       .then((resp) => resp.json())
       .then((response) => {
+        toast.dismiss();  // Make sure to dismiss before navigating
         if (response.success) {
-           toast.dismiss();
-           toast.success("User added successfully");
-           navigate("/login");
+          toast.success("User added successfully");
+          setTimeout(() => {
+            navigate("/login"); // Give it a short time to dismiss the toast
+          }, 500); // Adjust the timeout as needed
         } else if (response.error) {
-           toast.dismiss();
-           toast.error(response.error);
+          toast.error(response.error);
         }
-     })
-     
+      })
+      .catch((error) => {
+        toast.dismiss();
+        toast.error("Network error, please try again");
+        console.error("Error during user registration:", error);
+      });
   };
 
 
     // UPDATE  USER
-    const updateUser = (updated_phone, updated_email, updated_password) => {
+    const updateUser = (updated_phone, updated_email, updated_password, updated_profile_picture) => {
       fetch(`${apiURL}/user/update`, {
         method: "PATCH",
         headers: {
@@ -177,6 +183,7 @@ export const UserProvider = ({ children }) => {
           phone: updated_phone,
           email: updated_email,
           password: updated_password || "",
+          profile_picture: updated_profile_picture
         }),
       })
         .then((resp) => resp.json())

@@ -1,11 +1,10 @@
 import { React, useContext, useState } from "react";
-// import { UserContext } from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 import { signInWithGoogle, signInWithGithub } from "../firebase-config";
-
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  // const { login } = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
