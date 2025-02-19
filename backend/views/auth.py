@@ -183,7 +183,8 @@ def current_user():
     claims = get_jwt()  
 
     if claims.get('is_admin'):
-        admin = Admins.query.get(current_user_id)
+        admin = db.session.get(Admins, current_user_id)
+
         if admin:
             admin_data = {
                 'id': admin.id,
@@ -199,7 +200,7 @@ def current_user():
             return jsonify({"message": "Admin not found"}), 404
 
     elif claims.get("is_user"):
-        user = Users.query.get(current_user_id)
+        user = db.session.get(Users, current_user_id)
         if user:
             user_data = {
                 'id': user.id,
@@ -219,10 +220,13 @@ def current_user():
 @jwt_required()
 def update_info():
     current_user_id = get_jwt_identity()
-    claims = get_jwt() 
+    claims = get_jwt()
+
+    mail = get_mail() 
 
     if claims.get('is_admin'):
-        admin = Admins.query.get(current_user_id)
+        admin = db.session.get(Admins, current_user_id)
+
 
         if admin:
             data = request.get_json()
@@ -324,7 +328,7 @@ def update_info():
         </body>
         </html>
           """ 
-        mail = get_mail()
+        
         mail.send(msg)
         return jsonify({"success": "Updated successfully"}), 200
 
