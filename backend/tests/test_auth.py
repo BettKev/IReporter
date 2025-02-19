@@ -3,7 +3,7 @@ import pytest
 from models import db, Users, Admins, TokenBlocklist
 from werkzeug.security import generate_password_hash
 from flask_jwt_extended import create_access_token
-# import io
+from unittest.mock import patch
 
 
 @pytest.fixture
@@ -79,31 +79,45 @@ def test_current_user(client, test_user):
 
     assert response.status_code == 200, f"Unexpected response: {data}"
 
-# def test_update_user(client, test_user):
-#     """Test updating user information."""
-#     access_token = create_access_token(identity=str(test_user.id), additional_claims={"is_user": True})
-
-#     headers = {"Authorization": f"Bearer {access_token}"}
-
-#     # Correctly formatted form data
-#     data = {
-#         "phone": (None, "987654321"),
-#         "email": (None, "updateduser@example.com"),
-#         "password": (None, "newsecurepassword123"),
-#         "profile_picture": (io.BytesIO(b"fake_image_data"), "new_unique_picture.png")
-#     }
-
-#     # Send request as multipart/form-data (Flask will handle content-type)
-#     response = client.patch("/user/update", data=data, headers=headers)
-
-#     # Debugging: Print response if test fails
-#     print(response.status_code, response.data.decode())
-
-#     # Check response status
-#     assert response.status_code == 200
 
 
-from flask_jwt_extended import decode_token
+
+
+
+def test_update_user(client, test_user):
+    """Test updating user information with JSON payload."""
+    
+    access_token = create_access_token(identity=str(test_user.id), additional_claims={"is_user": True})
+    headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
+
+    data = {
+        "name": "New Name",
+        "profile_picture": "https://example.com/new_unique_picture.jpg",  # Ensure uniqueness
+        "password": "SecurePass123!"  # Add password to avoid NoneType error
+    }
+    
+    # Patch get_mail to return a mock Mail instance
+    with patch("views.auth.get_mail") as mock_get_mail:
+        mock_mail = mock_get_mail.return_value
+        response = client.patch("/user/update", json=data, headers=headers)
+
+        mock_mail.send.assert_called_once()  
+
+
+        # Debugging: Print response if test fails
+        print("Status Code:", response.status_code)
+        print("Response JSON:", response.json)
+
+        # Assertions
+        assert response.status_code == 200
+        assert response.json["success"] == "Updated successfully"
+
+        # Ensure email was attempted to be sent
+        mock_mail.send.assert_called_once()
+
+
+
+
 
 def test_logout(client, app, test_user):
     """Test logging out a user."""
