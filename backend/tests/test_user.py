@@ -49,3 +49,48 @@ def test_register_user(client, app):
         
         assert response.status_code == 404
         assert response.json["error"] == "Phone Number exists"
+
+
+
+
+def test_fetch_users(client, app):
+    """Test fetching all users."""
+    with app.app_context():
+        # Clear existing users to avoid conflicts
+        db.session.query(Users).delete()
+
+        # Create test users with a password field
+        user1 = Users(
+            first_name="Alice", 
+            last_name="Doe", 
+            email="alice@example.com", 
+            phone="123456789", 
+            profile_picture="https://example.com/alice.jpg",
+            password="testpassword123"  # Added password
+        )
+        user2 = Users(
+            first_name="Bob", 
+            last_name="Smith", 
+            email="bob@example.com", 
+            phone="987654321", 
+            profile_picture="https://example.com/bob.jpg",
+            password="securepass456"  # Added password
+        )
+
+        db.session.add_all([user1, user2])
+        db.session.commit()
+
+        # Make GET request to fetch users
+        response = client.get("/users")
+
+        assert response.status_code == 200
+
+        data = response.json
+        assert isinstance(data, list)
+        assert len(data) == 2
+
+        # Validate user data
+        assert data[0]["first_name"] == "Alice"
+        assert data[0]["email"] == "alice@example.com"
+        assert data[1]["first_name"] == "Bob"
+        assert data[1]["email"] == "bob@example.com"
