@@ -165,7 +165,8 @@ def test_delete_user_as_self(client, app):
         db.session.commit()
 
         # Create user token
-        user_token = create_access_token(identity=user.id, additional_claims={"is_user": True})
+        user_token = create_access_token(identity=str(user.id), additional_claims={"is_user": True})
+
 
         # Make DELETE request as the user
         response = client.delete(
@@ -173,11 +174,15 @@ def test_delete_user_as_self(client, app):
             headers={"Authorization": f"Bearer {user_token}"}
         )
 
+        print(response.status_code)
+        print(response.json)  # Check error message for more clues
+
+
         assert response.status_code == 200
         assert response.json == {"success": "Account Deleted successfully"}
 
         # Verify user is deleted
-        deleted_user = Users.query.get(user.id)
+        deleted_user = db.session.get(Users, user.id)
         assert deleted_user is None
 
 
