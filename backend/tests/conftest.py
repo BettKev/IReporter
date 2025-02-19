@@ -30,7 +30,7 @@ def app():
     with app.app_context():
         db.create_all()
 
-        # 🔥 Move `user_bp` import inside the app context to prevent circular import
+        # Move `user_bp` import inside the app context to prevent circular import
         from views.user import user_bp  
         app.register_blueprint(user_bp)
 
