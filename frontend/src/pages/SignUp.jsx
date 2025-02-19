@@ -1,33 +1,36 @@
-import React, { useState } from "react";
+import { React , useContext, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 import { signInWithGoogle, signInWithGithub } from "../firebase-config";
-import { Link } from "react-router-dom";
+
+
 
 export default function SignUp() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    phone: "",
-    profilePicture: null,
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const navigate = useNavigate();
+  const { addUser } = useContext(UserContext);
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, profilePicture: e.target.files[0] });
-  };
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-  };
+    
+    if (password !== repeatPassword) {
+        return alert("Password doesn't match");
+    } else {
+        addUser(first_name, last_name, phone, email, password);
+        navigate("/login");
+    }
+}
+
 
   return (
-    <div className="Register-form font-[sans-serif] max-w-4xl flex items-center mx-auto p-4 mt-15">
+    <div className="Register-form font-[sans-serif] max-w-4xl flex items-center mx-auto  p-4 mt-15">
       <div className="grid md:grid-cols-3 gap-6 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl ">
         <div className="Register-form-text max-md:order-1 flex flex-col justify-center md:space-y-16 space-y-8 max-md:mt-16 min-h-full b lg:px-8 px-4 py-4">
           <div>
@@ -61,81 +64,101 @@ export default function SignUp() {
               <label className="text-gray-600 text-sm mb-2 block">
                 First Name
               </label>
-              <input
-                type="text"
-                value={formData.firstName}
-                onChange={handleChange}
-                required
-                className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                placeholder="Enter first name"
-              />
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={first_name}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter first name"
+                />
+              </div>
             </div>
 
             <div>
               <label className="text-gray-600 text-sm mb-2 block">
                 Last Name
               </label>
-              <input
-                type="text"
-                value={formData.lastName}
-                onChange={handleChange}
-                required
-                className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                placeholder="Enter last name"
-              />
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={last_name}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter last name"
+                />
+              </div>
             </div>
 
             <div>
               <label className="text-gray-600 text-sm mb-2 block">Phone</label>
-              <input
-                type="number"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                placeholder="Enter phone number"
-              />
+              <div className="relative flex items-center">
+                <input
+                  type="number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter phone number"
+                />
+              </div>
             </div>
 
             <div>
               <label className="text-gray-600 text-sm mb-2 block">Email</label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                placeholder="Enter email"
-              />
+              <div className="relative flex items-center">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter email"
+                />
+              </div>
             </div>
 
             <div>
               <label className="text-gray-600 text-sm mb-2 block">
                 Password
               </label>
-              <input
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                placeholder="Enter password"
-              />
+              <div className="relative flex items-center">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter password"
+                />
+              </div>
             </div>
 
             <div>
               <label className="text-gray-600 text-sm mb-2 block">
+                {" "}
                 Repeat Password
               </label>
-              <input
-                type="password"
-                value={formData.repeatPassword}
-                onChange={handleChange}
-                required
-                className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                placeholder="Enter password"
-              />
+              <div className="relative flex items-center">
+                <input
+                  type="password"
+                  value={repeatPassword}
+                  onChange={(e)=>setRepeatPassword(e.target.value)}
+                  required
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter password"
+                />
+              </div>
             </div>
+
+            {/* <div className="flex items-center">
+              <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+              <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-600">
+                I accept the <a href="javascript:void(0);" className="text-blue-600 font-semibold hover:underline ml-1">Terms and Conditions</a>
+              </label>
+            </div> */}
           </div>
 
           <div className="mt-8">
