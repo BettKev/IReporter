@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import UserProfile from "./pages/UserProfile"
 import AdminProfile from "./pages/AdminProfile";
 import Contacts from "./pages/Contacts";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/userprofile" element={<UserProfile />} />
             <Route path="/adminprofile" element={<AdminProfile />} />
+            <Route path="/profile" element={< Profile />} />
             {/* <Route path="/about" element={<About />} /> */}
             <Route path="/signup" element={<SignUp />} />
             {/* <Route path="*" element={<NoPage />} /> */}

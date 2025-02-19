@@ -1,5 +1,8 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import Profile from "./Profile";
+
+
 
 const UserProfile = () => {
   const [activeSection, setActiveSection] = useState("Dashboard");
@@ -79,7 +82,7 @@ const UserProfile = () => {
         <p>Users can create and manage intervention records.</p>
       </div>
     ),
-    Profile: "Update your profile information here.",
+    Profile: <Profile/>,
     Settings: "Adjust your settings and preferences here.",
   };
 
