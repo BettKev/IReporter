@@ -6,7 +6,9 @@ const UserProfile = () => {
 
   const userName = "John Doe";
 
+  
   const sections = {
+    
     Dashboard: (
         <div>
           <h3 className="text-lg font-semibold">Welcome, {userName}!</h3>

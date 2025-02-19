@@ -5,6 +5,8 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import UserProfile from "./pages/UserProfile"
+import AdminProfile from "./pages/AdminProfile";
 import Contacts from "./pages/Contacts";
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/userprofile" element={<UserProfile />} />
+            <Route path="/adminprofile" element={<AdminProfile />} />
             {/* <Route path="/about" element={<About />} /> */}
             <Route path="/signup" element={<SignUp />} />
             {/* <Route path="*" element={<NoPage />} /> */}
