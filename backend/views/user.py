@@ -152,7 +152,8 @@ def delete_user(user_id):
     claims = get_jwt()
 
     if claims.get('is_admin'):
-        user_to_delete = Users.query.get(user_id)
+        user_to_delete = db.session.get(Users, user_id)
+
 
         if not user_to_delete:
             return jsonify({"error": "User not found"}), 404
@@ -172,7 +173,8 @@ def delete_user(user_id):
         return jsonify({"success": "User Deleted successfully"}), 200
     
     elif claims.get('is_user'):
-        user_to_delete = Users.query.get(user_id)
+        user_to_delete = db.session.get(Users, user_id)
+
 
         if not user_to_delete:
             return jsonify({"error": "User not found"}), 404
