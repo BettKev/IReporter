@@ -148,7 +148,7 @@ export default function SignUp() {
                   onChange={(e)=>setRepeatPassword(e.target.value)}
                   required
                   className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                  placeholder="Enter password"
+                  placeholder="Repeat password"
                 />
               </div>
             </div>
