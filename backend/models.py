@@ -19,11 +19,11 @@ class Users(db.Model):
     phone = db.Column(db.Integer, unique=True, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)  
     
-    red_flags = db.relationship('Red_Flags', backref='users', lazy=True)
+    red_flags = db.relationship('RedFlags', backref='users', lazy=True)
     intervensions = db.relationship('Interventions', backref='users', lazy=True)
 
 # Red_Flags Table
-class Red_Flags(db.Model):
+class RedFlags(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
@@ -31,7 +31,8 @@ class Red_Flags(db.Model):
     image = db.Column(db.String(512), nullable=True)  
     video = db.Column(db.String(512), nullable=True)  
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    location = db.Column(db.String(255))  
+    location = db.Column(db.String(255))
+    status = db.Column(db.String(50), nullable=False)  
 
    
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)    
@@ -46,7 +47,8 @@ class Interventions(db.Model):
     image = db.Column(db.String(512), nullable=True)  
     video = db.Column(db.String(512), nullable=True)  
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    location = db.Column(db.String(255))  
+    location = db.Column(db.String(255)) 
+    status = db.Column(db.String(50), nullable=False) 
 
    
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -63,8 +65,8 @@ class Admins(db.Model):
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
 
-# ContactUs Table
-class ContactUs(db.Model):
+# Comments Table
+class Comments(db.Model):
  
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
