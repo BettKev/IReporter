@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import SignUp from "../SignUp";
+import React from "react";
 
 // Mock functions
 const mockAddUser = jest.fn();
