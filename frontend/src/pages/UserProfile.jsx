@@ -82,7 +82,7 @@ const UserProfile = () => {
         <p>Users can create and manage intervention records.</p>
       </div>
     ),
-    Profile: <Profile/>,
+    Profile:( <div className="w-full flex-8 flex flex-col items-center justify-start text-center overflow-auto p-4"><Profile/></div>), 
     Settings: "Adjust your settings and preferences here.",
   };
 
@@ -182,7 +182,7 @@ const UserProfile = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-8 flex flex-col items-center justify-start text-center mt-10">
+      <div className="flex-1 flex flex-col items-center justify-start text-center overflow-auto p-4 h-full">
         <h2 className="text-2xl font-semibold mb-4">{activeSection}</h2>
         <div className="text-gray-700">{sections[activeSection]}</div>
       </div>
