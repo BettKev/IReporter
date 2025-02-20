@@ -45,13 +45,13 @@ const AdminProfile = () => {
   const renderContent = () => {
     switch (activeSection) {
       case "red-flags":
-        return <div className="p-6">Red-Flags Content</div>;
+        return <div className="p-6">Red-Flags</div>;
       case "interventions":
-        return <div className="p-6">Interventions Content</div>;
+        return <div className="p-6">Interventions</div>;
       case "settings":
-        return <div className="p-6">Settings Content</div>;
+        return <div className="p-6">Settings</div>;
       default:
-        return <div className="p-6">Dashboard Content</div>;
+        return <div className="p-6">Dashboard</div>;
     }
   };
 
@@ -213,5 +213,5 @@ const AdminProfile = () => {
 </div>
   );
 };
-// hello word
+
 export default AdminProfile;
