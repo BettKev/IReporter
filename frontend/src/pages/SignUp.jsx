@@ -22,7 +22,7 @@ export default function SignUp() {
     e.preventDefault();
     
     if (password !== repeatPassword) {
-      toast.error("Password does't match")
+      toast.error("Password doesn't match")
         return;
     } else {
         addUser(first_name, last_name, phone, email, password);
