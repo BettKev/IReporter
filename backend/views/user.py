@@ -1,5 +1,5 @@
 from flask import jsonify, request, Blueprint
-from models import Users, db, Red_Flags, Interventions
+from models import Users, db, Red_Flags, Interventions, Admins
 from flask_jwt_extended import  jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash
 from flask_mail import  Message
@@ -141,6 +141,27 @@ def fetch_users():
 
     
     return jsonify(user_list)
+
+# FETCH ALL Admins
+@user_bp.route("/admins")
+def fetch_admins():
+    admins = Admins.query.all() 
+    admin_list = []
+
+   
+    for admin in admins:
+        admin_list.append({
+            "id": admin.id,
+            "first_name": admin.first_name,
+            "last_name": admin.last_name,
+            "phone": admin.phone,
+            "email": admin.email,
+            "profile_picture": admin.profile_picture
+        })
+
+    
+    return jsonify(admin_list)
+# done
 
 
 
