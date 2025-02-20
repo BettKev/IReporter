@@ -2,6 +2,7 @@ import React, {useContext, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { signInWithGoogle, signInWithGithub } from "../firebase-config";
+import { toast } from 'react-toastify';
 
 
 
@@ -19,11 +20,9 @@ export default function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Submitting form...")
     
     if (password !== repeatPassword) {
-        console.log("Passwords mismatch logic executed");
-        alert("Password doesn't match");
+      toast.error("Password does't match")
         return;
     } else {
         addUser(first_name, last_name, phone, email, password);
@@ -151,7 +150,7 @@ export default function SignUp() {
                   onChange={(e)=>setRepeatPassword(e.target.value)}
                   required
                   className="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500"
-                  placeholder="Enter password"
+                  placeholder="Confirm password"
                 />
               </div>
             </div>
