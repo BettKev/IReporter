@@ -15,10 +15,12 @@ describe("Login Component", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sign in/i, { selector: 'h3' })).toBeInTheDocument();
+
     expect(screen.getByPlaceholderText(/Enter email/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Enter password/i)).toBeInTheDocument();
-    expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sign in/i, { selector: 'h3' })).toBeInTheDocument();
+
   });
 
   test("allows the user to type in email and password fields", () => {
