@@ -1,5 +1,5 @@
 from flask import jsonify, request, Blueprint
-from models import Users, db, Red_Flags, Interventions, Admins
+from models import Users, db, RedFlags, Interventions, Admins
 from flask_jwt_extended import  jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash
 from flask_mail import  Message
@@ -179,7 +179,7 @@ def delete_user(user_id):
         if not user_to_delete:
             return jsonify({"error": "User not found"}), 404
         
-        red_flags_to_delete = Red_Flags.query.filter_by(user_id=user_id).all()
+        red_flags_to_delete = RedFlags.query.filter_by(user_id=user_id).all()
         interventions_to_delete = Interventions.query.filter_by(user_id=user_id).all()
     
         for red_flag in red_flags_to_delete:
@@ -200,7 +200,7 @@ def delete_user(user_id):
         if not user_to_delete:
             return jsonify({"error": "User not found"}), 404
         
-        red_flags_to_delete = Red_Flags.query.filter_by(user_id=user_id).all()
+        red_flags_to_delete = RedFlags.query.filter_by(user_id=user_id).all()
         interventions_to_delete = Interventions.query.filter_by(user_id=user_id).all()
     
         for red_flag in red_flags_to_delete:
