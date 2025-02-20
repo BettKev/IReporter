@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import apiURL from "../config";
 
-export const UserContext = createContext();
+export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
     

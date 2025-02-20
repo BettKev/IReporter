@@ -1,8 +1,9 @@
-import React from "react";
+import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import Login from "../Login";
+import "@testing-library/jest-dom";
 
 describe("Login Component", () => {
   test("renders the login form", () => {
@@ -52,7 +53,7 @@ describe("Login Component", () => {
 
     const emailInput = screen.getByPlaceholderText(/Enter email/i);
     const passwordInput = screen.getByPlaceholderText(/Enter password/i);
-    const submitButton = screen.getByText(/Sign in/i);
+    const submitButton = screen.getByRole("button", {name: /sign in/i});
 
     fireEvent.change(emailInput, { target: { value: "test@example.com" } });
     fireEvent.change(passwordInput, { target: { value: "password123" } });
