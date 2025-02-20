@@ -174,12 +174,12 @@ export default function SignUp() {
           <div className="flex justify-center gap-4 mt-6">
             <button
               type="button"
-              class="border-none outline-none"
+              className="border-none outline-none"
               onClick={signInWithGoogle}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="w-7 h-7 inline"
+                className="w-7 h-7 inline"
                 viewBox="0 0 512 512"
               >
                 <path
@@ -217,12 +217,12 @@ export default function SignUp() {
 
             <button
               type="button"
-              class="border-none outline-none"
+              className="border-none outline-none"
               onClick={signInWithGithub}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="w-7 h-7 inline"
+                className="w-7 h-7 inline"
                 viewBox="0 0 512 512"
               >
                 <path
