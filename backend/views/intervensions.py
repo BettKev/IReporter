@@ -18,9 +18,25 @@ def add_intervention():
     current_user_id = get_jwt_identity()
     # user = Users.query.get(current_user_id)
     user = db.session.get(Users, current_user_id)
+    print("User:", user)
+    print("User email:", user.email if user else "No user")
+
   
     data = request.get_json()
-    print(data)
+    
+    # Debugging print
+    print("📩 Received Payload:", data)
+
+    if not data:
+        return jsonify({"error": "Invalid JSON payload"}), 400
+
+    required_fields = ["title", "description", "image", "video", "location", "status"]
+    
+    # Check for missing fields
+    for field in required_fields:
+        if field not in data:
+            print(f"🚨 Missing field: {field}")
+            return jsonify({"error": f"Missing field: {field}"}), 422
 
     title = data['title']
     description = data['description']
