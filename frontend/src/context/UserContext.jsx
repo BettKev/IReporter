@@ -16,6 +16,8 @@ export const UserProvider = ({ children }) => {
   const [current_user, setCurrentUser] = useState(null);
   const [current_admin, setCurrentAdmin] = useState(null);
   const [users, setUsers] = useState([])
+  const [admins, setAdmins] = useState([])
+
   const [onChange, setOnChange] = useState(true);
 
 // LOGIN
@@ -109,6 +111,20 @@ export const UserProvider = ({ children }) => {
       });
   }, []);
 
+  // FETCH ALL ADMINS
+  useEffect(() => {
+    fetch(`${apiURL}/admins`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setAdmins(response);
+        console.log(response)
+      });
+  }, []);
 
   // FETCH CURRENT USER
   useEffect(() => {
@@ -251,6 +267,8 @@ const deleteUser = (userId) => {
       addUser,
       updateUser,
       deleteUser,
+      setAdmins,
+      admins,
     };
   
     return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
