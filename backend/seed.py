@@ -24,7 +24,7 @@ with app.app_context():
     password = "1234"
     
     # Users seeds
-    users.append(Users(first_name="Hamza", last_name="Ali", email="david.kakhayanga@student.moringaschool.com", phone=1234567890, password=generate_password_hash(password)))
+    users.append(Users(first_name="Hamza", last_name="Ali", email="david.kakhayanga@student.moringaschool.com", phone=1234567890, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
 
    
     # # red flag seeds
@@ -35,9 +35,9 @@ with app.app_context():
 
         
     # ADMIN SEEDS
-    admins.append(Admins(first_name = "David", last_name = "Parsley", email = "davidparsley.kakhayanga@gmail.com", phone = 1111111 , password=generate_password_hash(password)))
+    admins.append(Admins(first_name = "David", last_name = "Parsley", email = "davidparsley.kakhayanga@gmail.com", phone = 1111111 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
     admins.append(Admins(first_name = "Emmaculate", last_name = "Mwikali", email = "mwikaliemmaculate6@gmail.com", phone = 2222222 , password=generate_password_hash(password)))
-    admins.append(Admins(first_name = "Kevin", last_name = "Bett", email = "kevin.bett3@student.moringaschool.com", phone = 3333333 , password=generate_password_hash(password)))
+    admins.append(Admins(first_name = "Kevin", last_name = "Bett", email = "kevin.bett3@student.moringaschool.com", phone = 3333333 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
 
     # Insert each Loan and User in the list into the database tables
     db.session.add_all(users)
