@@ -19,9 +19,12 @@ export default function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log("Submitting form...")
     
     if (password !== repeatPassword) {
-        return alert("Password doesn't match");
+        console.log("Passwords mismatch logic executed");
+        alert("Password doesn't match");
+        return;
     } else {
         addUser(first_name, last_name, phone, email, password);
         navigate("/login");

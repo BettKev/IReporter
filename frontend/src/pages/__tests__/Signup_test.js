@@ -54,20 +54,23 @@ describe("SignUp Component", () => {
 
 
 
-  test("shows an alert when passwords do not match", async () => {
+test("shows an alert when passwords do not match", async () => {
     jest.spyOn(window, "alert").mockImplementation(() => {});
 
-    fireEvent.change(screen.getByPlaceholderText("Enter password"), { target: { value: "password123" } });
+    // Get both password fields
+    const passwordInputs = screen.getAllByPlaceholderText("Enter password");
+    expect(passwordInputs.length).toBe(2); // Ensure we found both inputs
 
-    const passwordInputs = await screen.findAllByPlaceholderText("Enter password");
-    expect(passwordInputs.length).toBe(2);
-
-    fireEvent.change(passwordInputs[1], { target: { value: "wrongpassword" } });
+    fireEvent.change(passwordInputs[0], { target: { value: "password123" } }); // Main password
+    fireEvent.change(passwordInputs[1], { target: { value: "wrongpassword" } }); // Confirm password
 
     fireEvent.click(screen.getByRole("button", { name: /Create an account/i }));
 
-    expect(window.alert).toHaveBeenCalledWith("Password doesn't match");
-  });
+    console.log(window.alert.mock.calls);
+
+    await waitFor(() => expect(window.alert).toHaveBeenCalledWith("Password doesn't match"));
+});
+
 
   test("submits form and navigates to login page when passwords match", async () => {
     fireEvent.change(screen.getByPlaceholderText("Enter first name"), { target: { value: "John" } });
