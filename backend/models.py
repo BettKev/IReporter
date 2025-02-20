@@ -63,8 +63,8 @@ class Admins(db.Model):
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
 
-# Comments Table
-class Comments(db.Model):
+# ContactUs Table
+class ContactUs(db.Model):
  
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
