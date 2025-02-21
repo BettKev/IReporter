@@ -23,16 +23,16 @@ const center = [-1.286389, 36.817223];
 
 const OpenStreetMap = () => {
   return (
-    <MapContainer center={center} zoom={12} style={{ height: "400px", width: "100%" }}>
+    <MapContainer center={center} zoom={12} style={{ height: "400px", width: "100%", borderRadius: "1rem", overflow:"hidden" }}>
       {/* OpenStreetMap Tile Layer */}
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       {/* Sample Markers */}
       <Marker position={[-1.286389, 36.817223]} icon={redFlagIcon}>
-        <Popup>🟥 Red-Flag Report</Popup>
+        <Popup> 🚩 Red-Flag Report</Popup>
       </Marker>
       <Marker position={[-1.2921, 36.8219]} icon={blueFlagIcon}>
-        <Popup>🟦 Intervention Request</Popup>
+        <Popup> 🔨 Intervention Request</Popup>
       </Marker>
     </MapContainer>
   );

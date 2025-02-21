@@ -1,9 +1,9 @@
-import React, {useContext, useState } from "react";
+import React,{useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { signInWithGoogle, signInWithGithub } from "../firebase-config";
 import { Link } from "react-router-dom";
 
-const Login =  () => {
+export default function Login() {
   const { login } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
@@ -13,19 +13,20 @@ const Login =  () => {
     e.preventDefault();
     login(email, password);
   }
+  
   return (
-    <div className="font-[sans-serif] max-sm:px-4 mt-10">
+    <div className="font-[sans-serif] max-sm:px-4 mt-20 bg-[#05051e] rounded-4xl border-2 border-pink-200">
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="grid md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full p-4 m-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md">
-          <div className="md:max-w-md w-full px-4 py-4">
+        <div className="grid md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full p-4 m-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl border-2 border-white ">
+          <div className="md:max-w-md w-full px-4 py-4 ">
             <form onSubmit={handleSubmit}>
               <div className="mb-12">
-                <h3 className="text-gray-800 text-3xl font-extrabold">Sign in</h3>
-                <p className="text-sm mt-4 text-gray-800">
-                  Don't have an account{" "}
+                <h3 className="text-white text-3xl font-extrabold">Sign in</h3>
+                <p className="text-sm mt-4 text-white">
+                  Don't have an account?{" "}
                   <Link
                     to={"/signup"}
-                    className="text-[#a66cff;] font-semibold hover:text-[#d0f500d7] hover:underline ml-1 whitespace-nowrap"
+                    className="text-pink-300 hover:text-white font-semibold ml-2 whitespace-nowrap"
                   >
                     Register here
                   </Link>
@@ -33,14 +34,14 @@ const Login =  () => {
               </div>
 
               <div>
-                <label className="text-gray-800 text-xs block mb-2">Email</label>
+                <label className="text-white text-ls block mb-2">Email</label>
                 <div className="relative flex items-center">
                   <input
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 pl-2 pr-8 py-3 outline-none"
+                    className="w-full text-white text-sm border-b border-gray-300 focus:border-blue-600 pl-2 pr-8 py-3 outline-none placeholder-white"
                     placeholder="Enter email"
                   />
                   <svg
@@ -59,13 +60,13 @@ const Login =  () => {
                       </clipPath>
                     </defs>
                     <g
-                      clipPath="url(#a)"
+                      clip-path="url(#a)"
                       transform="matrix(1.33 0 0 -1.33 0 682.667)"
                     >
                       <path
                         fill="none"
-                        strokeMiterlimit="10"
-                        strokeWidth="40"
+                        stroke-miterlimit="10"
+                        stroke-width="40"
                         d="M452 444H60c-22.091 0-40-17.909-40-40v-39.446l212.127-157.782c14.17-10.54 33.576-10.54 47.746 0L492 364.554V404c0 22.091-17.909 40-40 40Z"
                         data-original="#000000"
                       ></path>
@@ -79,14 +80,14 @@ const Login =  () => {
               </div>
 
               <div className="mt-8">
-                <label className="text-gray-800 text-xs block mb-2">Password</label>
+                <label className="text-white text-ls block mb-2">Password</label>
                 <div className="relative flex items-center">
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 pl-2 pr-8 py-3 outline-none"
+                    className="w-full text-white text-sm border-b border-gray-300 focus:border-blue-600 pl-2 pr-8 py-3 outline-none placeholder-white"
                     placeholder="Enter password"
                   />
                   <svg
@@ -107,7 +108,7 @@ const Login =  () => {
               {/* <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
                 <div className="flex items-center">
                   <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-                  <label for="remember-me" className="ml-3 block text-sm text-gray-800">
+                  <label for="remember-me" className="ml-3 block text-sm text-white">
                     Remember me
                   </label>
                 </div>
@@ -121,7 +122,7 @@ const Login =  () => {
               <div className="mt-12">
                 <button
                   type="submit"
-                  className="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-md text-black bg-[#a66cff;] hover:bg-[#d0f500d7] focus:outline-none"
+                  className="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-gray-700 hover:bg-white hover:text-black focus:outline-none"
                 >
                   Sign in
                 </button>
@@ -129,7 +130,7 @@ const Login =  () => {
 
               <div className="my-4 flex items-center gap-4">
                 <hr className="w-full border-gray-300" />
-                <p className="text-sm text-gray-800 text-center">or</p>
+                <p className="text-sm text-white text-center">or</p>
                 <hr className="w-full border-gray-300" />
               </div>
 
@@ -208,5 +209,3 @@ const Login =  () => {
     </div>
   );
 }
-
-export default Login;

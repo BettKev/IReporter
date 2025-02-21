@@ -209,7 +209,7 @@ export const UserProvider = ({ children }) => {
           if (response.success) {
             toast.success("Updated successfully");
             setOnChange(!onChange);
-            navigate("/profile");
+            // navigate("/profile");
           } else if (response.error) {
             toast.error("Details Not Updated");
           } else {
