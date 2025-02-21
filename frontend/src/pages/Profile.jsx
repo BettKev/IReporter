@@ -33,12 +33,12 @@ export default function Profile() {
   }
 
   return (
-    <div className="bg-gray-100 rounded-2xl w-full p-6 h-full overflow-auto  mb-10 shadow-md -mt-8">
+    <div className="bg-gray-100 rounded-4xl w-full p-6 h-full overflow-auto  mb-10 shadow-md -mt-5">
       <div className="mx-auto h-full px-6 py-8 sm:max-w-xl md:max-w-full md:px-16 lg:max-w-screen-xl lg:px-12">
         <div className="flex flex-col lg:flex-row justify-center items-center gap-8 -mt-5">
           {current_user || current_admin ? (
             <div className="lg:w-2/3 bg-white p-6 rounded-2xl shadow-lg w-full overflow-auto">
-              <h2 className="bg-purple-600 text-white rounded-xl text-center text-2xl font-bold py-3 mb-5">
+              <h2 className="bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-white rounded-xl text-center text-2xl font-bold py-3 mb-5">
                 Personal Details
               </h2>
               <div className="p-4">
@@ -84,7 +84,7 @@ export default function Profile() {
                     <label htmlFor="profilePicture" className="block text-sm font-semibold">Profile Picture</label>
                     <input type="text" name="profilePicture" value={profile_picture || ""} onChange={(e) => setProfilePicture(e.target.value)} placeholder="Enter image URL" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" />
                   </div>
-                  <button type="submit" className="px-4 py-2 mt-4 text-white bg-purple-600 border-2 border-purple-600 rounded-md hover:bg-green-400 hover:border-transparent">
+                  <button type="submit" className="inline-block px-6 py-3 text-lg font-bold text-white text-center rounded-lg bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out shadow-lg shadow-[rgba(255,_126,_179,_0.4)] hover:from-[#7effb8] hover:to-[#80d893] hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px] border border-gray-700">
                     Update Information
                   </button>
                 </form>
@@ -93,19 +93,19 @@ export default function Profile() {
           ) : null}
           {current_user || current_admin ? (
             <div className="lg:w-1/3 flex justify-center lg:items-start -mt-58">
-              <img src={current_user?.profile_picture || current_admin?.profile_picture} className="w-44 h-44 rounded-full shadow-lg border-4 border-purple-600" alt="Profile" />
+              <img src={current_user?.profile_picture || current_admin?.profile_picture} className="w-44 h-44 rounded-full shadow-lg border-4 border-transparent bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] bg-clip-border transition-all duration-300 ease-in-out" alt="Profile" />
             </div>
           ) : null}
         </div>
       </div>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg">
-          <div className="bg-white p-6 rounded-lg shadow-xl">
+          <div className="bg-white p-6 rounded-lg shadow-xl ">
             <h2 className="text-lg font-bold mb-4">Confirm Update</h2>
             <p>Are you sure you want to update your information?</p>
             <div className="flex justify-end mt-4">
-              <button onClick={() => setShowModal(false)} className="px-4 py-2 mr-2 bg-gray-300 rounded-md">Cancel</button>
-              <button onClick={confirmUpdate} className="px-4 py-2 bg-purple-600 text-white rounded-md">Yes, Update</button>
+              <button onClick={() => setShowModal(false)} className="px-4 py-2 mr-2 bg-gray-300 rounded-md hover:bg-gradient-to-r hover:from-[#ec4c4c] hover:to-[#ff0000]  hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px] transition-all duration-300 ease-in-out hover:text-amber-50">Cancel</button>
+              <button onClick={confirmUpdate} className="px-4 py-2 rounded-md  bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out shadow-lg shadow-[rgba(255,_126,_179,_0.4)] hover:from-[#7effb8] hover:to-[#80d893] hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px]">Yes, Update</button>
             </div>
           </div>
         </div>

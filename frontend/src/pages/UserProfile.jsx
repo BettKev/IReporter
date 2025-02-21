@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import React ,{ useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import Profile from "./Profile";
 
@@ -24,6 +24,7 @@ const UserProfile = () => {
     if (current_user) {
       logout(); 
       closeLogoutModal(); 
+      navigate("/login"); 
     } else {
       toast.error("FAILED LOG OUT");
     }
@@ -87,15 +88,15 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="flex h-screen bg-white mt-20 rounded-xl shadow-lg  text-center">
+    <div className="flex h-screen bg-gray-300 mt-20 rounded-xl shadow-lg  text-center">
       {/* Sidebar */}
-      <div className="w-1/5 bg-white rounded-xl shadow-lg p-5">
+      <div className="w-1/5 bg-gray-200 rounded-xl shadow-lg p-5">
         <h2 className="text-xl font-bold mb-4">User Profile</h2>
         <ul>
           <li
             className={`p-3 cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
               activeSection === "Dashboard"
-                ? "bg-blue-500 text-white shadow-lg"
+                ? "bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-white text-center mb-2 "
                 : "hover:bg-gray-200"
             }`}
             onClick={() => {
@@ -110,7 +111,7 @@ const UserProfile = () => {
           <li
             className={`p-3 cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
               showReportOptions
-                ? "bg-blue-500 text-white shadow-lg"
+                ? "bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-white text-center mb-2 "
                 : "hover:bg-gray-200"
             }`}
             onClick={() => setShowReportOptions(!showReportOptions)}
@@ -124,7 +125,7 @@ const UserProfile = () => {
               <li
                 className={`p-3 pl-6 cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
                   activeSection === "Red-Flag"
-                    ? "bg-red-500 text-white shadow-lg"
+                    ? "bg-red-600 text-white shadow-lg"
                     : "hover:bg-gray-200"
                 }`}
                 onClick={() => setActiveSection("Red-Flag")}
@@ -134,7 +135,7 @@ const UserProfile = () => {
               <li
                 className={`p-3 pl-6 cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
                   activeSection === "Intervention"
-                    ? "bg-blue-500 text-white shadow-lg"
+                    ? "bg-orange-500 text-white shadow-lg"
                     : "hover:bg-gray-200"
                 }`}
                 onClick={() => setActiveSection("Intervention")}
@@ -147,7 +148,7 @@ const UserProfile = () => {
           <li
             className={`p-3 cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
               activeSection === "Profile"
-                ? "bg-blue-500 text-white shadow-lg"
+                ? "bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-white text-center mb-2 "
                 : "hover:bg-gray-200"
             }`}
             onClick={() => {
@@ -160,7 +161,7 @@ const UserProfile = () => {
           <li
             className={`p-3 cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
               activeSection === "Settings"
-                ? "bg-blue-500 text-white shadow-lg"
+                ? "bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-white text-center mb-2 "
                 : "hover:bg-gray-200"
             }`}
             onClick={() => {
@@ -196,13 +197,13 @@ const UserProfile = () => {
             </h3>
             <div className="flex justify-between">
               <button
-                className="px-4 py-2 bg-gray-500 text-white rounded-lg"
+                className="px-4 py-2 mr-2 bg-gray-300 rounded-md hover:bg-gradient-to-r hover:from-[#95ec89] hover:to-[#1bdf4c]  hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px] transition-all duration-300 ease-in-out hover:text-amber-50"
                 onClick={closeLogoutModal} // Close the modal
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-2 bg-red-600 text-white rounded-lg"
+                className="px-4 py-2 mr-2 bg-red-400 rounded-md hover:bg-gradient-to-r hover:from-[#ec4c4c] hover:to-[#ff0000]  hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px] transition-all duration-300 ease-in-out hover:text-amber-50"
                 onClick={handleLogout} // Proceed with logout
               >
                 Logout
