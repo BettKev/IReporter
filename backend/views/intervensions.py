@@ -30,7 +30,7 @@ def add_intervention():
     if not data:
         return jsonify({"error": "Invalid JSON payload"}), 400
 
-    required_fields = ["title", "description", "image", "video", "location", "status"]
+    required_fields = ["title", "description", "image", "video", "location"]
     
     # Check for missing fields
     for field in required_fields:
