@@ -8,9 +8,9 @@ export default function Layout() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow p-8">
+      <main className="flex-grow p-8 overflow-auto"> {/* Allow content to scroll, if necessary */}
         <Outlet />
-        <ToastContainer/>
+        <ToastContainer />
       </main>
       <Footer />
     </div>
