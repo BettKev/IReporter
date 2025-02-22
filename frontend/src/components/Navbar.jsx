@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 
 export default function Navbar() {
   const { current_user, current_admin } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
 
   return (
-    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl">
+    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl bg-black">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+        {/* Logo Section */}
         <div className="Navbar-logo flex items-center space-x-3 text-3xl font-bold">
           <span className="text-white hover:text-purple-600">iReporter</span>
           <svg
@@ -21,7 +23,36 @@ export default function Navbar() {
           </svg>
         </div>
 
-        <div className="Navbar-links flex-grow flex justify-center space-x-6">
+        {/* Mobile Menu Button */}
+        <button
+          className="sm:hidden flex items-center text-white"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <svg
+            className="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            {isOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+
+        {/* Desktop Links (only visible on larger screens) */}
+        <div className="hidden sm:flex flex-grow justify-center space-x-6">
           {current_user && !current_admin ? (
             <>
               <Link to="/userprofile" className="text-white text-lg hover:text-purple-600">
@@ -30,7 +61,6 @@ export default function Navbar() {
               <Link to="/about" className="text-white text-lg hover:text-purple-600">
                 About
               </Link>
-             
             </>
           ) : current_admin && !current_user ? (
             <>
@@ -40,7 +70,6 @@ export default function Navbar() {
               <Link to="/about" className="text-white text-lg hover:text-purple-600">
                 About
               </Link>
-              
             </>
           ) : (
             <>
@@ -57,6 +86,71 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Mobile Menu (only visible on small screens when open) */}
+      {isOpen && (
+        <div className="sm:hidden flex flex-col items-center bg-black text-white py-4 space-y-4">
+          {current_user && !current_admin ? (
+            <>
+              <Link
+                to="/userprofile"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/about"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </Link>
+            </>
+          ) : current_admin && !current_user ? (
+            <>
+              <Link
+                to="/adminprofile"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/about"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+              <Link
+                to="/about"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                to="/contacts"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact
+              </Link>
+            </>
+          )}
+        </div>
+      )}
     </nav>
   );
 }
