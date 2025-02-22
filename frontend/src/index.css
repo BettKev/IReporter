@@ -32,7 +32,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 100;
   background: linear-gradient(90deg, #616161, #5f5f5f, #4d4c4c);
 
   padding: -2px;
@@ -185,10 +185,9 @@ body {
   animation-timing-function: ease-in-out;
 }
 
-.custom-map-container {
-  border-radius: 1.5rem; /* Equivalent to rounded-4xl in Tailwind */
-  overflow: hidden;
-  border: 24px solid white; /* Optional: Apply border if needed */
+.map-container {
+  position: relative;
+  z-index: 10; /* Ensure the map stays under the navbar */
 }
 
 
@@ -205,6 +204,27 @@ body {
 }
 /* MAP on the left side of home page  */
 
+
+
+/* Map */
+.map-style {
+  position: relative;
+  z-index: 0; /* Set z-index to 0 or leave it as is */
+  margin-top: 10px; /* This ensures the map does not overlap with the navbar */
+  transition: all 0.3s ease; /* Smooth transition */
+  overflow: hidden; /* Ensure content inside the map doesn't overflow */
+}
+
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999; /* Ensure the modal appears on top */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /* CONTACT FORM STYLING STARTS HERE */
 .contact-container {
