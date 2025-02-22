@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from 'react-router-dom';
+import { FaUser, FaEnvelope, FaPhone } from 'react-icons/fa';
+
 
 export default function Profile() {
   const { current_user, current_admin, updateUser } = useContext(UserContext);
@@ -37,32 +39,32 @@ export default function Profile() {
       <div className="mx-auto h-full px-6 py-8 sm:max-w-xl md:max-w-full md:px-16 lg:max-w-screen-xl lg:px-12">
         <div className="flex flex-col lg:flex-row justify-center items-center gap-8 -mt-5">
           {current_user || current_admin ? (
-            <div className="lg:w-2/3 bg-white p-6 rounded-2xl shadow-lg w-full overflow-auto">
+            <div className="lg:w-2/3 bg-white p-6 rounded-2xl shadow-lg w-full ">
               <h2 className="bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-white rounded-xl text-center text-2xl font-bold py-3 mb-5">
                 Personal Details
               </h2>
               <div className="p-4">
                 <div className="space-y-4 text-gray-700 items-left">
                   <div className="flex items-center">
-                    <span className="text-purple-600 text-xl mr-3">👤</span>
+                    <FaUser className="text-purple-600 text-xl mr-3"/>
                     <h3 className="text-lg font-semibold">First Name:</h3>
                     <p className="ml-2 text-gray-900">{current_user?.first_name || current_admin?.first_name}</p>
                   </div>
 
                   <div className="flex items-center">
-                    <span className="text-purple-600 text-xl mr-3">👤</span>
+                    <FaUser className="text-purple-600 text-xl mr-3"/>
                     <h3 className="text-lg font-semibold">Last Name:</h3>
                     <p className="ml-2 text-gray-900">{current_user?.last_name || current_admin?.last_name}</p>
                   </div>
 
                   <div className="flex items-center">
-                    <span className="text-purple-600 text-xl mr-3">📧</span>
+                    <FaEnvelope className="text-purple-600 text-xl mr-3" />
                     <h5 className="text-lg font-semibold">Email:</h5>
                     <p className="ml-2 text-gray-900">{current_user?.email || current_admin?.email}</p>
                   </div>
 
                   <div className="flex items-center">
-                    <span className="text-purple-600 text-xl mr-3">📞</span>
+                    <FaPhone className="text-purple-600 text-xl mr-3"/>
                     <h3 className="text-lg font-semibold">Phone:</h3>
                     <p className="ml-2 text-gray-900">{current_user?.phone || current_admin?.phone}</p>
                   </div>

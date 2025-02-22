@@ -23,7 +23,7 @@ const center = [-1.286389, 36.817223];
 
 const OpenStreetMap = () => {
   return (
-    <MapContainer center={center} zoom={12} style={{ height: "400px", width: "100%", borderRadius: "1rem", overflow:"hidden" }}>
+    <MapContainer className="map-container" center={center} zoom={12} style={{ height: "400px", width: "100%", borderRadius: "1rem", overflow:"hidden" }}>
       {/* OpenStreetMap Tile Layer */}
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
