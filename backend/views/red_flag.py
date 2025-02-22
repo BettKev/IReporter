@@ -472,7 +472,7 @@ def delete_red_flag(red_flag_id):
             db.session.commit()
             return jsonify({"success": "Red Flag deleted successfully"}), 200
         else:
-            return jsonify({"error": "Red Flag must be 'resolved' to be deleted"}), 400
+            return jsonify({"error": "Red Flag must be Resolved to be deleted"}), 400
     else:
         return jsonify({"error": "User not found or not authorized"}), 406
 
