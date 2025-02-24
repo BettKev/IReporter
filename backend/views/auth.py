@@ -445,6 +445,24 @@ def update_info():
 
     else:
         return jsonify({"error": "Details Not Updated"}), 406
+
+# google login
+@auth_bp.route("/google_login", methods=["POST"])    
+def google_login():
+    """Handles Google Login for users only"""
+    data = request.get_json()
+    email = data.get("email")
+
+    user = Users.query.filter_by(email=email).first()
+    
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Generate JWT token with 'is_user' claim
+    access_token = create_access_token(identity=user.id, additional_claims={'is_user': True})
+
+    return jsonify({"access_token": access_token, "message": "Google login successful"})
+
 # done 
 # LOG OUT CURRENT USER
 @auth_bp.route("/logout", methods=["DELETE"])

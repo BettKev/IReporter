@@ -2,7 +2,7 @@ import React,{ createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
-import apiURL from "../config";
+import { apiURL } from "../config";
 
 export const InterventionContext = createContext();
 
