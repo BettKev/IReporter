@@ -569,7 +569,7 @@ def delete_intervention(intervention_id):
             db.session.commit()
             return jsonify({"success": "Intervention deleted successfully"}), 200
         else:
-            return jsonify({"error": "Intervention must be 'resolved' to be deleted"}), 400
+            return jsonify({"error": "Intervention must be Resolved to be deleted"}), 400
     else:
         return jsonify({"error": "User not found or not authorized"}), 406
 
