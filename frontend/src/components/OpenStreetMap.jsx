@@ -8,6 +8,8 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import apiURL from "../config";
+
 
 const { BaseLayer } = LayersControl;
 
@@ -36,7 +38,7 @@ const OpenStreetMap = () => {
   useEffect(() => {
     const fetchRedFlags = async () => {
       try {
-        const response = await fetch("http://localhost:5000/red_flags/all");
+        const response = await fetch(`${apiURL}/red_flags/all`);
         const data = await response.json();
         const formattedData = data.map((flag) => ({
           id: flag.id,
@@ -53,7 +55,7 @@ const OpenStreetMap = () => {
 
     const fetchInterventions = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/interventions/all");
+        const response = await fetch(`${apiURL}/interventions/all`);
         const data = await response.json();
         const formattedData = data.map((intervention) => ({
           id: intervention.id,
