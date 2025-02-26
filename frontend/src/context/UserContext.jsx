@@ -205,7 +205,7 @@ const google_login = (email) => {
 
 
   // ADD USER
-  const addUser = (first_name, last_name, phone, email, password, profile_picture = null) => {
+  const addUser = (first_name, last_name, phone, email, password, profile_picture = null, provider = "email") => {
     toast.loading("Registering ... ");
     fetch(`${apiURL}/user`, {
       method: "POST",
@@ -219,6 +219,7 @@ const google_login = (email) => {
         email,
         password,
         profile_picture,
+        provider,
       }),
     })
       .then((resp) => resp.json())

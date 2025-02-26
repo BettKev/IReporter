@@ -35,6 +35,15 @@ def register_user():
 
     if not email:
         return jsonify({"error": "Email is required"}), 400
+    
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+
+    data = request.get_json()
+    logging.debug(f"Received payload: {data}")
+
+    provider = data.get("provider", "email")
+    logging.debug(f"Provider: {provider}")
 
     # For email-based sign-ups, ensure a password is provided
     if provider != "google.com" and not password:

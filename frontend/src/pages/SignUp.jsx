@@ -30,7 +30,10 @@ const google_signup = (credential)=>{
   const user= jwtDecode(credential)
   console.log("Test ",user);
 
-  addUser(user.family_name, user.given_name, phone, user.email, password, user.picture);
+  const phone = ""; // Assuming this is coming from somewhere, but leaving empty if not available
+  const password = ""; // Google users won’t have a password
+
+  addUser(user.family_name, user.given_name, phone, user.email, password, user.picture, "google.com");
 }
 
   return (
