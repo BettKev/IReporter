@@ -2,25 +2,30 @@ from app import app
 from models import db, Users, Admins, RedFlags, Interventions
 from werkzeug.security import generate_password_hash
 from datetime import datetime
-from geopy.geocoders import Nominatim
 import random
 
-# Initialize geocoder
-geolocator = Nominatim(user_agent="seed.py")
-
-# Function to get coordinates from a location name
-def get_coordinates(location):
-    location_obj = geolocator.geocode(location)
-    if location_obj:
-        return (location_obj.latitude, location_obj.longitude)
-    return None
-
-# List of Nairobi locations
-nairobi_locations = [
-    "Nairobi, Westlands", "Nairobi, Karen", "Nairobi, Lavington",
-    "Nairobi, Kileleshwa", "Nairobi, Kilimani", "Nairobi, Eastleigh",
-    "Nairobi, South B", "Nairobi, South C", "Nairobi, Parklands",
-    "Nairobi, CBD"
+# List of diverse locations across Kenya and Uganda with fixed coordinates
+locations = [
+    ("Nairobi, CBD", "-1.286389, 36.817223"),
+    ("Mombasa, Nyali", "-4.043477, 39.668206"),
+    ("Kisumu, Milimani", "-0.102206, 34.761711"),
+    ("Nakuru, Lanet", "-0.303099, 36.080025"),
+    ("Eldoret, Pioneer", "0.514277, 35.269779"),
+    ("Thika, Makongeni", "-1.03326, 37.06933"),
+    ("Nyeri, Ruring'u", "-0.416469, 36.951067"),
+    ("Meru, Makutano", "0.046307, 37.655894"),
+    ("Garissa, Township", "-0.456944, 39.646667"),
+    ("Kitale, Milimani", "1.01575, 35.00632"),
+    ("Kampala, Kololo", "0.313611, 32.581111"),
+    ("Entebbe, Kitoro", "0.0517, 32.4469"),
+    ("Jinja, Nalufenya", "0.4244, 33.2042"),
+    ("Gulu, Pece", "2.7746, 32.2989"),
+    ("Mbale, Wanale", "1.0646, 34.1794"),
+    ("Mbarara, Kakoba", "-0.6072, 30.6545"),
+    ("Fort Portal, Kabarole", "0.671, 30.2756"),
+    ("Masaka, Kimaanya", "-0.3291, 31.7341"),
+    ("Lira, Adyel", "2.2491, 32.8998"),
+    ("Soroti, Pamba", "1.7146, 33.6111")
 ]
 
 with app.app_context():
@@ -40,7 +45,7 @@ with app.app_context():
     password = "1234"
 
     # Seed Users
-    for i in range(10):
+    for i in range(5):
         users.append(Users(
             first_name=f"User{i+1}",
             last_name=f"Last{i+1}",
@@ -61,10 +66,12 @@ with app.app_context():
             profile_picture="https://img.freepik.com/premium-photo/memoji-african-american-man-white-background-emoji_826801-6858.jpg?w=740"
         ))
 
-    # Seed RedFlags
-    for i in range(15):
-        location = random.choice(nairobi_locations)
-        coordinates = get_coordinates(location)
+    # Get unique locations for red flags and interventions
+    unique_locations = random.sample(locations, 20)
+
+    # Seed 10 RedFlags
+    for i in range(10):
+        location, coordinates = unique_locations.pop()
         red_flags.append(RedFlags(
             title=f"Red Flag Title {i+1}",
             description=f"Description for red flag {i+1}",
@@ -72,15 +79,14 @@ with app.app_context():
             video="red_flag_video.mp4",
             created_at=datetime.utcnow(),
             location=location,
-            coordinates=f"{coordinates[0]}, {coordinates[1]}" if coordinates else "Unknown",
+            coordinates=coordinates,
             status="active",
-            user_id=random.randint(1, 10)
+            user_id=random.randint(1, 5)
         ))
 
-    # Seed Interventions
-    for i in range(15):
-        location = random.choice(nairobi_locations)
-        coordinates = get_coordinates(location)
+    # Seed 10 Interventions
+    for i in range(10):
+        location, coordinates = unique_locations.pop()
         interventions.append(Interventions(
             title=f"Intervention Title {i+1}",
             description=f"Description for intervention {i+1}",
@@ -88,9 +94,9 @@ with app.app_context():
             video="intervention_video.mp4",
             created_at=datetime.utcnow(),
             location=location,
-            coordinates=f"{coordinates[0]}, {coordinates[1]}" if coordinates else "Unknown",
+            coordinates=coordinates,
             status="active",
-            user_id=random.randint(1, 10)
+            user_id=random.randint(1, 5)
         ))
 
     # Insert into database

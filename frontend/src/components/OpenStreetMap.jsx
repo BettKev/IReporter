@@ -16,16 +16,16 @@ const { BaseLayer } = LayersControl;
 // Custom Icons
 const redFlagIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
+  iconSize: [12, 20],
+  iconAnchor: [6, 20],
+  popupAnchor: [1, -20],
 });
 
 const interventionIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/190/190411.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
+  iconSize: [12, 20],
+  iconAnchor: [6, 20],
+  popupAnchor: [1, -20],
 });
 
 // Default Map Center (Kenya)
