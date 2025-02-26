@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 
 export default function Navbar() {
   const { current_user, current_admin } = useContext(UserContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl">
+    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl bg-gray-800">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+        {/* Logo */}
         <div className="Navbar-logo flex items-center space-x-3 text-3xl font-bold">
           <span className="text-white hover:text-purple-600">iReporter</span>
           <svg
@@ -21,7 +25,46 @@ export default function Navbar() {
           </svg>
         </div>
 
-        <div className="Navbar-links flex-grow flex justify-center space-x-6">
+        {/* Hamburger Menu Button */}
+        <button
+          className="md:hidden text-white"
+          onClick={toggleMenu}
+        >
+          {isMenuOpen ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-8 w-8"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-8 w-8"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
+        </button>
+
+        {/* Navbar Links - Wide Screen */}
+        <div className="hidden md:flex flex-grow justify-center space-x-6">
           {current_user && !current_admin ? (
             <>
               <Link to="/userprofile" className="text-white text-lg hover:text-purple-600">
@@ -30,7 +73,6 @@ export default function Navbar() {
               <Link to="/about" className="text-white text-lg hover:text-purple-600">
                 About
               </Link>
-             
             </>
           ) : current_admin && !current_user ? (
             <>
@@ -40,7 +82,6 @@ export default function Navbar() {
               <Link to="/about" className="text-white text-lg hover:text-purple-600">
                 About
               </Link>
-              
             </>
           ) : (
             <>
@@ -56,6 +97,45 @@ export default function Navbar() {
             </>
           )}
         </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`${
+          isMenuOpen ? "flex" : "hidden"
+        } md:hidden flex-col items-center space-y-4 pb-4 bg-gray-800`}
+      >
+        {current_user && !current_admin ? (
+          <>
+            <Link to="/userprofile" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
+              Dashboard
+            </Link>
+            <Link to="/about" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
+              About
+            </Link>
+          </>
+        ) : current_admin && !current_user ? (
+          <>
+            <Link to="/adminprofile" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
+              Dashboard
+            </Link>
+            <Link to="/about" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
+              About
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
+              Home
+            </Link>
+            <Link to="/about" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
+              About
+            </Link>
+            <Link to="/contacts" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
+              Contact
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
