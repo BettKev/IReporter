@@ -28,8 +28,8 @@ const interventionIcon = new L.Icon({
   popupAnchor: [1, -34],
 });
 
-// Default Map Center (Nairobi, Kenya)
-const center = [-1.286389, 36.817223];
+// Default Map Center (Kenya)
+const center = [1.2921, 36.8219];
 
 const OpenStreetMap = () => {
   const [redFlags, setRedFlags] = useState([]);
@@ -78,7 +78,7 @@ const OpenStreetMap = () => {
     <MapContainer
       className="map-container"
       center={center}
-      zoom={13}
+      zoom={6}
       style={{
         height: "400px",
         width: "100%",
@@ -126,4 +126,3 @@ const OpenStreetMap = () => {
 };
 
 export default OpenStreetMap;
-
