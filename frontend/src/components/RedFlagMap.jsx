@@ -8,7 +8,8 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import apiURL from "../config";
+import config from "../config"; // Import the default export
+const { apiURL } = config; // Destructure the apiURL from the config object
 
 const { BaseLayer } = LayersControl;
 

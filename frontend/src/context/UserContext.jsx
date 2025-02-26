@@ -2,8 +2,10 @@ import React from "react";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import config from "../config"; // Import the default export
+const { apiURL } = config; // Destructure the apiURL from the config object
 
-import apiURL  from "../config";
+
 export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
