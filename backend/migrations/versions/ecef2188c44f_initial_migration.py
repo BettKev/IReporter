@@ -1,8 +1,8 @@
-"""update migration
+"""Initial Migration
 
-Revision ID: 1329e7662414
+Revision ID: ecef2188c44f
 Revises: 
-Create Date: 2025-02-26 22:23:50.040523
+Create Date: 2025-02-27 22:22:53.885681
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1329e7662414'
+revision = 'ecef2188c44f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -30,14 +30,6 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('phone')
-    )
-    op.create_table('comments',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=255), nullable=False),
-    sa.Column('email', sa.String(length=255), nullable=False),
-    sa.Column('comment', sa.String(length=512), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
     )
     op.create_table('token_blocklist',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -102,6 +94,5 @@ def downgrade():
         batch_op.drop_index(batch_op.f('ix_token_blocklist_jti'))
 
     op.drop_table('token_blocklist')
-    op.drop_table('comments')
     op.drop_table('admins')
     # ### end Alembic commands ###
