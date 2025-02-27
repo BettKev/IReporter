@@ -12,14 +12,19 @@ export default function Footer() {
           <li>
             <Link to={"/about"} className="hover:underline me-4 md:me-6">About</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to={"#"} className="hover:underline me-4 md:me-6">Privacy Policy</Link>
           </li>
           <li>
             <Link to={"#"} className="hover:underline me-4 md:me-6">Licensing</Link>
-          </li>
+          </li> */}
           <li>
-            <Link to={"/contact"} className="hover:underline me-4 md:me-6">Contact</Link>
+          <a
+              href="mailto:iregisterweb@gmail.com"
+              className="hover:underline me-4 md:me-6"
+            >
+              Contact Us
+            </a>
           </li>
           <li>
             <Link to={"https://ireporter-8cyw.onrender.com"} className="hover:underline me-4 md:me-6" target="_blank" rel="noopener noreferrer">API Documentation</Link>

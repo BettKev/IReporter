@@ -8,7 +8,7 @@ const Home = () => {
       <div className="home-page">
         <div className="home-container">
           <div className="text-section">
-            <h1 className="Home-h1 gradient-text">
+            <h1 className="res Home-h1 gradient-text">
               Welcome To <span className="mr-10">iReporter</span>
             </h1>
             <p className="text-lg text-white mb-6 font-bold mr-10 ">

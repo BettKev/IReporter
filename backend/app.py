@@ -39,7 +39,6 @@ app.register_blueprint(user_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(red_flag_bp)
 app.register_blueprint(intervention_bp)
-# app.register_blueprint(contact_us_bp)
 
 # Test route
 @app.route("/")

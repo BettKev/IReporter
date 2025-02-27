@@ -8,7 +8,7 @@ import { HiOutlineCog, HiOutlineUser, HiOutlineFlag } from "react-icons/hi";
 import RedFlagMap from "../components/RedFlagMap";
 import { Link } from "react-router-dom";
 import InterventionMap from "../components/IntervenstionMap";
-import Settings from "./Settings";
+import SettingsPage from "./SettingsPage";
 
 const UserProfile = () => {
   const [activeSection, setActiveSection] = useState("Dashboard");
@@ -188,63 +188,79 @@ const UserProfile = () => {
         </div>
         <div>
           <div className="text-center">
-            <p>Click on a Red flag Card to edit it.</p>
+            <p>Click on a Red flag Card to view or edit it.</p>
           </div>
           <div className="red_flag-cards-container mt-8 p-8 rounded-3xl">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
               {red_flags &&
                 red_flags.map((red_flag) => (
                   <div
-                    className="flex items-center justify-center p-4"
+                    className="flex flex-wrap gap-6 items-center justify-center"
                     key={red_flag.id}
                   >
                     <Link to={`/singleredflag/${red_flag.id}`}>
-                      <div className="red_flag-card bg-gray-200 rounded-xl shadow-md transition-all transform hover:scale-105 hover:shadow-2xl border border-[#a66cff] w-[400px]">
-                        <div className="relative rounded-t-xl overflow-hidden">
+                      <div className="bg-white rounded-2xl shadow-md border border-transparent bg-clip-border transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:border-[#d580d8] w-[400px]">
+                        {/* Image */}
+                        <div className="relative rounded-t-2xl overflow-hidden">
                           <img
                             src={red_flag.image}
                             alt="red_flag"
-                            className="w-full h-52 object-cover rounded-t-xl"
+                            className="w-full h-52 object-cover rounded-t-2xl"
                           />
                         </div>
 
+                        {/* Card Content */}
                         <div className="p-6 space-y-6 text-gray-800">
+                          {/* Title & Description */}
                           <div className="space-y-2">
-                            <h3 className="text-xl font-semibold">
+                            <h3 className="text-xl font-semibold text-gray-900">
                               {red_flag.title}
                             </h3>
-                            <p className="text-sm">{red_flag.description}</p>
+                            <p className="text-sm text-gray-700">
+                              {red_flag.description}
+                            </p>
                           </div>
 
+                          {/* Location */}
                           <div className="space-y-2">
-                            <p className="text-sm font-bold">Location:</p>
-                            <p className="text-sm">{red_flag.location}</p>
+                            <p className="text-sm font-bold text-gray-900">
+                              Location:
+                            </p>
+                            <p className="text-sm text-gray-700">
+                              {red_flag.location}
+                            </p>
                           </div>
 
+                          {/* Video Link */}
                           <div className="space-y-2">
-                            <p className="text-sm font-bold">Video:</p>
+                            <p className="text-sm font-bold text-gray-900">
+                              Video:
+                            </p>
                             <a
                               href={red_flag.video}
-                              className="text-blue-400 hover:underline"
+                              className="text-blue-500 font-semibold hover:underline"
                             >
                               Watch Video
                             </a>
                           </div>
 
+                          {/* Status */}
                           <div className="mt-4 text-center">
-                            <p className="text-sm font-bold">Status</p>
+                            <p className="text-sm font-bold text-gray-900">
+                              Status
+                            </p>
                             <span
-                              className={`${
+                              className={`text-lg font-semibold px-3 py-1 rounded-full ${
                                 red_flag.status === "active"
-                                  ? "text-[#d580d8]"
+                                  ? "bg-green-100 text-blue-600"
                                   : red_flag.status === "under investigation"
-                                  ? "text-yellow-600"
+                                  ? "bg-orange-100 text-orange-600"
                                   : red_flag.status === "rejected"
-                                  ? "text-red-600"
+                                  ? "bg-red-100 text-red-600"
                                   : red_flag.status === "resolved"
-                                  ? "text-green-600"
+                                  ? "bg-green-200 text-green-800"
                                   : ""
-                              } text-lg font-semibold`}
+                              }`}
                             >
                               {red_flag.status}
                             </span>
@@ -334,19 +350,21 @@ const UserProfile = () => {
                           </div>
 
                           <div className="mt-4 text-center">
-                            <p className="text-sm font-bold">Status</p>
+                            <p className="text-sm font-bold text-gray-900">
+                              Status
+                            </p>
                             <span
-                              className={`${
+                              className={`text-lg font-semibold px-3 py-1 rounded-full ${
                                 intervention.status === "active"
-                                  ? "text-[#d580d8]"
+                                  ? "bg-green-100 text-blue-600"
                                   : intervention.status === "under investigation"
-                                  ? "text-yellow-600"
+                                  ? "bg-orange-100 text-orange-600"
                                   : intervention.status === "rejected"
-                                  ? "text-red-600"
+                                  ? "bg-red-100 text-red-600"
                                   : intervention.status === "resolved"
-                                  ? "text-green-600"
+                                  ? "bg-green-200 text-green-800"
                                   : ""
-                              } text-lg font-semibold`}
+                              }`}
                             >
                               {intervention.status}
                             </span>
@@ -368,7 +386,7 @@ const UserProfile = () => {
     ),
     Settings: (
       <div className="w-full flex-8 flex flex-col items-center justify-start text-center  p-4">
-        <Settings />
+        <SettingsPage />
       </div>
     ),
   };

@@ -9,11 +9,12 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import UserProfile from "./pages/UserProfile";
 import AdminProfile from "./pages/AdminProfile";
-import Contacts from "./pages/Contacts";
 import Profile from "./pages/Profile";
 import SingleRedFlag from "./pages/SingleRedFlag";
 import SingleIntervention from "./pages/SingleIntervention";
-import Settings from "./pages/Settings";
+import About from "./pages/About";
+import SettingsPage from "./pages/SettingsPage";
+import NoPage from "./pages/NoPage";
 
 function App() {
   return (
@@ -28,13 +29,12 @@ function App() {
                 <Route path="/userprofile" element={<UserProfile />} />
                 <Route path="/adminprofile" element={<AdminProfile />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/settings" element={<Settings />} />
+                <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/singleredflag/:id" element={<SingleRedFlag />} />
                 <Route path="/singleintervention/:id" element={<SingleIntervention />} />
-                {/* <Route path="/about" element={<About />} /> */}
+                <Route path="/about" element={<About />} />
                 <Route path="/signup" element={<SignUp />} />
-                {/* <Route path="*" element={<NoPage />} /> */}
-                <Route path="/contacts" element={<Contacts />} />
+                <Route path="*" element={<NoPage />} />
               </Route>
             </Routes>
           </InterventionProvider>

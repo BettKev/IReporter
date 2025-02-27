@@ -294,6 +294,7 @@ const deleteUser = (userId) => {
         if (response.success) {
           toast.dismiss(); 
           toast.success(response.success);
+          navigate("/signup");
           
           const updatedUsers = users.filter(user => user.id !== userId); 
           setUsers(updatedUsers); 

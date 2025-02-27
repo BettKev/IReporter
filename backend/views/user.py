@@ -193,58 +193,53 @@ def fetch_admins():
 
     
     return jsonify(admin_list)
-# done
-
-
 
 # DELETE A USER
 @user_bp.route("/user/<int:user_id>", methods=["DELETE"])
 @jwt_required()
 def delete_user(user_id):
-    # current_user_id = get_jwt_identity()
-    claims = get_jwt()
+    current_user_id = get_jwt_identity()  
+    claims = get_jwt()  
 
+    
     if claims.get('is_admin'):
-        user_to_delete = db.session.get(Users, user_id)
-
-
-        if not user_to_delete:
-            return jsonify({"error": "User not found"}), 404
+        admin_to_delete = db.session.get(Admins, current_user_id)  
         
-        red_flags_to_delete = RedFlags.query.filter_by(user_id=user_id).all()
-        interventions_to_delete = Interventions.query.filter_by(user_id=user_id).all()
-    
-        for red_flag in red_flags_to_delete:
-            db.session.delete(red_flag)
-
-        for intervension in interventions_to_delete:
-            db.session.delete(intervension)    
-
-        db.session.delete(user_to_delete)
+        if not admin_to_delete:
+            return jsonify({"error": "Admin not found"}), 404
+        
+        if db.session.query(Admins).count() == 1:
+            return jsonify({"error": "Cannot delete the last admin"}), 400
+        
+        db.session.delete(admin_to_delete)
         db.session.commit()
 
-        return jsonify({"success": "User Deleted successfully"}), 200
+        return jsonify({"success": "Admin deleted successfully"}), 200
     
+   
     elif claims.get('is_user'):
+        if current_user_id != user_id:  
+            return jsonify({"error": "You can only delete your own account"}), 403
+        
         user_to_delete = db.session.get(Users, user_id)
-
 
         if not user_to_delete:
             return jsonify({"error": "User not found"}), 404
         
+        # Delete associated data (red flags, interventions, etc.)
         red_flags_to_delete = RedFlags.query.filter_by(user_id=user_id).all()
         interventions_to_delete = Interventions.query.filter_by(user_id=user_id).all()
     
         for red_flag in red_flags_to_delete:
             db.session.delete(red_flag)
 
-        for intervension in interventions_to_delete:
-            db.session.delete(intervension)    
+        for intervention in interventions_to_delete:
+            db.session.delete(intervention)    
 
         db.session.delete(user_to_delete)
         db.session.commit()
 
-        return jsonify({"success": "Account Deleted successfully"}), 200
+        return jsonify({"success": "Account deleted successfully"}), 200
     
     else:
         return jsonify({"error": "You must be logged in as a User or Admin to delete an account"}), 403

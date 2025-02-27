@@ -8,8 +8,8 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import config from "../config"; // Import the default export
-const { apiURL } = config; // Destructure the apiURL from the config object
+import config from "../config"; 
+const { apiURL } = config; 
 
 
 const { BaseLayer } = LayersControl;
@@ -85,6 +85,7 @@ const OpenStreetMap = () => {
         width: "100%",
         borderRadius: "1rem",
         overflow: "hidden",
+        zIndex: 1
       }}
     >
       <LayersControl position="topright">

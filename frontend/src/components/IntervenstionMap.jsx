@@ -8,18 +8,17 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import config from "../config"; // Import the default export
-const { apiURL } = config; // Destructure the apiURL from the config object
-
+import config from "../config"; 
+const { apiURL } = config; 
 
 const { BaseLayer } = LayersControl;
 
 // Custom Icons
 const interventionIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/190/190411.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
+  iconSize: [12, 20],
+  iconAnchor: [6, 20],
+  popupAnchor: [1, -20],
 });
 
 // Default Map Center (Nairobi, Kenya)
@@ -51,7 +50,7 @@ const OpenStreetMap = () => {
   return (
     <MapContainer className="map-style"
     center={center}
-    zoom={12}
+    zoom={6}
     style={{
       height: "400px",
       width: "100%",
