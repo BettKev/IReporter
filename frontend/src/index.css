@@ -19,7 +19,7 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background: linear-gradient(45deg, #0a0a2a, #9b5bbd, #814c94);
   animation: gradientBackground 15s ease infinite alternate;
   overflow-x: hidden;
@@ -44,7 +44,7 @@ body {
 
 .Navbar-logo {
   font-weight: 700;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: bold;
   background: linear-gradient(90deg, #b07ab6, #a35b95, #ffbe6f);
   background-size: 300% 300%;
@@ -83,7 +83,6 @@ body {
 }
 /* NAVBAR STYLING ENDS HERE */
 
-
 /* HOME PAGE STYLING STARTS HERE */
 .home-page {
   display: flex;
@@ -111,7 +110,7 @@ body {
 /* Refined h1 gradient for better sync */
 .Home-h1 {
   font-size: 70px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: bold;
   background: linear-gradient(90deg, #b07ab6, #a35b95, #ffbe6f);
   background-size: 300% 300%;
@@ -123,9 +122,15 @@ body {
 }
 
 @keyframes gradientText {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Adjusted paragraph color for contrast */
@@ -140,7 +145,7 @@ body {
   font-size: 22px;
   color: #e0e0e0;
   margin-top: 20px;
-  font-family: 'Merriweather', serif;
+  font-family: "Merriweather", serif;
   word-wrap: break-word;
   overflow-wrap: break-word;
   width: 80%;
@@ -152,7 +157,6 @@ body {
   color: #a66cff;
 }
 /* HOME PAGE STYLING ENDS HERE */
-
 
 /* GET STARTED BUTTON STYLING IN HOME PAGE STARTS HERE */
 .get-started-btn {
@@ -176,9 +180,8 @@ body {
 }
 /* GET STARTED BUTTON STYLING IN HOME PAGE ENDS HERE */
 
-
 /* MAP on the left side of home page  */
-.Map{
+.Map {
   animation-name: floating;
   animation-duration: 15s;
   animation-iteration-count: infinite;
@@ -189,7 +192,6 @@ body {
   position: relative;
   z-index: 10; /* Ensure the map stays under the navbar */
 }
-
 
 @keyframes floating {
   0% {
@@ -204,8 +206,6 @@ body {
 }
 /* MAP on the left side of home page  */
 
-
-
 /* Map */
 .map-style {
   position: relative;
@@ -214,7 +214,6 @@ body {
   transition: all 0.3s ease; /* Smooth transition */
   overflow: hidden; /* Ensure content inside the map doesn't overflow */
 }
-
 
 /* Modal */
 .modal {
@@ -226,54 +225,100 @@ body {
   align-items: center;
 }
 
-/* CONTACT FORM STYLING STARTS HERE */
-.contact-container {
- margin-left: 50px;
-}
-
-.contact-form {
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
-
-.contact-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: 16px;
-  outline: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.contact-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.contact-input:focus {
-  border-color: #c58dff;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.contact-button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 18px;
+/* ABOUT PAGE STYLING STARTS HERE */
+.About-h1 {
+  font-size: 60px;
+  /* text-align: center; */
+  font-family: "Montserrat", sans-serif;
   font-weight: bold;
-  text-transform: uppercase;
+  background: linear-gradient(90deg, #b07ab6, #a35b95, #ffbe6f);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientText 3s infinite alternate ease-in-out;
+  margin-top: 2px;
+  margin-right: 90px;
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ABOUT PAGE STYLING ENDS HERE */
+
+/* NoPage STYLING STARTS HERE */
+.noPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+  animation: gradientBackground 15s ease infinite alternate;
+}
+
+.noPageText h1 {
   color: white;
-  background: linear-gradient(90deg, #d580d8, #bb6d98);
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  animation: fadeIn 1.5s ease-in-out, upDown 2s ease-in-out infinite;
 }
 
-.contact-button:hover {
-  background: linear-gradient(90deg, #bb6d98, #ffcc70);
-  box-shadow: 0 0 10px rgba(255, 204, 112, 0.6);
+.noPageText p {
+  color: #dcdcdc;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  animation: fadeIn 1.5s ease-in-out 0.5s;
 }
-/* CONTACT FORM STYLING ENDS HERE */
 
+.backHomeLink {
+  font-size: 1.5rem;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 2px solid #9b5bbe;
+  color: rgb(236, 232, 232);
+  border-radius: 5px;
+  animation: fadeIn 1.5s ease-in-out 1s;
+  border-color: black;
+  background: linear-gradient(90deg, #d580d8, #ff7eb3);
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
+.backHomeLink:hover {
+  background: linear-gradient(45deg, #9b5bbd, #7a437e, #0a0a2a);
+  color: white;
+  border-color: white;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes upDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* NoPage STYLING ENDS HERE */

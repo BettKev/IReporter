@@ -3,9 +3,8 @@ import { UserContext } from "../context/UserContext";
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaPhone } from 'react-icons/fa';
 
-
 export default function Profile() {
-  const { current_user, current_admin, updateUser } = useContext(UserContext);
+  const { current_user, updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [phone, setPhone] = useState("");
@@ -22,7 +21,7 @@ export default function Profile() {
       SetPassword(currentData.password);
       setProfilePicture(currentData.profilepicture);
     }
-  }, [current_user, current_admin]);
+  }, [current_user]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -35,69 +34,111 @@ export default function Profile() {
   }
 
   return (
-    <div className="bg-gray-100 rounded-4xl w-full p-6 h-full overflow-auto  mb-10 shadow-md -mt-5">
+    <div className="bg-gray-100 rounded-4xl w-full p-6 h-full overflow-auto mb-10 shadow-md -mt-5">
       <div className="mx-auto h-full px-6 py-8 sm:max-w-xl md:max-w-full md:px-16 lg:max-w-screen-xl lg:px-12">
-        <div className="flex flex-col lg:flex-row justify-center items-center gap-8 -mt-5">
-          {current_user || current_admin ? (
-            <div className="lg:w-2/3 bg-white p-6 rounded-2xl shadow-lg w-full ">
-              <h2 className="bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-white rounded-xl text-center text-2xl font-bold py-3 mb-5">
-                Personal Details
-              </h2>
-              <div className="p-4">
-                <div className="space-y-4 text-gray-700 items-left">
-                  <div className="flex items-center">
-                    <FaUser className="text-purple-600 text-xl mr-3"/>
-                    <h3 className="text-lg font-semibold">First Name:</h3>
-                    <p className="ml-2 text-gray-900">{current_user?.first_name || current_admin?.first_name}</p>
-                  </div>
-
-                  <div className="flex items-center">
-                    <FaUser className="text-purple-600 text-xl mr-3"/>
-                    <h3 className="text-lg font-semibold">Last Name:</h3>
-                    <p className="ml-2 text-gray-900">{current_user?.last_name || current_admin?.last_name}</p>
-                  </div>
-
-                  <div className="flex items-center">
-                    <FaEnvelope className="text-purple-600 text-xl mr-3" />
-                    <h5 className="text-lg font-semibold">Email:</h5>
-                    <p className="ml-2 text-gray-900">{current_user?.email || current_admin?.email}</p>
-                  </div>
-
-                  <div className="flex items-center">
-                    <FaPhone className="text-purple-600 text-xl mr-3"/>
-                    <h3 className="text-lg font-semibold">Phone:</h3>
-                    <p className="ml-2 text-gray-900">{current_user?.phone || current_admin?.phone}</p>
-                  </div>
+        <div className="flex flex-col lg:flex-row justify-between items-start gap-12 -mt-5">
+          
+          {/* Profile Information Section (on the left side) */}
+          {current_user && (
+            <div className="lg:w-2/5 flex flex-col items-center mb-6 lg:mb-0 space-y-6">
+              <img
+                src={current_user?.profile_picture}
+                alt="Profile"
+                className="w-40 h-40 rounded-full shadow-xl border-4 border-transparent bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] bg-clip-border transition-all duration-300 ease-in-out"
+              />
+              <div className="w-full text-gray-700">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">First Name:</h3>
+                  <p className="ml-2 text-gray-900">{current_user?.first_name}</p>
                 </div>
-                <form className="mt-4 space-y-4 bg-gray-50 p-6 rounded-lg shadow-md" onSubmit={handleSubmit}>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold">Email</label>
-                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter New Email" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" />
-                  </div>
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold">Phone Number</label>
-                    <input type="tel" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter New Phone Number" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" />
-                  </div>
-                  <div>
-                    <label htmlFor="password" className="block text-sm font-semibold">Password</label>
-                    <input type="password" id="password" value={password} onChange={(e) => SetPassword(e.target.value)} placeholder="Enter New Password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" />
-                  </div>
-                  <div>
-                    <label htmlFor="profilePicture" className="block text-sm font-semibold">Profile Picture</label>
-                    <input type="text" name="profilePicture" value={profile_picture || ""} onChange={(e) => setProfilePicture(e.target.value)} placeholder="Enter image URL" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" />
-                  </div>
-                  <button type="submit" className="inline-block px-6 py-3 text-lg font-bold text-white text-center rounded-lg bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out shadow-lg shadow-[rgba(255,_126,_179,_0.4)] hover:from-[#7effb8] hover:to-[#80d893] hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px] border border-gray-700">
-                    Update Information
-                  </button>
-                </form>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Last Name:</h3>
+                  <p className="ml-2 text-gray-900">{current_user?.last_name}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <FaEnvelope className="text-purple-600 text-xl mr-3" />
+                  <h5 className="text-lg font-semibold">Email:</h5>
+                  <p className="ml-2 text-gray-900">{current_user?.email}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <FaPhone className="text-purple-600 text-xl mr-3" />
+                  <h3 className="text-lg font-semibold">Phone:</h3>
+                  <p className="ml-2 text-gray-900">{current_user?.phone}</p>
+                </div>
               </div>
             </div>
-          ) : null}
-          {current_user || current_admin ? (
-            <div className="lg:w-1/3 flex justify-center lg:items-start -mt-58">
-              <img src={current_user?.profile_picture || current_admin?.profile_picture} className="w-44 h-44 rounded-full shadow-lg border-4 border-transparent bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] bg-clip-border transition-all duration-300 ease-in-out" alt="Profile" />
+          )}
+
+          {/* Profile Update Form Section (on the right side) */}
+          {current_user && (
+            <div className="lg:w-3/5 w-full space-y-6 text-gray-700">
+              <form
+                onSubmit={handleSubmit}
+                className="mt-4 bg-gray-50 p-6 rounded-lg shadow-md"
+              >
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter New Email"
+                      className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-semibold">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="Enter New Phone Number"
+                      className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="password" className="block text-sm font-semibold">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      value={password}
+                      onChange={(e) => SetPassword(e.target.value)}
+                      placeholder="Enter New Password"
+                      className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="profilePicture" className="block text-sm font-semibold">
+                      Profile Picture
+                    </label>
+                    <input
+                      type="text"
+                      name="profilePicture"
+                      value={profile_picture || ""}
+                      onChange={(e) => setProfilePicture(e.target.value)}
+                      placeholder="Enter image URL"
+                      className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="inline-block px-4 py-2 text-md font-semibold text-white text-center rounded-lg bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out shadow-lg hover:from-[#7effb8] hover:to-[#80d893] hover:shadow-[rgba(255,_126,_179,_0.6)]"
+                  >
+                    Update Information
+                  </button>
+                </div>
+              </form>
             </div>
-          ) : null}
+          )}
         </div>
       </div>
       {showModal && (

@@ -6,7 +6,7 @@ export default function Navbar() {
   const { current_user, current_admin } = useContext(UserContext);
 
   return (
-    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl">
+    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl ">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <div className="Navbar-logo flex items-center space-x-3 text-3xl font-bold">
           <span className="text-white hover:text-purple-600">iReporter</span>
@@ -27,9 +27,7 @@ export default function Navbar() {
               <Link to="/userprofile" className="text-white text-lg hover:text-purple-600">
                 Dashboard
               </Link>
-              <Link to="/about" className="text-white text-lg hover:text-purple-600">
-                About
-              </Link>
+              
              
             </>
           ) : current_admin && !current_user ? (
@@ -37,22 +35,17 @@ export default function Navbar() {
               <Link to="/adminprofile" className="text-white text-lg hover:text-purple-600">
                 Dashboard
               </Link>
-              <Link to="/about" className="text-white text-lg hover:text-purple-600">
-                About
-              </Link>
               
             </>
           ) : (
             <>
-              <Link to="/" className="text-white text-lg hover:text-purple-600">
+              <Link to="/" className="text-white text-lg hover:text-purple-400 mr-15">
                 Home
               </Link>
-              <Link to="/about" className="text-white text-lg hover:text-purple-600">
+              <Link to="/about" className="text-white text-lg hover:text-purple-400 text-center">
                 About
               </Link>
-              <Link to="/contacts" className="text-white text-lg hover:text-purple-600">
-                Contact
-              </Link>
+              
             </>
           )}
         </div>

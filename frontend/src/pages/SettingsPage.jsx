@@ -2,47 +2,60 @@ import React, { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-
-export default function Settings() {
-
-  const navigate = useNavigate()  
-  const { current_user, deleteUser } = useContext(UserContext);
+export default function SettingsPage() {
+  const navigate = useNavigate();
+  const { current_user, current_admin, deleteUser } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
 
-  const openDeleteModal = (userId) => {
-    setSelectedUserId(userId);
-    setIsModalOpen(true);
-  };
+  
 
   const closeDeleteModal = () => {
     setIsModalOpen(false);
     setSelectedUserId(null);
   };
 
-  const handleDelete = () => {
-    if (selectedUserId) {
-      deleteUser(selectedUserId);
-      closeDeleteModal();
-      navigate("/signup")
-    } else {
-      toast.error("User not found");
-    }
-  };
+  const openDeleteModal = () => {
+  
+  if (current_admin) {
+    const userId = current_admin.id;
+    setSelectedUserId(userId);
+  } else if (current_user) {
+    const userId = current_user.id;
+    setSelectedUserId(userId);
+  } else {
+    toast.error("No user is logged in.");
+    return;
+  }
+
+  setIsModalOpen(true);
+};
+
+const handleDelete = () => {
+  if (selectedUserId) {
+    deleteUser(selectedUserId)
+      .then(() => {
+        toast.success("Account deleted successfully");
+        closeDeleteModal();
+        navigate("/signup"); 
+      })
+      .catch((error) => {
+        toast.error("Error deleting the account: " + error.message);
+      });
+  } else {
+    toast.error("User not found");
+  }
+};
 
   return (
     <div className="settings-container p-8">
-      <h1 className="text-2xl font-semibold text-gray-800">Settings</h1>
-
-      {/* Button to trigger the modal */}
       <button
-        onClick={() => openDeleteModal(current_user.id)}
+        onClick={openDeleteModal}
         className="mt-8 inline-flex items-center justify-center rounded-md bg-red-600 px-6 py-2 text-sm font-semibold text-white shadow-md hover:bg-red-500"
       >
         Delete Account
       </button>
 
-      {/* Modal */}
       {isModalOpen && (
         <div
           className="relative z-10"
@@ -81,12 +94,12 @@ export default function Settings() {
                         className="text-base font-semibold text-gray-900"
                         id="modal-title"
                       >
-                        Deactivate account
+                        Delete account
                       </h3>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All
-                          of your data will be permanently removed. This action
+                          Are you sure you want to delete your account? All of
+                          your data will be permanently removed. This action
                           cannot be undone.
                         </p>
                       </div>
@@ -99,7 +112,7 @@ export default function Settings() {
                     onClick={handleDelete}
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto"
                   >
-                    Deactivate
+                    Delete
                   </button>
                   <button
                     type="button"

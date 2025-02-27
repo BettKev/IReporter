@@ -70,14 +70,6 @@ class Admins(db.Model):
     password = db.Column(db.String(512), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
     provider = db.Column(db.String(50), default="email")
-
-# Comments Table
-class Comments(db.Model):
- 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    comment = db.Column(db.String(512), nullable=False)
        
     
 
