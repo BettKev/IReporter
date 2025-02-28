@@ -3,6 +3,7 @@ from models import RedFlags, Users, db, Admins
 from flask_jwt_extended import  jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime
 from flask_mail import  Message
+# from twilio.rest import Client
 
 
 def get_mail():
@@ -10,6 +11,8 @@ def get_mail():
     return mail
 
 red_flag_bp = Blueprint("red_flag_bp", __name__)
+
+DEFAULT_IMAGE_URL = "https://i.pinimg.com/236x/67/4d/6c/674d6cc2e33d3d336dff203065d0d75a.jpg"
 
 # ADD A RedFlag
 @red_flag_bp.route("/red_flag", methods=["POST"])
@@ -53,6 +56,9 @@ def add_red_flag():
 
     if not check_user:
         return jsonify({"error": "User doesn't exist"}), 406
+    
+    if not image:
+        image = DEFAULT_IMAGE_URL
     
     new_red_flag = RedFlags( title=title, description=description, image=image, video=video, user_id=user_id, location=location, coordinates=f"{coordinates[0]}, {coordinates[1]}" ,status=status)
     
@@ -182,8 +188,8 @@ def fetch_red_flags():
         return jsonify(red_flag_list), 200
 
     else:
-        # user = Users.query.get(current_user_id)
-        user = db.session.get(Users, current_user_id)
+        user = Users.query.get(current_user_id)
+        # user = db.session.get(Users, current_user_id)
         if user:
             
             red_flags = RedFlags.query.all()
@@ -252,6 +258,20 @@ def fetch_red_flag(red_flag_id):
     
     return jsonify({"error": f'red_flag selected is not assigned to You'}), 406 
 
+# # Twilio Credentials (Replace with your actual Twilio credentials)
+# TWILIO_ACCOUNT_SID = "ACe07b743d8513ec1cee8d78295b71069d"
+# TWILIO_AUTH_TOKEN = "9252a3cb11891c68a1e3b3a6878a4d2c"
+# TWILIO_PHONE_NUMBER = "+254796792951"  # Your Twilio phone number
+
+# client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+# def send_sms(to, message):
+#     """Send SMS using Twilio"""
+#     client.messages.create(
+#         body=message,
+#         from_=TWILIO_PHONE_NUMBER,
+#         to=to
+#     )
 
 # UPDATE A RED FLAG
 @red_flag_bp.route("/red_flag/<int:red_flag_id>", methods=["PATCH"])
@@ -277,6 +297,7 @@ def update_red_flag(red_flag_id):
 
             if user:
                 user_email = user.email 
+                user_phone = user.phone
 
                 red_flag.status = status
                 db.session.commit()
@@ -353,6 +374,12 @@ def update_red_flag(red_flag_id):
                 mail = get_mail()  
                 mail.send(msg)
                 
+                # # Sending SMS Notification
+                # sms_message = f"Hello {user.first_name}, your Red Flag status has been updated to: {status}. - iReporter"
+                # if user_phone:
+                #     send_sms(user_phone, sms_message)
+
+
                 return jsonify({"success": "Red Flag status updated successfully"}), 200
 
             return jsonify({"error": ""}), 404
@@ -457,7 +484,7 @@ def update_red_flag(red_flag_id):
             return jsonify({"success": "Red Flag details updated successfully"}), 200
 
 
-    return jsonify({"error": "Must be an admin to update a loan!"}), 404  
+    return jsonify({"error": "Must be an admin to update a redflag!"}), 404  
 
 
 # DELETE A RED FLAG

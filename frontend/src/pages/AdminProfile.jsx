@@ -6,6 +6,8 @@ import { InterventionContext } from "../context/InterventionContext";
 import { Link } from "react-router-dom";
 import SettingsPage from "./SettingsPage";
 import OpenStreetMap from "../components/OpenStreetMap";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css"
 
 import {
   BarChart,
@@ -20,7 +22,7 @@ import {
 
 const AdminProfile = () => {
   const navigate = useNavigate();
-  const { admins, setAdmins, current_admin, updateUser, logout } =
+  const { admins, setAdmins, current_admin, updateUser, users,logout } =
     useContext(UserContext);
   const { red_flags } = useContext(RedFlagContext);
   const { interventions } = useContext(InterventionContext);
@@ -34,7 +36,9 @@ const AdminProfile = () => {
     current_admin?.profile_picture ?? ""
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
 
+  
   useEffect(() => {
     if (current_admin) {
       setUpdatedPhone(current_admin.phone ?? "");
@@ -80,8 +84,8 @@ const AdminProfile = () => {
       case "red-flags":
         return (
           <div className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">RED FLAGS</h2>
-            <div className="red_flag-cards-container mt-8 p-8 rounded-3xl">
+            <h2 className="text-2xl font-bold text-purple-800 mb-6">RED FLAGS</h2>
+            <div className="red_flag-cards-container mt-8 p-8 rounded-3xl bg-purple-100">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {red_flags &&
                   red_flags.map((red_flag) => (
@@ -90,7 +94,7 @@ const AdminProfile = () => {
                       key={red_flag.id}
                     >
                       <Link to={`/singleredflag/${red_flag.id}`}>
-                        <div className="bg-[#ddc6ec] rounded-2xl shadow-md border border-transparent bg-clip-border transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:border-[#d580d8] w-[400px]">
+                        <div className="bg-purple-200 rounded-2xl shadow-md border border-transparent bg-clip-border transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:border-purple-500 w-[400px]">
                           {/* Image */}
                           <div className="relative rounded-t-2xl overflow-hidden">
                             <img
@@ -99,57 +103,57 @@ const AdminProfile = () => {
                               className="w-full h-52 object-cover rounded-t-2xl"
                             />
                           </div>
-
+  
                           {/* Card Content */}
                           <div className="p-6 space-y-6 text-gray-800">
                             {/* Title & Description */}
                             <div className="space-y-2">
-                              <h3 className="text-xl font-semibold text-gray-900">
+                              <h3 className="text-xl font-semibold text-purple-900">
                                 {red_flag.title}
                               </h3>
                               <p className="text-sm text-gray-700">
                                 {red_flag.description}
                               </p>
                             </div>
-
+  
                             {/* Location */}
                             <div className="space-y-2">
-                              <p className="text-sm font-bold text-gray-900">
+                              <p className="text-sm font-bold text-purple-900">
                                 Location:
                               </p>
                               <p className="text-sm text-gray-700">
                                 {red_flag.location}
                               </p>
                             </div>
-
+  
                             {/* Video Link */}
                             <div className="space-y-2">
-                              <p className="text-sm font-bold text-gray-900">
+                              <p className="text-sm font-bold text-purple-900">
                                 Video:
                               </p>
                               <a
                                 href={red_flag.video}
-                                className="text-blue-500 font-semibold hover:underline"
+                                className="text-purple-600 font-semibold hover:underline"
                               >
                                 Watch Video
                               </a>
                             </div>
-
+  
                             {/* Status */}
                             <div className="mt-4 text-center">
-                              <p className="text-sm font-bold text-gray-900">
+                              <p className="text-sm font-bold text-purple-900">
                                 Status
                               </p>
                               <span
                                 className={`text-lg font-semibold px-3 py-1 rounded-full ${
                                   red_flag.status === "active"
-                                    ? "bg-green-100 text-blue-600"
-                                    : red_flag.status === "under investigation"
-                                    ? "bg-orange-100 text-orange-600"
-                                    : red_flag.status === "rejected"
-                                    ? "bg-red-100 text-red-600"
-                                    : red_flag.status === "resolved"
                                     ? "bg-green-200 text-green-800"
+                                    : red_flag.status === "under investigation"
+                                    ? "bg-orange-200 text-orange-700"
+                                    : red_flag.status === "rejected"
+                                    ? "bg-red-200 text-red-700"
+                                    : red_flag.status === "resolved"
+                                    ? "bg-blue-200 text-blue-700"
                                     : ""
                                 }`}
                               >
@@ -165,13 +169,14 @@ const AdminProfile = () => {
             </div>
           </div>
         );
+  
       case "interventions":
         return (
           <div className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            <h2 className="text-2xl font-bold text-purple-800 mb-6">
               Interventions
             </h2>
-            <div className="mt-8 p-8 bg-white rounded-3xl shadow-lg">
+            <div className="mt-8 p-8 bg-purple-100 rounded-3xl shadow-lg">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {interventions &&
                   interventions.map((intervention) => (
@@ -180,7 +185,7 @@ const AdminProfile = () => {
                       key={intervention.id}
                     >
                       <Link to={`/singleintervention/${intervention.id}`}>
-                        <div className="bg-[#ddc6ec] rounded-2xl shadow-md border border-transparent bg-clip-border transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:border-[#d580d8] w-[400px]">
+                        <div className="bg-purple-200 rounded-2xl shadow-md border border-transparent bg-clip-border transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:border-purple-500 w-[400px]">
                           {/* Image */}
                           <div className="relative rounded-t-2xl overflow-hidden">
                             <img
@@ -189,58 +194,57 @@ const AdminProfile = () => {
                               className="w-full h-52 object-cover rounded-t-2xl"
                             />
                           </div>
-
+  
                           {/* Card Content */}
                           <div className="p-6 space-y-6 text-gray-800">
                             {/* Title & Description */}
                             <div className="space-y-2">
-                              <h3 className="text-xl font-semibold text-gray-900">
+                              <h3 className="text-xl font-semibold text-purple-900">
                                 {intervention.title}
                               </h3>
                               <p className="text-sm text-gray-700">
                                 {intervention.description}
                               </p>
                             </div>
-
+  
                             {/* Location */}
                             <div className="space-y-2">
-                              <p className="text-sm font-bold text-gray-900">
+                              <p className="text-sm font-bold text-purple-900">
                                 Location:
                               </p>
                               <p className="text-sm text-gray-700">
                                 {intervention.location}
                               </p>
                             </div>
-
+  
                             {/* Video Link */}
                             <div className="space-y-2">
-                              <p className="text-sm font-bold text-gray-900">
+                              <p className="text-sm font-bold text-purple-900">
                                 Video:
                               </p>
                               <a
                                 href={intervention.video}
-                                className="text-blue-500 font-semibold hover:underline"
+                                className="text-purple-600 font-semibold hover:underline"
                               >
                                 Watch Video
                               </a>
                             </div>
-
+  
                             {/* Status */}
                             <div className="mt-4 text-center">
-                              <p className="text-sm font-bold text-gray-900">
+                              <p className="text-sm font-bold text-purple-900">
                                 Status
                               </p>
                               <span
                                 className={`text-lg font-semibold px-3 py-1 rounded-full ${
                                   intervention.status === "active"
-                                    ? "bg-green-100 text-blue-600"
-                                    : intervention.status ===
-                                      "under investigation"
-                                    ? "bg-orange-100 text-orange-600"
-                                    : intervention.status === "rejected"
-                                    ? "bg-red-100 text-red-600"
-                                    : intervention.status === "resolved"
                                     ? "bg-green-200 text-green-800"
+                                    : intervention.status === "under investigation"
+                                    ? "bg-orange-200 text-orange-700"
+                                    : intervention.status === "rejected"
+                                    ? "bg-red-200 text-red-700"
+                                    : intervention.status === "resolved"
+                                    ? "bg-blue-200 text-blue-700"
                                     : ""
                                 }`}
                               >
@@ -256,32 +260,36 @@ const AdminProfile = () => {
             </div>
           </div>
         );
+  
       case "settings":
         return (
           <div className="p-6">
             <SettingsPage />
           </div>
         );
+  
       case "logout":
         return <div className="p-6">Logout</div>;
+  
       default:
         return (
-          <div className="p-6 flex justify-center items-center text-center justify-items-center">
-            <div className="w-full max-w-4xl">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 justify-items-center">
-                <div className="bg-white text-black text-center p-6 rounded-lg shadow-md border border-gray-200">
-                  Total Red Flags: {red_flags && red_flags.length}
-                </div>
-                <div className="bg-white text-black text-center p-6 rounded-lg shadow-md border border-gray-200">
+          <div className="p-6 flex justify-center items-center text-center">
+          <div className="w-full max-w-4xl">
+            <div className="grid grid-cols-3 gap-4 mt-4">
+          <div className="bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out text-black text-center p-4 rounded-lg shadow-md ">
+            Total Red Flags: {red_flags && red_flags.length}
+          </div>
+          <div className="bg-gradient-to-r from-[#80d88f] to-[#89ff7e] transition-all duration-300 ease-in-out text-black text-center p-4 rounded-lg shadow-md ">
                   Total Interventions: {interventions && interventions.length}
                 </div>
-                {/* Uncomment to include the third card */}
-                {/* <div className="bg-white text-black text-center p-6 rounded-lg shadow-md border border-gray-200">
-        Héroes del Cambio: {users && users.length}
-      </div> */}
+                <div className="bg-gradient-to-r from-[#d7d880] to-[#fff27e] transition-all duration-300 ease-in-out text-black text-center p-4 rounded-lg shadow-md ">
+            Héroes del Cambio : {users && users.length}
+          </div>
+                <div className="bg-purple-100 text-purple-900 p-6 rounded-lg shadow-md border border-purple-300 ">
+                  <p className="text-lg font-semibold mb-2">Calendar</p>
+                  <Calendar onChange={setDate} value={date} />
+                </div>
               </div>
-
-              {/* Map Section */}
               <div className="mt-8">
                 <OpenStreetMap />
               </div>
@@ -290,13 +298,13 @@ const AdminProfile = () => {
         );
     }
   };
-
+  
   return (
-    <div className="flex min-h-screen bg-white mt-20 rounded-xl shadow-xg text-center">
+    <div className="flex min-h-screen bg-[#f5f0fa] mt-20 rounded-xl shadow-xl text-center">
       {/* Sidebar */}
       <aside className="w-72 bg-[#5c356e] text-white flex flex-col p-6">
         <div
-          className="flex items-center space-x-2 mb-8 cursor-pointer "
+          className="flex items-center space-x-2 mb-8 cursor-pointer"
           onClick={() => setShowAdminList(true)}
         >
           <Users size={28} />
@@ -304,28 +312,28 @@ const AdminProfile = () => {
         </div>
         <nav className="flex-1 space-y-6">
           <div
-            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-600 rounded"
+            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-[#7d529e] rounded"
             onClick={() => setActiveSection("dashboard")}
           >
             <BarChart size={20} />
             <span>Dashboard</span>
           </div>
           <div
-            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-red-600 rounded"
+            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-[#a34bbf] rounded"
             onClick={() => setActiveSection("red-flags")}
           >
             <Flag size={20} />
             <span>Red-Flags</span>
           </div>
           <div
-            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-orange-600 rounded"
+            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-[#c084fc] rounded"
             onClick={() => setActiveSection("interventions")}
           >
             <AlertTriangle size={20} />
             <span>Interventions</span>
           </div>
           <div
-            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-green-600 rounded"
+            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-[#9b59b6] rounded"
             onClick={() => setActiveSection("settings")}
           >
             <Settings size={20} />
@@ -333,7 +341,7 @@ const AdminProfile = () => {
           </div>
           {/* Logout button */}
           <div
-            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-red-600 rounded"
+            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-[#a34bbf] rounded"
             onClick={openLogoutModal}
           >
             <LogOut size={20} />
@@ -341,7 +349,7 @@ const AdminProfile = () => {
           </div>
         </nav>
         <div
-          className="mt-auto flex items-center space-x-3 p-3 rounded-lg bg-gray-800 cursor-pointer"
+          className="mt-auto flex items-center space-x-3 p-3 rounded-lg bg-[#3d2459] cursor-pointer"
           onClick={() => setShowAdminProfile(true)}
         >
           <img
@@ -353,10 +361,11 @@ const AdminProfile = () => {
         </div>
       </aside>
 
+
       {/* Main Content */}
       <div className="flex-1 bg-white rounded-xl shadow-lg p-6 ml-6">
         <header className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">
+          <h1 className="text-2xl font-semibold text-[#5c356e]">
             {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
           </h1>
         </header>
@@ -399,6 +408,8 @@ const AdminProfile = () => {
           </div>
         </div>
       )}
+ 
+
 
       {/* Admin Profile Modal */}
       {showAdminProfile && (
@@ -421,28 +432,28 @@ const AdminProfile = () => {
                 <img
                   src={current_admin?.profile_picture || "/default-avatar.png"}
                   alt="Admin"
-                  className="w-32 h-32 rounded-full shadow-xl border-4 border-transparent bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] bg-clip-border transition-all duration-300 ease-in-out"
+                  className="w-32 h-32 rounded-full shadow-xl border-4 border-transparent bg-gradient-to-r from-[#7d529e] to-[#b583d5] bg-clip-border transition-all duration-300 ease-in-out"
                 />
                 <div className="w-full text-gray-700">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold">First Name:</h3>
-                    <p className="ml-2 text-gray-900">
+                    <p className="ml-2 text-[#5c356e]">
                       {current_admin?.first_name}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold">Last Name:</h3>
-                    <p className="ml-2 text-gray-900">
+                    <p className="ml-2 text-[#5c356e]">
                       {current_admin?.last_name}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
                     <h5 className="text-lg font-semibold">Email:</h5>
-                    <p className="ml-2 text-gray-900">{current_admin?.email}</p>
+                    <p className="ml-2 text-[#5c356e]">{current_admin?.email}</p>
                   </div>
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold">Phone:</h3>
-                    <p className="ml-2 text-gray-900">{current_admin?.phone}</p>
+                    <p className="ml-2 text-[#5c356e]">{current_admin?.phone}</p>
                   </div>
                 </div>
               </div>
@@ -451,7 +462,7 @@ const AdminProfile = () => {
               <div className="lg:w-2/3 w-full space-y-4 text-gray-700">
                 <form
                   onSubmit={handleUpdate}
-                  className="mt-4 bg-gray-50 p-4 rounded-lg shadow-md"
+                  className="mt-4 bg-[#f5f0fa] p-4 rounded-lg shadow-md"
                 >
                   <div className="space-y-3">
                     <div>
@@ -467,7 +478,7 @@ const AdminProfile = () => {
                         value={updatedEmail}
                         onChange={(e) => setUpdatedEmail(e.target.value)}
                         placeholder="Enter New Email"
-                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#7d529e] text-sm"
                       />
                     </div>
                     <div>
@@ -483,7 +494,7 @@ const AdminProfile = () => {
                         value={updatedPhone}
                         onChange={(e) => setUpdatedPhone(e.target.value)}
                         placeholder="Enter New Phone Number"
-                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#7d529e] text-sm"
                       />
                     </div>
                     <div>
@@ -499,7 +510,7 @@ const AdminProfile = () => {
                         value={updatedPassword}
                         onChange={(e) => setUpdatedPassword(e.target.value)}
                         placeholder="Enter New Password"
-                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#7d529e] text-sm"
                       />
                     </div>
                     <div>
@@ -517,12 +528,12 @@ const AdminProfile = () => {
                           setUpdatedProfilePicture(e.target.value)
                         }
                         placeholder="Enter image URL"
-                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#7d529e] text-sm"
                       />
                     </div>
                     <button
                       type="submit"
-                      className="inline-block px-4 py-2 text-md font-semibold text-white text-center rounded-lg bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] transition-all duration-300 ease-in-out shadow-lg hover:from-[#7effb8] hover:to-[#80d893] hover:shadow-[rgba(255,_126,_179,_0.6)]"
+                      className="inline-block px-4 py-2 text-md font-semibold text-white text-center rounded-lg bg-gradient-to-r from-[#7d529e] to-[#b583d5] transition-all duration-300 ease-in-out shadow-lg hover:from-[#5c356e] hover:to-[#7d529e] hover:shadow-[rgba(125,_82,_158,_0.6)]"
                     >
                       Update Information
                     </button>
@@ -534,25 +545,26 @@ const AdminProfile = () => {
         </div>
       )}
 
-      {/* Logout Confirmation Modal */}
-      {isModalOpen && (
+
+     {/* Logout Confirmation Modal */}
+     {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg z-10">
           <div className="bg-white p-6 rounded-xl shadow-lg w-1/3">
             <div className="mb-4">
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-xl font-semibold text-[#5c356e]">
                 Are you sure you want to log out?
               </h2>
             </div>
             <div className="flex justify-end space-x-4 ">
               <button
                 onClick={closeLogoutModal}
-                className="bg-gray-500 text-white px-4 py-2 -ml-60 rounded-md hover:bg-gradient-to-r hover:from-[#95ec89] hover:to-[#1bdf4c]  hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px] transition-all duration-300 ease-in-out hover:text-amber-50"
+                className="bg-[#7d529e] text-white px-4 py-2 -ml-60 rounded-md hover:bg-[#5c356e] hover:shadow-lg transition-all duration-300 ease-in-out"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 mr-2 bg-red-400 rounded-md hover:bg-gradient-to-r hover:from-[#ec4c4c] hover:to-[#ff0000]  hover:shadow-[rgba(255,_126,_179,_0.6)] hover:translate-y-[-2px] transition-all duration-300 ease-in-out hover:text-amber-50"
+                className="px-4 py-2 mr-2 bg-[#d580d8] text-white rounded-md hover:bg-[#5c356e] hover:shadow-lg transition-all duration-300 ease-in-out"
               >
                 Logout
               </button>
@@ -563,5 +575,6 @@ const AdminProfile = () => {
     </div>
   );
 };
+
 
 export default AdminProfile;

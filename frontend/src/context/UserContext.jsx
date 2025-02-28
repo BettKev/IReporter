@@ -232,7 +232,11 @@ const google_login = (email) => {
           setTimeout(() => {
             navigate("/login");
           }, 500); 
-        } 
+        
+      } 
+      else if (response.error) { 
+        toast.error(response.error);  
+      }
         else if(email.error)
           {
             toast.error("Email already exists");

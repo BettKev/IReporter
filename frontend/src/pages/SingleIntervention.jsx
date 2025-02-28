@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { InterventionContext } from "../context/InterventionContext";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SingleIntervention() {
   const { current_admin, current_user } = useContext(UserContext);
@@ -14,6 +15,27 @@ export default function SingleIntervention() {
   const [image, setImage] = useState("");
   const [status, setStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
+  
+  const handleGoBack = () => {
+    navigate(-1); 
+  };
+
+  const getStatusClasses = (status) => {
+    switch (status) {
+      case "active":
+        return "bg-green-100 text-blue-600";
+      case "under investigation":
+        return "bg-orange-100 text-orange-600";
+      case "rejected":
+        return "bg-red-100 text-red-600";
+      case "resolved":
+        return "bg-green-200 text-green-800";
+      default:
+        return "";
+    }
+  };
 
   useEffect(() => {
     if (current_user && intervention) {
@@ -91,7 +113,10 @@ export default function SingleIntervention() {
             </div>
             <div className="flex flex-col">
               <h3 className="text-black">Intervention Status:</h3>
-              <p className="text-gray-800">{intervention?.status}</p>
+              <p className={`px-4 py-1 rounded-md font-semibold w-fit ${getStatusClasses(intervention?.status)}`}>
+                {intervention?.status}
+              </p>
+
             </div>
             <div className="flex flex-col">
               <h3 className="text-black">Video Link:</h3>
@@ -102,7 +127,17 @@ export default function SingleIntervention() {
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-8 space-x-4 flex justify-start">
+
+          <div className="mt-8 space-x-4 flex justify-between">
+            {/* Back Button */}
+            <button
+              onClick={handleGoBack}
+              className="bg-gray-600 text-white py-1 px-4 rounded-md text-sm transition-shadow hover:bg-gray-700 focus:ring-2 focus:ring-gray-500"
+            >
+              Back
+            </button>
+
+          {/* <div className="mt-8 space-x-4 flex justify-start"> */}
             {/* Only show Delete button if the current user is the owner */}
             {isOwner && !current_admin && (
               <button
@@ -141,16 +176,17 @@ export default function SingleIntervention() {
               {current_admin ? (
                 <div className="flex flex-col">
                   <label htmlFor="status" className="text-black mb-2">Update Status</label>
-                  <select
-                    id="status"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    className="px-4 py-3 rounded-md border border-gray-400 bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-500"
-                  >
-                    <option value="under investigation">Under Investigation</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="resolved">Resolved</option>
-                  </select>
+               <select
+                  id="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className={`p-2 rounded w-full border border-gray-400 transition-colors duration-300 ${getStatusClasses(status)}`}
+                >
+                  <option value="under investigation">Under Investigation</option>
+                  <option value="rejected">Rejected</option>
+                  <option value="resolved">Resolved</option>
+                </select>
+
                 </div>
               ) : (
                 <>

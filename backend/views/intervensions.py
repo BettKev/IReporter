@@ -11,6 +11,8 @@ def get_mail():
 
 intervention_bp = Blueprint("intervention_bp", __name__)
 
+DEFAULT_IMAGE_URL = "https://i.pinimg.com/236x/67/4d/6c/674d6cc2e33d3d336dff203065d0d75a.jpg"
+
 # ADD AN INTERVENTION
 @intervention_bp.route("/intervention", methods=["POST"])
 @jwt_required()
@@ -71,6 +73,8 @@ def add_intervention():
     if not check_user:
         return jsonify({"error": "User doesn't exist"}), 406
     
+    if not image:
+        image = DEFAULT_IMAGE_URL
     new_intervention = Interventions( title=title, description=description, image=image, video=video, user_id=user_id, location=location, coordinates=f"{coordinates[0]}, {coordinates[1]}", status=status)
     
     db.session.add(new_intervention)
