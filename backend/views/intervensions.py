@@ -6,10 +6,12 @@ from flask_mail import  Message
 
 
 def get_mail():
-    from app import mail  # Import `mail` only when needed
+    from app import mail  
     return mail
 
 intervention_bp = Blueprint("intervention_bp", __name__)
+
+DEFAULT_IMAGE_URL = "https://img.freepik.com/premium-photo/wooden-police-barricades-city-new-york_1236033-32262.jpg?w=740"
 
 # ADD AN INTERVENTION
 @intervention_bp.route("/intervention", methods=["POST"])
@@ -71,6 +73,8 @@ def add_intervention():
     if not check_user:
         return jsonify({"error": "User doesn't exist"}), 406
     
+    if not image:
+        image = DEFAULT_IMAGE_URL
     new_intervention = Interventions( title=title, description=description, image=image, video=video, user_id=user_id, location=location, coordinates=f"{coordinates[0]}, {coordinates[1]}", status=status)
     
     db.session.add(new_intervention)

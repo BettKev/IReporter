@@ -243,3 +243,56 @@ def delete_user(user_id):
     
     else:
         return jsonify({"error": "You must be logged in as a User or Admin to delete an account"}), 403
+
+# FETCH RECENT NOTIFICATIONS FOR ADMIN
+@user_bp.route("/notifications", methods=["GET"])
+@jwt_required()
+def get_notifications():
+    """
+    Fetches recent red-flag and intervention records for admin notifications.
+    Only fetches records from the last 7 days.
+    """
+    # Define time range (last 7 days)
+    seven_days_ago = datetime.utcnow() - timedelta(days=7)
+
+    # Query the latest red-flag records
+    recent_redflags = (
+        db.session.query(RedFlags)
+        .filter(RedFlags.created_at >= seven_days_ago)
+        .order_by(RedFlags.created_at.desc())
+        .limit(10)
+        .all()
+    )
+
+    # Query the latest intervention records
+    recent_interventions = (
+        db.session.query(Interventions)
+        .filter(Interventions.created_at >= seven_days_ago)
+        .order_by(Interventions.created_at.desc())
+        .limit(10)
+        .all()
+    )
+
+    # Format response data
+    notifications = []
+
+    for red_flag in recent_redflags:
+        user = Users.query.get(red_flag.user_id)
+        notifications.append({
+            "user": {"firstName": user.first_name},
+            "type": "Red Flag",
+            "created_at": red_flag.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+
+    for intervention in recent_interventions:
+        user = Users.query.get(intervention.user_id)
+        notifications.append({
+            "user": {"firstName": user.first_name},
+            "type": "Intervention",
+            "created_at": intervention.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+
+    # Sort notifications by creation date (most recent first)
+    notifications.sort(key=lambda x: x["created_at"], reverse=True)
+
+    return jsonify(notifications)

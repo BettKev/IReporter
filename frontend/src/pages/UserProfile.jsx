@@ -392,124 +392,125 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 p-6 rounded-xl shadow-xl mt-16">
-      {/* Sidebar */}
-      <div className="w-1/5 bg-white rounded-xl shado.w-lg p-6 flex flex-col items-center ">
-        <h2 className="text-xl font-bold text-gray-800">User Profile</h2>
-        <ul className="mt-6 w-full">
-          <li
-            className={`p-3 rounded-lg cursor-pointer transition-all ${
-              activeSection === "Dashboard"
-                ? "bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md"
-                : "hover:bg-gray-200"
-            }`}
-            onClick={() => setActiveSection("Dashboard")}
-          >
-            Dashboard
-          </li>
-          <li
-            className="p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center"
-            onClick={() => setShowReportOptions(!showReportOptions)}
-          >
-            Report <HiOutlineFlag className="text-lg" />
-          </li>
-          {showReportOptions && (
-            <div className="pl-4">
-              <li
-                className="p-3 rounded-lg cursor-pointer transition-all hover:bg-gray-200"
-                onClick={() => setActiveSection("Red-Flag")}
-              >
-                🚩 Red-Flag
-              </li>
-              <li
-                className="p-3 rounded-lg cursor-pointer transition-all hover:bg-gray-200"
-                onClick={() => setActiveSection("Intervention")}
-              >
-                🔨 Intervention
-              </li>
-            </div>
-          )}
-          <li
-            className={`p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center ${
-              activeSection === "Profile"
-                ? "bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md"
-                : "hover:bg-gray-200"
-            }`}
-            onClick={() => setActiveSection("Profile")}
-          >
-            Profile <HiOutlineUser className="text-lg" />
-          </li>
-          <li
-            className={`p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center ${
-              activeSection === "Settings"
-                ? "bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md"
-                : "hover:bg-gray-200"
-            }`}
-            onClick={() => setActiveSection("Settings")}
-          >
-            Settings <HiOutlineCog className="text-lg" />
-          </li>
-          <li
-            className="p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center text-red-500 hover:bg-red-100"
-            onClick={() => setLogOutIsModalOpen(true)}
-          >
-            Logout <FiLogOut className="text-lg" />
-          </li>
-        </ul>
-      </div>
+    <div className="flex min-h-screen bg-[#f5f0fa] p-6 rounded-xl shadow-xl mt-16">
+    {/* Sidebar */}
+    <div className="w-1/5 bg-[#5c356e] text-white rounded-xl shadow-lg p-6 flex flex-col items-center">
+      <h2 className="text-xl font-bold">User Profile</h2>
+      <ul className="mt-6 w-full">
+        <li
+          className={`p-3 rounded-lg cursor-pointer transition-all ${
+            activeSection === "Dashboard"
+              ? "bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] text-white shadow-md"
+              : "hover:bg-[#7d529e]"
+          }`}
+          onClick={() => setActiveSection("Dashboard")}
+        >
+          Dashboard
+        </li>
+        <li
+          className="p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center hover:bg-[#7d529e]"
+          onClick={() => setShowReportOptions(!showReportOptions)}
+        >
+          Report <HiOutlineFlag className="text-lg" />
+        </li>
+        {showReportOptions && (
+          <div className="pl-4">
+            <li
+              className="p-3 rounded-lg cursor-pointer transition-all hover:bg-[#7d529e]"
+              onClick={() => setActiveSection("Red-Flag")}
+            >
+              🚩 Red-Flag
+            </li>
+            <li
+              className="p-3 rounded-lg cursor-pointer transition-all hover:bg-[#7d529e]"
+              onClick={() => setActiveSection("Intervention")}
+            >
+              🔨 Intervention
+            </li>
+          </div>
+        )}
+        <li
+          className={`p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center ${
+            activeSection === "Profile"
+              ? "bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] text-white shadow-md"
+              : "hover:bg-[#7d529e]"
+          }`}
+          onClick={() => setActiveSection("Profile")}
+        >
+          Profile <HiOutlineUser className="text-lg" />
+        </li>
+        <li
+          className={`p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center ${
+            activeSection === "Settings"
+              ? "bg-gradient-to-r from-[#d580d8] to-[#ff7eb3] text-white shadow-md"
+              : "hover:bg-[#7d529e]"
+          }`}
+          onClick={() => setActiveSection("Settings")}
+        >
+          Settings <HiOutlineCog className="text-lg" />
+        </li>
+        <li
+          className="p-3 rounded-lg cursor-pointer transition-all flex justify-between items-center text-red-500 hover:bg-red-100"
+          onClick={() => setLogOutIsModalOpen(true)}
+        >
+          Logout <FiLogOut className="text-lg" />
+        </li>
+      </ul>
+    </div>
 
-      {/* Main Content */}
-      <div className="flex-1 bg-white rounded-xl shadow-lg p-6 ml-6">
-        <h2 className="text-2xl font-semibold text-gray-800">
+
+           {/* Main Content */}
+           <div className="flex-1 bg-white rounded-xl shadow-lg p-6 ml-6">
+        <h2 className="text-2xl font-semibold text-purple-700">
           {activeSection}
         </h2>
         <div className="text-gray-700 mt-4">{sections[activeSection]}</div>
       </div>
 
-      {/*Add Red Flag Modal */}
+      {/* Add Red Flag Modal */}
       {isAddRedFlagModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h3 className="text-lg font-semibold mb-4">Add Red Flag</h3>
+            <h3 className="text-lg font-semibold mb-4 text-purple-700">Add Red Flag</h3>
             <form onSubmit={handleSubmitRedFlag}>
               <input
                 type="text"
                 placeholder="Title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
+                className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
               />
               <textarea
                 placeholder="Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
+                className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
               />
               <input
                 type="text"
                 placeholder="Image URL"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
+                className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
               />
               <input
                 type="text"
                 placeholder="Video URL"
                 value={video}
                 onChange={(e) => setVideo(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
+                className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
               />
               <input
                 type="text"
                 placeholder="Location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
+                className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
               />
               <div className="flex justify-end">
                 <button
                   type="button"
-                  className="px-4 py-2 mr-2 bg-gray-300 rounded-md hover:bg-green-400 transition-all"
+                  className="px-4 py-2 mr-2 bg-gray-300 text-purple-700 rounded-md hover:bg-purple-300 transition-all"
                   onClick={() => {
                     setAddRedFlagIsModalOpen(false);
                     setTitle("");
@@ -523,7 +524,7 @@ const UserProfile = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-400 rounded-md hover:bg-blue-600 transition-all"
+                  className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-700 transition-all"
                 >
                   Submit
                 </button>
@@ -533,97 +534,98 @@ const UserProfile = () => {
         </div>
       )}
 
-      {/*Add Intervention Modal */}
-      {isAddInterventionModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h3 className="text-lg font-semibold mb-4">Add an Intervention</h3>
-            <form onSubmit={handleSubmitIntervention}>
-              <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-              <textarea
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-              <input
-                type="text"
-                placeholder="Video URL"
-                value={video}
-                onChange={(e) => setVideo(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-              <input
-                type="text"
-                placeholder="Location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  className="px-4 py-2 mr-2 bg-gray-300 rounded-md hover:bg-green-400 transition-all"
-                  onClick={() => {
-                    setAddInterventionModalOpen(false);
-                    setTitle("");
-                    setDescription("");
-                    setImage("");
-                    setVideo("");
-                    setLocation("");
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-400 rounded-md hover:bg-blue-600 transition-all"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+      {/* Add Intervention Modal */}
+{isAddInterventionModalOpen && (
+  <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg">
+    <div className="bg-white p-6 rounded-xl shadow-lg w-1/3">
+      <h3 className="text-lg font-semibold mb-4 text-purple-700">Add an Intervention</h3>
+      <form onSubmit={handleSubmitIntervention}>
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
+        />
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
+        />
+        <input
+          type="text"
+          placeholder="Image URL"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
+        />
+        <input
+          type="text"
+          placeholder="Video URL"
+          value={video}
+          onChange={(e) => setVideo(e.target.value)}
+          className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="w-full p-2 mb-4 border border-purple-300 rounded focus:ring-2 focus:ring-purple-500"
+        />
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className="px-4 py-2 mr-2 bg-gradient-to-r from-purple-400 to-pink-400 text-white rounded-md shadow-md hover:from-purple-500 hover:to-pink-500 transition-all duration-300"
+            onClick={() => {
+              setAddInterventionModalOpen(false);
+              setTitle("");
+              setDescription("");
+              setImage("");
+              setVideo("");
+              setLocation("");
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-md shadow-md hover:from-purple-700 hover:to-pink-700 transition-all duration-300"
+          >
+            Submit
+          </button>
         </div>
-      )}
+      </form>
+    </div>
+  </div>
+)}
 
-      {/* Logout Modal */}
-      {isLogOutModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h3 className="text-lg font-semibold mb-4">
-              Are you sure you want to logout?
-            </h3>
-            <div className="flex justify-end">
-              <button
-                className="px-4 py-2 mr-2 bg-gray-300 rounded-md hover:bg-green-400 transition-all"
-                onClick={() => setLogOutIsModalOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-4 py-2 bg-red-400 rounded-md hover:bg-red-600 transition-all"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+  {/* Logout Modal */}
+{isLogOutModalOpen && (
+  <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg">
+    <div className="bg-white p-6 rounded-xl shadow-lg w-1/3">
+      <h3 className="text-lg font-semibold mb-4 text-purple-700">
+        Are you sure you want to logout?
+      </h3>
+      <div className="flex justify-end">
+        <button
+          className="px-4 py-2 mr-2 bg-gradient-to-r from-purple-400 to-pink-400 text-white rounded-md shadow-md hover:from-purple-500 hover:to-pink-500 transition-all duration-300"
+          onClick={() => setLogOutIsModalOpen(false)}
+        >
+          Cancel
+        </button>
+        <button
+          className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-md shadow-md hover:from-red-600 hover:to-red-800 transition-all duration-300"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
