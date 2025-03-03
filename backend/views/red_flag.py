@@ -12,7 +12,7 @@ def get_mail():
 
 red_flag_bp = Blueprint("red_flag_bp", __name__)
 
-DEFAULT_IMAGE_URL = "https://i.pinimg.com/236x/67/4d/6c/674d6cc2e33d3d336dff203065d0d75a.jpg"
+DEFAULT_IMAGE_URL = "https://img.freepik.com/free-vector/money-laundering-isometric-illustration-with-criminals-selling-weapons-illegally-3d-vector-illustration_98292-8520.jpg?t=st=1740139720~exp=1740143320~hmac=d9b8cef0ccfb3c978c49aa14c73771fb3fa2c64a9842821fd991505686833b27&w=826"
 
 # ADD A RedFlag
 @red_flag_bp.route("/red_flag", methods=["POST"])

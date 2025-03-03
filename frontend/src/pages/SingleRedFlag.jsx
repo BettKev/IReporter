@@ -188,7 +188,7 @@ export default function SingleRedFlag() {
               ) : (
                 <>
                   <div className="flex flex-col">
-                    <label htmlFor="title" className="text-black mb-2">Title ($)</label>
+                    <label htmlFor="title" className="text-black mb-2">Title</label>
                     <input
                       type="text"
                       id="title"

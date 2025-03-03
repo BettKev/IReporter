@@ -6,12 +6,12 @@ from flask_mail import  Message
 
 
 def get_mail():
-    from app import mail  # Import `mail` only when needed
+    from app import mail  
     return mail
 
 intervention_bp = Blueprint("intervention_bp", __name__)
 
-DEFAULT_IMAGE_URL = "https://i.pinimg.com/236x/67/4d/6c/674d6cc2e33d3d336dff203065d0d75a.jpg"
+DEFAULT_IMAGE_URL = "https://img.freepik.com/premium-photo/wooden-police-barricades-city-new-york_1236033-32262.jpg?w=740"
 
 # ADD AN INTERVENTION
 @intervention_bp.route("/intervention", methods=["POST"])
