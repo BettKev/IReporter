@@ -14,6 +14,7 @@ flask-cors = "*"
 gunicorn = "*"
 pytest = "*"
 geopy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
