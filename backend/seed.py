@@ -1,5 +1,5 @@
 from app import app
-from models import db, Users, Admins, RedFlags, Interventions, TokenBlocklist, PasswordResetToken
+from models import db, Users, Admins, RedFlags, Interventions
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 import random
@@ -35,8 +35,6 @@ with app.app_context():
     Interventions.query.delete()
     Users.query.delete()
     Admins.query.delete()
-    PasswordResetToken.query.delete()
-    TokenBlocklist.query.delete()
 
     # Create empty lists
     users = []
@@ -47,7 +45,7 @@ with app.app_context():
     password = "1234"
 
     # Seed Users
-    for i in range(5):
+    for i in range(3):
         users.append(Users(
             first_name=f"User{i+1}",
             last_name=f"Last{i+1}",
@@ -57,22 +55,16 @@ with app.app_context():
             profile_picture="https://img.freepik.com/premium-photo/memoji-happy-man-white-background-emoji_826801-6830.jpg?w=740"
         ))
 
-    # Seed Admins
-    for i in range(3):
-        admins.append(Admins(
-            first_name=f"Admin{i+1}",
-            last_name=f"AdminLast{i+1}",
-            email=f"admin{i+1}@example.com",
-            phone=random.randint(1000000, 9999999),
-            password=generate_password_hash(password),
-            profile_picture="https://img.freepik.com/premium-photo/memoji-african-american-man-white-background-emoji_826801-6858.jpg?w=740"
-        ))
+    # ADMIN SEEDS
+    admins.append(Admins(first_name = "David", last_name = "Parsley", email = "davidparsley.kakhayanga@gmail.com", phone = 1111111 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
+    admins.append(Admins(first_name = "Emmaculate", last_name = "Mwikali", email = "mwikaliemmaculate6@gmail.com", phone = 2222222 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
+    admins.append(Admins(first_name = "Kevin", last_name = "Bett", email = "kevin.bett3@student.moringaschool.com", phone = 3333333 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
 
     # Get unique locations for red flags and interventions
     unique_locations = random.sample(locations, 20)
 
     # Seed 10 RedFlags
-    for i in range(10):
+    for i in range(5):
         location, coordinates = unique_locations.pop()
         red_flags.append(RedFlags(
             title=f"Red Flag Title {i+1}",
@@ -87,7 +79,7 @@ with app.app_context():
         ))
 
     # Seed 10 Interventions
-    for i in range(10):
+    for i in range(5):
         location, coordinates = unique_locations.pop()
         interventions.append(Interventions(
             title=f"Intervention Title {i+1}",
