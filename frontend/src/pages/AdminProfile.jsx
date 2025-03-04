@@ -145,20 +145,20 @@ const AdminProfile = () => {
                                 Status
                               </p>
                               <span
-                                className={`text-lg font-semibold px-3 py-1 rounded-full ${
-                                  red_flag.status === "active"
-                                    ? "bg-green-200 text-green-800"
-                                    : red_flag.status === "under investigation"
-                                    ? "bg-orange-200 text-orange-700"
-                                    : red_flag.status === "rejected"
-                                    ? "bg-red-200 text-red-700"
-                                    : red_flag.status === "resolved"
-                                    ? "bg-blue-200 text-blue-700"
-                                    : ""
-                                }`}
-                              >
-                                {red_flag.status}
-                              </span>
+                              className={`text-lg font-semibold px-3 py-1 rounded-full ${
+                                red_flag.status === "active"
+                                  ? "bg-green-100 text-blue-600"
+                                  : red_flag.status === "under investigation"
+                                  ? "bg-orange-100 text-orange-600"
+                                  : red_flag.status === "rejected"
+                                  ? "bg-red-100 text-red-600"
+                                  : red_flag.status === "resolved"
+                                  ? "bg-green-200 text-green-800"
+                                  : ""
+                              }`}
+                            >
+                              {red_flag.status}
+                            </span>
                             </div>
                           </div>
                         </div>
@@ -236,20 +236,20 @@ const AdminProfile = () => {
                                 Status
                               </p>
                               <span
-                                className={`text-lg font-semibold px-3 py-1 rounded-full ${
-                                  intervention.status === "active"
-                                    ? "bg-green-200 text-green-800"
-                                    : intervention.status === "under investigation"
-                                    ? "bg-orange-200 text-orange-700"
-                                    : intervention.status === "rejected"
-                                    ? "bg-red-200 text-red-700"
-                                    : intervention.status === "resolved"
-                                    ? "bg-blue-200 text-blue-700"
-                                    : ""
-                                }`}
-                              >
-                                {intervention.status}
-                              </span>
+                              className={`text-lg font-semibold px-3 py-1 rounded-full ${
+                                intervention.status === "active"
+                                  ? "bg-green-100 text-blue-600"
+                                  : intervention.status === "under investigation"
+                                  ? "bg-orange-100 text-orange-600"
+                                  : intervention.status === "rejected"
+                                  ? "bg-red-100 text-red-600"
+                                  : intervention.status === "resolved"
+                                  ? "bg-green-200 text-green-800"
+                                  : ""
+                              }`}
+                            >
+                              {intervention.status}
+                            </span>
                             </div>
                           </div>
                         </div>
