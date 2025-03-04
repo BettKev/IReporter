@@ -134,7 +134,7 @@ def index():
                     <th>Auth</th>
                 </tr>
                 <tr>
-                    <td><code>/register</code></td>
+                    <td><code>/user</code></td>
                     <td>POST</td>
                     <td>Registers a new user (Normal or Admin role).</td>
                     <td>&#10008;</td>
@@ -143,6 +143,12 @@ def index():
                     <td><code>/login</code></td>
                     <td>POST</td>
                     <td>Authenticates the current user & returns JWT token.</td>
+                    <td>&#10008;</td>
+                </tr>
+                 <tr>
+                    <td><code>/google_login</code></td>
+                    <td>POST</td>
+                    <td>Registers a new user using google login .</td>
                     <td>&#10008;</td>
                 </tr>
                 <tr>
