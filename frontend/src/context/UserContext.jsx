@@ -321,7 +321,7 @@ const deleteUser = (userId) => {
     // Forgot Password
     const forgotPassword = (email) => {
       toast.loading("Sending password reset email ... ");
-      fetch(`${apiURL}/forgot_password`, {
+      fetch(`${apiURL}/request_password_reset`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ email }),
@@ -337,33 +337,6 @@ const deleteUser = (userId) => {
         });
     };
   
-    // Reset Password
-    const resetPassword = (token, newPassword) => {
-      toast.loading("Resetting your password ... ");
-      fetch(`${apiURL}/reset_password/${token}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ password: newPassword }),
-      })
-        .then((resp) => resp.json())
-        .then((response) => {
-          toast.dismiss();
-          if (response) {
-           
-            navigate(`/reset-password/${token}`); 
-          } else if (response.message) {
-           
-            toast.success(response.message);
-            navigate("/login");  
-          } else if (response.error) {
-            toast.error(response.error);
-          }
-        })
-        .catch((error) => {
-          toast.dismiss();
-          toast.error("Something went wrong. Please try again.");
-        });
-    };
     
   const data = {
     authToken,
@@ -379,7 +352,6 @@ const deleteUser = (userId) => {
     google_login,
     admins,
     forgotPassword,
-    resetPassword,
   };
 
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
