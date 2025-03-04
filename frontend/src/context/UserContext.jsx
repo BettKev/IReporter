@@ -232,7 +232,11 @@ const google_login = (email) => {
           setTimeout(() => {
             navigate("/login");
           }, 500); 
-        } 
+        
+      } 
+      else if (response.error) { 
+        toast.error(response.error);  
+      }
         else if(email.error)
           {
             toast.error("Email already exists");
@@ -294,6 +298,7 @@ const deleteUser = (userId) => {
         if (response.success) {
           toast.dismiss(); 
           toast.success(response.success);
+          navigate("/signup");
           
           const updatedUsers = users.filter(user => user.id !== userId); 
           setUsers(updatedUsers); 
@@ -311,8 +316,28 @@ const deleteUser = (userId) => {
         console.error("Error deleting user:", error); 
       });
   };
-  
 
+
+    // Forgot Password
+    const forgotPassword = (email) => {
+      toast.loading("Sending password reset email ... ");
+      fetch(`${apiURL}/request_password_reset`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+        .then((resp) => resp.json())
+        .then((response) => {
+          toast.dismiss();
+          if (response.message) {
+            toast.success(response.message);
+          } else if (response.error) {
+            toast.error(response.error);
+          }
+        });
+    };
+  
+    
   const data = {
     authToken,
     current_user,
@@ -326,6 +351,7 @@ const deleteUser = (userId) => {
     setAdmins,
     google_login,
     admins,
+    forgotPassword,
   };
 
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;

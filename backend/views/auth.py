@@ -1,9 +1,13 @@
 from flask import jsonify, request, Blueprint
-from models import Users, Admins, db, TokenBlocklist
+from models import Users, Admins, db, TokenBlocklist, PasswordResetToken
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt, decode_token
+from flask_jwt_extended.exceptions import JWTDecodeError 
 from datetime import datetime, timedelta, timezone
-from flask_mail import  Message
+from flask_mail import Message
+from app import jwt
+import secrets
+
 
 def get_mail():
     from app import mail 
@@ -463,7 +467,151 @@ def google_login():
 
     return jsonify({"access_token": access_token, "message": "Google login successful"})
 
-# done 
+# RESET PASSWORD
+FRONTEND_URL = "http://localhost:5173" 
+@auth_bp.route("/request_password_reset", methods=["POST"])
+def request_password_reset():
+    data = request.get_json()
+    email = data.get("email")
+    
+    
+    user = Users.query.filter_by(email=email).first()
+    admin = Admins.query.filter_by(email=email).first()
+
+    if not user and not admin:
+        return jsonify({"message": "If the email is registered, a reset link will be sent."}), 200
+
+    token = secrets.token_urlsafe(16)
+    expires_at = datetime.utcnow() + timedelta(hours=1)
+
+  
+    if user:
+        reset_token = PasswordResetToken(user_id=user.id, token=token, expires_at=expires_at)
+    else:
+        reset_token = PasswordResetToken(admin_id=admin.id, token=token, expires_at=expires_at)
+
+    db.session.add(reset_token)
+    db.session.commit()
+
+    reset_link = f"{FRONTEND_URL}/ResetPassword?token={token}"
+
+    msg = Message("Password Reset Request", sender='iregisterweb@gmail.com', recipients=[email])
+    msg.body = f"Click the following link to reset your password: {reset_link}"
+    mail = get_mail()
+    mail.send(msg)
+
+    return jsonify({"message": "If the email is registered, a reset link will be sent."}), 200
+
+@auth_bp.route("/reset_password", methods=["PUT"])
+def reset_password():
+    data = request.get_json()
+    token = data.get("token")
+    new_password = data.get("password")
+
+    reset_token = PasswordResetToken.query.filter_by(token=token).first()
+
+    if not reset_token:
+        return jsonify({"error": "Invalid or expired token"}), 400
+
+    if reset_token.expires_at < datetime.utcnow():
+        db.session.delete(reset_token)
+        db.session.commit()
+        return jsonify({"error": "Invalid or expired token"}), 400
+
+  
+    if reset_token.user_id:
+        user = Users.query.get(reset_token.user_id)
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        user.password = generate_password_hash(new_password)
+        email = user.email
+        recipient_name = f"{user.first_name} {user.last_name}"
+
+   
+    elif reset_token.admin_id:
+        admin = Admins.query.get(reset_token.admin_id)
+        if not admin:
+            return jsonify({"error": "Admin not found"}), 404
+        admin.password = generate_password_hash(new_password)
+        email = admin.email
+        recipient_name = f"{admin.first_name} {admin.last_name}"
+
+   
+    db.session.delete(reset_token)
+    db.session.commit()
+
+  
+  
+    current_date = datetime.now().strftime("%d-%m-%Y")
+    msg = Message("Password Has been reset", sender='iregisterweb@gmail.com', recipients=[email])
+    msg.html = f"""
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Password Reset Successful</title>
+                <style>
+                    body {{
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f9;
+                        margin: 0;
+                        padding: 0;
+                    }}
+                    .container {{
+                        width: 100%;
+                        max-width: 600px;
+                        margin: 0 auto;
+                        padding: 20px;
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    }}
+                    .header {{
+                        text-align: center;
+                        padding-bottom: 20px;
+                    }}
+                    .header h1 {{
+                        color: #11172b;
+                        font-size: 24px;
+                    }}
+                    .body-content {{
+                        font-size: 16px;
+                        line-height: 1.6;
+                        margin-bottom: 20px;
+                    }}
+                    .footer {{
+                        font-size: 14px;
+                        color: #777;
+                        text-align: center;
+                    }}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>Password Reset Successful</h1>
+                    </div>
+                    <div class="body-content">
+                        <p>Hello {recipient_name},</p>
+                        <p>Your password has been successfully reset.</p>
+                        <p>If you did not request this change, please contact us immediately.</p>
+                        <p>Thank you for using iRegister!</p>
+                    </div>
+                    <div class="footer">
+                        <p><i>Sent on: {current_date}</i></p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+
+    # Send the email
+    mail = get_mail()
+    mail.send(msg)
+
+    return jsonify({"message": "Password reset successfully and email sent."}), 200
+
 # LOG OUT CURRENT USER
 @auth_bp.route("/logout", methods=["DELETE"])
 @jwt_required()
@@ -473,3 +621,7 @@ def logout():
     db.session.add(TokenBlocklist(jti=jti, created_at=now))
     db.session.commit()
     return jsonify({"success": "Logged Out successfully"}), 200
+
+	
+
+

@@ -14,6 +14,7 @@ app = Flask(__name__)
 CORS(app)
 
 
+
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
@@ -39,7 +40,6 @@ app.register_blueprint(user_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(red_flag_bp)
 app.register_blueprint(intervention_bp)
-# app.register_blueprint(contact_us_bp)
 
 # Test route
 @app.route("/")
@@ -134,7 +134,7 @@ def index():
                     <th>Auth</th>
                 </tr>
                 <tr>
-                    <td><code>/register</code></td>
+                    <td><code>/user</code></td>
                     <td>POST</td>
                     <td>Registers a new user (Normal or Admin role).</td>
                     <td>&#10008;</td>
@@ -143,6 +143,12 @@ def index():
                     <td><code>/login</code></td>
                     <td>POST</td>
                     <td>Authenticates the current user & returns JWT token.</td>
+                    <td>&#10008;</td>
+                </tr>
+                 <tr>
+                    <td><code>/google_login</code></td>
+                    <td>POST</td>
+                    <td>Registers a new user using google login .</td>
                     <td>&#10008;</td>
                 </tr>
                 <tr>

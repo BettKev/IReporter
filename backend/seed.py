@@ -1,5 +1,5 @@
 from app import app
-from models import db, Users, Admins, RedFlags, Interventions
+from models import db, Users, Admins, RedFlags, Interventions, TokenBlocklist, PasswordResetToken
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 import random
@@ -35,6 +35,8 @@ with app.app_context():
     Interventions.query.delete()
     Users.query.delete()
     Admins.query.delete()
+    PasswordResetToken.query.delete()
+    TokenBlocklist.query.delete()
 
     # Create empty lists
     users = []
@@ -75,7 +77,7 @@ with app.app_context():
         red_flags.append(RedFlags(
             title=f"Red Flag Title {i+1}",
             description=f"Description for red flag {i+1}",
-            image="red_flag_image.jpg",
+            image="https://img.freepik.com/free-vector/money-laundering-isometric-illustration-with-criminals-selling-weapons-illegally-3d-vector-illustration_98292-8520.jpg?t=st=1740139720~exp=1740143320~hmac=d9b8cef0ccfb3c978c49aa14c73771fb3fa2c64a9842821fd991505686833b27&w=826",
             video="red_flag_video.mp4",
             created_at=datetime.utcnow(),
             location=location,
@@ -90,7 +92,7 @@ with app.app_context():
         interventions.append(Interventions(
             title=f"Intervention Title {i+1}",
             description=f"Description for intervention {i+1}",
-            image="intervention_image.jpg",
+            image="https://img.freepik.com/premium-photo/wooden-police-barricades-city-new-york_1236033-32262.jpg?w=740",
             video="intervention_video.mp4",
             created_at=datetime.utcnow(),
             location=location,

@@ -8,17 +8,17 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import config from "../config"; // Import the default export
-const { apiURL } = config; // Destructure the apiURL from the config object
+import config from "../config"; 
+const { apiURL } = config; 
 
 const { BaseLayer } = LayersControl;
 
 // Custom Icons
 const redFlagIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
+  iconSize: [12, 20],
+  iconAnchor: [6, 20],
+  popupAnchor: [1, -20],
 });
 
 // Default Map Center (Nairobi, Kenya)
@@ -45,18 +45,17 @@ const OpenStreetMap = () => {
       }
     };
     fetchRedFlags();
-  }, []); // Add empty dependency array to run once after mount
-
+  }, []); 
   return (
-    <MapContainer className="map-style" // Applying the updated class
+    <MapContainer className="map-style" 
     center={center}
-    zoom={12}
+    zoom={6}
     style={{
       height: "400px",
       width: "100%",
       borderRadius: "1rem",
       overflow: "hidden",
-      // zIndex: -1, // Lower z-index to keep map behind modal
+      // zIndex: -1, 
     }}
     >
       <LayersControl position="topright">

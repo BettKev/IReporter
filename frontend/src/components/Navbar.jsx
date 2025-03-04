@@ -4,14 +4,12 @@ import { React, useContext, useState } from "react";
 
 export default function Navbar() {
   const { current_user, current_admin } = useContext(UserContext);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
 
   return (
-    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl bg-gray-800">
+    <nav className="Navbar fixed top-0 left-0 w-full z-50 shadow-xl rounded-b-3xl bg-black">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
-        {/* Logo */}
+        {/* Logo Section */}
         <div className="Navbar-logo flex items-center space-x-3 text-3xl font-bold">
           <span className="text-white hover:text-purple-600">iReporter</span>
           <svg
@@ -25,62 +23,58 @@ export default function Navbar() {
           </svg>
         </div>
 
-        {/* Hamburger Menu Button */}
+        {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white"
-          onClick={toggleMenu}
+          className="sm:hidden flex items-center text-white"
+          onClick={() => setIsOpen(!isOpen)}
         >
-          {isMenuOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-8 w-8"
-            >
+          <svg
+            className="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            {isOpen ? (
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
                 d="M6 18L18 6M6 6l12 12"
               />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-8 w-8"
-            >
+            ) : (
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
                 d="M4 6h16M4 12h16M4 18h16"
               />
-            </svg>
-          )}
+            )}
+          </svg>
         </button>
 
-        {/* Navbar Links - Wide Screen */}
-        <div className="hidden md:flex flex-grow justify-center space-x-6">
+        {/* Desktop Links (only visible on larger screens) */}
+        <div className="hidden sm:flex flex-grow justify-center space-x-6">
           {current_user && !current_admin ? (
             <>
-              <Link to="/userprofile" className="text-white text-lg hover:text-purple-600">
+              <Link
+                to="/userprofile"
+                className="text-white text-lg hover:text-purple-600"
+              >
                 Dashboard
               </Link>
-              <Link to="/about" className="text-white text-lg hover:text-purple-600">
-                About
-              </Link>
+              <a
+                href="mailto:iregisterweb@gmail.com"
+                className="text-white text-lg hover:text-purple-600"
+              >
+                Contact Us
+              </a>
             </>
           ) : current_admin && !current_user ? (
             <>
-              <Link to="/adminprofile" className="text-white text-lg hover:text-purple-600">
+              <Link
+                to="/adminprofile"
+                className="text-white text-lg hover:text-purple-600"
+              >
                 Dashboard
-              </Link>
-              <Link to="/about" className="text-white text-lg hover:text-purple-600">
-                About
               </Link>
             </>
           ) : (
@@ -88,55 +82,80 @@ export default function Navbar() {
               <Link to="/" className="text-white text-lg hover:text-purple-600">
                 Home
               </Link>
-              <Link to="/about" className="text-white text-lg hover:text-purple-600">
+              <Link
+                to="/about"
+                className="text-white text-lg hover:text-purple-600"
+              >
                 About
               </Link>
-              <Link to="/contacts" className="text-white text-lg hover:text-purple-600">
-                Contact
-              </Link>
+              <a
+                href="mailto:iregisterweb@gmail.com"
+                className="text-white text-lg hover:text-purple-600"
+              >
+                Contact Us
+              </a>
             </>
           )}
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className={`${
-          isMenuOpen ? "flex" : "hidden"
-        } md:hidden flex-col items-center space-y-4 pb-4 bg-gray-800`}
-      >
-        {current_user && !current_admin ? (
-          <>
-            <Link to="/userprofile" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
-              Dashboard
-            </Link>
-            <Link to="/about" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
-              About
-            </Link>
-          </>
-        ) : current_admin && !current_user ? (
-          <>
-            <Link to="/adminprofile" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
-              Dashboard
-            </Link>
-            <Link to="/about" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
-              About
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link to="/" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
-              Home
-            </Link>
-            <Link to="/about" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
-              About
-            </Link>
-            <Link to="/contacts" className="text-white text-lg hover:text-purple-600" onClick={toggleMenu}>
-              Contact
-            </Link>
-          </>
-        )}
-      </div>
+      {/* Mobile Menu (only visible on small screens when open) */}
+      {isOpen && (
+        <div className="sm:hidden flex flex-col items-center bg-black text-white py-4 space-y-4">
+          {current_user && !current_admin ? (
+            <>
+              <Link
+                to="/userprofile"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <a
+                href="mailto:iregisterweb@gmail.com"
+                className="text-white text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact Us
+              </a>
+            </>
+          ) : current_admin && !current_user ? (
+            <>
+              <Link
+                to="/adminprofile"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+              <Link
+                to="/about"
+                className="text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </Link>
+              <a
+                href="mailto:iregisterweb@gmail.com"
+                className="text-white text-lg hover:text-purple-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact Us
+              </a>
+            </>
+          )}
+        </div>
+      )}
     </nav>
   );
 }

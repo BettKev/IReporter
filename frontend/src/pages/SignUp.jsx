@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
+// import { toast } from 'react-toastify';
 
 export default function SignUp() {
 
@@ -15,16 +16,61 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
+  // Handle submit with data validation and integrity
   function handleSubmit(e) {
     e.preventDefault();
-    
-    if (password !== repeatPassword) {
-        return alert("Password doesn't match");
-    } else {
-        addUser(first_name, last_name, phone, email, password);
+
+    // Trim inputs
+    const cleanFirstName = first_name.trim();
+    const cleanLastName = last_name.trim();
+    const cleanPhone = phone.trim();
+    const cleanEmail = email.trim();
+    const cleanPassword = password.trim();
+    const cleanRepeatPassword = repeatPassword.trim();
+
+    const newErrors =[];
+
+    // Name validation (only letters, between 2-50 characters)
+    const nameRegex = /^[a-zA-Z]{2,50}$/;
+    if (!nameRegex.test(cleanFirstName) || !nameRegex.test(cleanLastName)) {
+        newErrors.push("Names must only contain letters and be between 2 and 50 characters.");
     }
+
+    // Phone validation (only digits, 10-15 characters)
+    const phoneRegex = /^[0-9]{10,15}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+        newErrors.push("Phone number must contain only digits and be between 10 and 15 characters.");
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+        newErrors.push("Please enter a valid email address.");
+    }
+
+    // Password validation (min 8 chars, uppercase, lowercase, number, special char)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(cleanPassword)) {
+        newErrors.push("Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.");
+    }
+
+    // Confirm password match
+    if (cleanPassword !== cleanRepeatPassword) {
+        newErrors.push("Passwords don't match.");
+    }
+
+    if (newErrors.length > 0){
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors([]);
+    // If all checks pass, proceed with user creation
+    addUser(cleanFirstName, cleanLastName, cleanPhone, cleanEmail, cleanPassword);
 }
+
 
 const google_signup = (credential)=>{
   const user= jwtDecode(credential)
@@ -153,6 +199,13 @@ const google_signup = (credential)=>{
               Create an account
             </button>
           </div>
+           {errors.length > 0 && (
+            <div className="error-messages text-red-500 mt-4">
+              {errors.map((error, index) => (
+                <p key={index}>{error}</p>
+              ))}
+            </div>
+          )}
 
           <div className="my-4 flex items-center gap-4">
                 <hr className="w-full border-gray-300" />
