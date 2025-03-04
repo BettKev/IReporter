@@ -75,7 +75,7 @@ with app.app_context():
             location=location,
             coordinates=coordinates,
             status="active",
-            user_id=random.randint(1, 5)
+            user_id=random.randint(1, 3)
         ))
 
     # Seed 10 Interventions
@@ -90,7 +90,7 @@ with app.app_context():
             location=location,
             coordinates=coordinates,
             status="active",
-            user_id=random.randint(1, 5)
+            user_id=random.randint(1, 3)
         ))
 
     # Insert into database
