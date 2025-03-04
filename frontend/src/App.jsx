@@ -15,6 +15,7 @@ import SingleIntervention from "./pages/SingleIntervention";
 import About from "./pages/About";
 import SettingsPage from "./pages/SettingsPage";
 import NoPage from "./pages/NoPage";
+import NewPassword from "./pages/NewPassword";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/singleintervention/:id" element={<SingleIntervention />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/reset-password/:token" element={<NewPassword />} />
                 <Route path="*" element={<NoPage />} />
               </Route>
             </Routes>

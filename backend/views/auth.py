@@ -1,9 +1,12 @@
 from flask import jsonify, request, Blueprint
 from models import Users, Admins, db, TokenBlocklist
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt, decode_token
+from flask_jwt_extended.exceptions import JWTDecodeError 
 from datetime import datetime, timedelta, timezone
-from flask_mail import  Message
+from flask_mail import Message
+from app import jwt
+
 
 def get_mail():
     from app import mail 
@@ -473,3 +476,85 @@ def logout():
     db.session.add(TokenBlocklist(jti=jti, created_at=now))
     db.session.commit()
     return jsonify({"success": "Logged Out successfully"}), 200
+
+
+# Forgot Password Route
+@auth_bp.route("/forgot_password", methods=["POST"])
+def forgot_password():
+    data = request.get_json()
+    email = data.get("email")
+    
+    # Check if the email exists in Users or Admins
+    user = Users.query.filter_by(email=email).first()
+    admin = Admins.query.filter_by(email=email).first()
+    
+    if not user and not admin:
+        return jsonify({"error": "Email not found"}), 404
+
+    # Explicitly include email in the token payload
+    reset_token = create_access_token(identity=email, expires_delta=timedelta(hours=1))
+
+    # Send the password reset email with the token
+    mail = get_mail()
+    msg = Message(
+        "Password Reset Request",
+        sender="iregisterweb@gmail.com", 
+        recipients=[email]
+    )
+    msg.body = f"To reset your password, click the following link: \nhttp://127.0.0.1:5000/reset_password/{reset_token}"
+    mail.send(msg)
+
+    return jsonify({"message": "Password reset link sent to your email"}), 200
+
+
+
+# Reset Password Route
+# Reset Password Route
+@auth_bp.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    if request.method == "GET":
+        try:
+            # Decode the token and validate it
+            payload = decode_token(token)
+            email = payload.get("sub")  # Extract email from token
+            if not email:
+                return jsonify({"error": "Email not found in token"}), 400
+            
+            # Simply return a 200 status code without a message, for the frontend to handle
+            return jsonify({"message": "Valid token"}), 200
+        
+        except JWTDecodeError as e:
+            # Return a 400 error if the token is invalid or expired
+            return jsonify({"error": f"Invalid or expired token: {str(e)}"}), 400
+
+    if request.method == "POST":
+        try:
+            payload = decode_token(token)
+            email = payload.get("sub")
+            if not email:
+                return jsonify({"error": "Email not found in token"}), 400
+        except JWTDecodeError as e:
+            return jsonify({"error": f"Invalid or expired token: {str(e)}"}), 400
+
+        data = request.get_json()
+        new_password = data.get("password")
+
+        if not new_password:
+            return jsonify({"error": "Password is required"}), 400
+
+        hashed_password = generate_password_hash(new_password)
+
+        # Check if the user exists in Users or Admins and reset password
+        user = Users.query.filter_by(email=email).first()
+        if user:
+            user.password = hashed_password
+            db.session.commit()
+            return jsonify({"message": "Password has been reset successfully"}), 200
+
+        admin = Admins.query.filter_by(email=email).first()
+        if admin:
+            admin.password = hashed_password
+            db.session.commit()
+            return jsonify({"message": "Password has been reset successfully"}), 200
+
+        return jsonify({"error": "User not found"}), 404

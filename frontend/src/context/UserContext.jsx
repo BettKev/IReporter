@@ -316,8 +316,55 @@ const deleteUser = (userId) => {
         console.error("Error deleting user:", error); 
       });
   };
-  
 
+
+    // Forgot Password
+    const forgotPassword = (email) => {
+      toast.loading("Sending password reset email ... ");
+      fetch(`${apiURL}/forgot_password`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+        .then((resp) => resp.json())
+        .then((response) => {
+          toast.dismiss();
+          if (response.message) {
+            toast.success(response.message);
+          } else if (response.error) {
+            toast.error(response.error);
+          }
+        });
+    };
+  
+    // Reset Password
+    const resetPassword = (token, newPassword) => {
+      toast.loading("Resetting your password ... ");
+      fetch(`${apiURL}/reset_password/${token}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ password: newPassword }),
+      })
+        .then((resp) => resp.json())
+        .then((response) => {
+          toast.dismiss();
+          if (response) {
+           
+            navigate(`/reset-password/${token}`); 
+          } else if (response.message) {
+           
+            toast.success(response.message);
+            navigate("/login");  
+          } else if (response.error) {
+            toast.error(response.error);
+          }
+        })
+        .catch((error) => {
+          toast.dismiss();
+          toast.error("Something went wrong. Please try again.");
+        });
+    };
+    
   const data = {
     authToken,
     current_user,
@@ -331,6 +378,8 @@ const deleteUser = (userId) => {
     setAdmins,
     google_login,
     admins,
+    forgotPassword,
+    resetPassword,
   };
 
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
