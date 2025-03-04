@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from flask_mail import Message
 from app import jwt
 import secrets
+from config import FRONTEND_URL
 
 
 def get_mail():
@@ -468,7 +469,6 @@ def google_login():
     return jsonify({"access_token": access_token, "message": "Google login successful"})
 
 # RESET PASSWORD
-FRONTEND_URL = "http://localhost:5173" 
 @auth_bp.route("/request_password_reset", methods=["POST"])
 def request_password_reset():
     data = request.get_json()

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div>
       <div className="home-page">
         <div className="home-container">
           <div className="text-section">
