@@ -1,5 +1,5 @@
 from app import app
-from models import db, Users, Admins, RedFlags, Interventions, TokenBlocklist, Password
+from models import db, Users, Admins, RedFlags, Interventions, TokenBlocklist, PasswordResetToken
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 import random
@@ -35,6 +35,8 @@ with app.app_context():
     Interventions.query.delete()
     Users.query.delete()
     Admins.query.delete()
+    TokenBlocklist.query.delete()
+    PasswordResetToken.query.delete()
 
     # Create empty lists
     users = []
