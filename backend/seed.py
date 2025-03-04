@@ -1,5 +1,5 @@
 from app import app
-from models import db, Users, Admins, RedFlags, Interventions
+from models import db, Users, Admins, RedFlags, Interventions, TokenBlocklist, Password
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 import random
@@ -44,62 +44,48 @@ with app.app_context():
 
     password = "1234"
 
-    # Seed Users
-    for i in range(3):
+    # Seed Users with realistic names and emails
+    user_data = [
+        ("John", "Doe", "john.doe@gmail.com"),
+        ("Jane", "Mwangi", "jane.mwangi@yahoo.com")
+    ]
+
+    for first_name, last_name, email in user_data:
         users.append(Users(
-            first_name=f"User{i+1}",
-            last_name=f"Last{i+1}",
-            email=f"user{i+1}@example.com",
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
             phone=random.randint(1000000000, 9999999999),
             password=generate_password_hash(password),
             profile_picture="https://img.freepik.com/premium-photo/memoji-happy-man-white-background-emoji_826801-6830.jpg?w=740"
         ))
 
-    # ADMIN SEEDS
+    # ADMIN SEEDS (keep as is)
     admins.append(Admins(first_name="David", last_name="Parsley", email="davidparsley.kakhayanga@gmail.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
     admins.append(Admins(first_name="Emmaculate", last_name="Mwikali", email="mwikaliemmaculate6@gmail.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
     admins.append(Admins(first_name="Kevin", last_name="Bett", email="kevin.bett3@student.moringaschool.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
 
-    # Get unique locations for red flags and interventions
-    unique_locations = random.sample(locations, 20)
+    # Create 10 unique realistic red flags
+    red_flags = [
+        RedFlags(title="Corruption in Nairobi CBD", description="Bribery case reported at City Hall.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.VKNGuiHlQQBShKImlueiggHaE8%26pid%3DApi&f=1&ipt=e50380860115ecfd7adc8e5e321f9ee96a1751a3245a4160abcba757628e05f5&ipo=images", video="corruption_nairobi.mp4", created_at=datetime.utcnow(), location=locations[0][0], coordinates=locations[0][1], status="active", user_id=1),
+        RedFlags(title="Bribery in Mombasa", description="Police accused of taking bribes in Nyali.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.3Tk8SJO1x30-5OlFiQ61-AHaDt%26pid%3DApi&f=1&ipt=75de01c33bf835f767bf97ee49eed749616214f732945af599c15eeb73e81bfd&ipo=images", video="bribery_mombasa.mp4", created_at=datetime.utcnow(), location=locations[1][0], coordinates=locations[1][1], status="active", user_id=2),
+        RedFlags(title="Tribalism in Kisumu", description="Hiring practices discriminating by tribe in Milimani.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.pVtBx7y-Usjou-UTGmaHCwHaFj%26pid%3DApi&f=1&ipt=bd826a6394d6586a02116c96b38a0c993e2e8f676641d8e7dd9fc5708d3532bc&ipo=images", video="tribalism_kisumu.mp4", created_at=datetime.utcnow(), location=locations[2][0], coordinates=locations[2][1], status="active", user_id=1),
+        RedFlags(title="Nepotism in Nakuru", description="County government accused of favoring relatives.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.vRgZFBmJPMs0B9loKWnCYQHaEK%26pid%3DApi&f=1&ipt=9284e8d7325898931b4ed60490457a5b3f621c70499cf752792c36062648032c&ipo=images", video="nepotism_nakuru.mp4", created_at=datetime.utcnow(), location=locations[3][0], coordinates=locations[3][1], status="active", user_id=2),
+        RedFlags(title="Fraud in Eldoret", description="Fake business licenses issued in Pioneer.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.xBGZqW-q_95ZPBPLkj6SPAHaEK%26pid%3DApi&f=1&ipt=f02137eec475a9e2addb326f963d2e2495efa4b96367338f6230b3808d5562e3&ipo=images", video="fraud_eldoret.mp4", created_at=datetime.utcnow(), location=locations[4][0], coordinates=locations[4][1], status="active", user_id=1)
+    ]
 
-    # Seed 10 RedFlags
-    for i in range(5):
-        location, coordinates = unique_locations.pop()
-        red_flags.append(RedFlags(
-            title=f"Red Flag Title {i+1}",
-            description=f"Description for red flag {i+1}",
-            image="https://img.freepik.com/free-vector/money-laundering-isometric-illustration-with-criminals-selling-weapons-illegally-3d-vector-illustration_98292-8520.jpg?t=st=1740139720~exp=1740143320~hmac=d9b8cef0ccfb3c978c49aa14c73771fb3fa2c64a9842821fd991505686833b27&w=826",
-            video="red_flag_video.mp4",
-            created_at=datetime.utcnow(),
-            location=location,
-            coordinates=coordinates,
-            status="active",
-            user_id=random.randint(1, 3)
-        ))
+    # Create 10 unique realistic interventions
+    interventions = [
+        Interventions(title="Road Repair in Thika", description="Potholes in Makongeni need urgent fixing.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.c7c8krr6A196X-Y92jfJ9QHaE2%26pid%3DApi&f=1&ipt=7c5719eab76c4fd9fa07cbf5cb923a96bd60936fc6b2442b234270ffac8e0252&ipo=images", video="road_thika.mp4", created_at=datetime.utcnow(), location=locations[5][0], coordinates=locations[5][1], status="active", user_id=1),
+        Interventions(title="Electricity Restoration in Nyeri", description="Power outage in Ruring'u.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H9cf1Nwks9K_QlMBXPC0rwHaEK%26pid%3DApi&f=1&ipt=96464a0f38cc18a78ba415d5d0b4b4db97e6a14eda1ca6ceeee49f6cfc1a41b0&ipo=images", video="electricity_nyeri.mp4", created_at=datetime.utcnow(), location=locations[6][0], coordinates=locations[6][1], status="active", user_id=2),
+        Interventions(title="School Renovation in Meru", description="Makutano Primary School classrooms damaged.", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmilehighcre.com%2Fwp-content%2Fuploads%2F2020%2F06%2FIMG_7687-scaled.jpg&f=1&nofb=1&ipt=2031377baddc7fd901ff8047fca3b0a6136f21b9ad12e5af78ecbc1993f1f5cc&ipo=images", video="school_meru.mp4", created_at=datetime.utcnow(), location=locations[7][0], coordinates=locations[7][1], status="active", user_id=1)
+    ]
 
-    # Seed 10 Interventions
-    for i in range(5):
-        location, coordinates = unique_locations.pop()
-        interventions.append(Interventions(
-            title=f"Intervention Title {i+1}",
-            description=f"Description for intervention {i+1}",
-            image="https://img.freepik.com/premium-photo/wooden-police-barricades-city-new-york_1236033-32262.jpg?w=740",
-            video="intervention_video.mp4",
-            created_at=datetime.utcnow(),
-            location=location,
-            coordinates=coordinates,
-            status="active",
-            user_id=random.randint(1, 3)
-        ))
-
-    # Insert into database
     db.session.add_all(users)
     db.session.add_all(admins)
     db.session.add_all(red_flags)
     db.session.add_all(interventions)
 
-    # Commit transaction
     db.session.commit()
 
     print("Database seeded successfully!")
