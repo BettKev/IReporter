@@ -68,7 +68,7 @@ class Admins(db.Model):
     profile_picture = db.Column(db.String(512), nullable=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(512), nullable=False)
-    phone = db.Column(db.Integer, unique=True, nullable=False)
+    phone = db.Column(db.Integer, unique=True, nullable=True)
     provider = db.Column(db.String(50), default="email")
        
 

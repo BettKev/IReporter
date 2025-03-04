@@ -56,9 +56,9 @@ with app.app_context():
         ))
 
     # ADMIN SEEDS
-    admins.append(Admins(first_name = "David", last_name = "Parsley", email = "davidparsley.kakhayanga@gmail.com", phone = 1111111 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
-    admins.append(Admins(first_name = "Emmaculate", last_name = "Mwikali", email = "mwikaliemmaculate6@gmail.com", phone = 2222222 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
-    admins.append(Admins(first_name = "Kevin", last_name = "Bett", email = "kevin.bett3@student.moringaschool.com", phone = 3333333 , password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
+    admins.append(Admins(first_name="David", last_name="Parsley", email="davidparsley.kakhayanga@gmail.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
+    admins.append(Admins(first_name="Emmaculate", last_name="Mwikali", email="mwikaliemmaculate6@gmail.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
+    admins.append(Admins(first_name="Kevin", last_name="Bett", email="kevin.bett3@student.moringaschool.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
 
     # Get unique locations for red flags and interventions
     unique_locations = random.sample(locations, 20)
