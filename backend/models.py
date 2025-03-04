@@ -71,7 +71,17 @@ class Admins(db.Model):
     phone = db.Column(db.Integer, unique=True, nullable=False)
     provider = db.Column(db.String(50), default="email")
        
-    
+
+# Password Reset Table
+class PasswordResetToken(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # Corrected line
+    token = db.Column(db.String(32), unique=True, nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+def __repr__(self):
+    return f'<PasswordResetToken {self.token}>'    
 
 # TokenBlocklist Table
 class TokenBlocklist(db.Model):

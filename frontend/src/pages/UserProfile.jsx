@@ -6,7 +6,7 @@ import Profile from "./Profile";
 import { FiLogOut } from "react-icons/fi";
 import { HiOutlineCog, HiOutlineUser, HiOutlineFlag } from "react-icons/hi";
 import RedFlagMap from "../components/RedFlagMap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InterventionMap from "../components/IntervenstionMap";
 import SettingsPage from "./SettingsPage";
 
@@ -16,6 +16,7 @@ const UserProfile = () => {
   const { current_user, logout, users } = useContext(UserContext);
   const { red_flags, addRedFlag } = useContext(RedFlagContext);
   const { interventions, addIntervention } = useContext(InterventionContext);
+   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
