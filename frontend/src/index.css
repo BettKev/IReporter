@@ -323,6 +323,20 @@ body {
 
 /* NoPage STYLING ENDS HERE */
 
+/* RESET PASSWORD  STYLING STARTS HERE  */
+.password-strength-weak {
+  color: red;
+}
+
+.password-strength-medium {
+  color: orange;
+}
+
+.password-strength-strong {
+  color: green;
+}
+/* RESET PASSWORD  STYLING ENDS HERE  */
+
 /* Responsiveness Styling Starts here  */
 @media screen and (max-width: 830px) {
   /* About page responsiveness starts here */
