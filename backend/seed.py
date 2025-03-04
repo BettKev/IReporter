@@ -2,7 +2,6 @@ from app import app
 from models import db, Users, Admins, RedFlags, Interventions, TokenBlocklist, PasswordResetToken
 from werkzeug.security import generate_password_hash
 from datetime import datetime
-import random
 
 # List of diverse locations across Kenya and Uganda with fixed coordinates
 locations = [
