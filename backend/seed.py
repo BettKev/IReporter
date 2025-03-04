@@ -47,21 +47,8 @@ with app.app_context():
     password = "1234"
 
     # Seed Users with realistic names and emails
-    user_data = [
-        ("John", "Doe", "john.doe@gmail.com"),
-        ("Jane", "Mwangi", "jane.mwangi@yahoo.com")
-    ]
-
-    for first_name, last_name, email in user_data:
-        users.append(Users(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            phone=random.randint(1000000000, 9999999999),
-            password=generate_password_hash(password),
-            profile_picture="https://img.freepik.com/premium-photo/memoji-happy-man-white-background-emoji_826801-6830.jpg?w=740"
-        ))
-
+    users.append(Users(first_name="John", last_name="Doe", email="john.doe@gmail.com", phone=10786892, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
+    users.append(Users(first_name="Jane", last_name="Mwangi", email="jane.mwangi@example.com", phone=10886892, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid"))
     # ADMIN SEEDS (keep as is)
     admins.append(Admins(first_name="David", last_name="Parsley", email="davidparsley.kakhayanga@gmail.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
     admins.append(Admins(first_name="Emmaculate", last_name="Mwikali", email="mwikaliemmaculate6@gmail.com", phone=None, password=generate_password_hash(password), profile_picture="https://img.freepik.com/premium-vector/simple-cute-black-boy-ith-beard-icon-vector_960391-425.jpg?semt=ais_hybrid", provider="email"))
