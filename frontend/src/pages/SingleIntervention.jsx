@@ -81,7 +81,7 @@ export default function SingleIntervention() {
         {/* Image on the left */}
         <div className="w-[45%] h-[500px] bg-gray-100">
           <img
-            src={image || "https://via.placeholder.com/600x600"} // fallback image
+            src={intervention?.image} // fallback image
             alt="Red Flag"
             className="w-full h-full object-cover"
           />
@@ -91,7 +91,7 @@ export default function SingleIntervention() {
         <div className="w-[55%] p-8 space-y-6">
           {/* Title */}
           <div className="text-center">
-            <h1 className="text-4xl font-semibold text-black">{title || "Untitled"}</h1>
+            <h1 className="text-4xl font-semibold text-black">{intervention?.title}</h1>
             <h2 className="text-lg text-gray-700 uppercase font-medium mt-2">
             Intervention Details
             </h2>
