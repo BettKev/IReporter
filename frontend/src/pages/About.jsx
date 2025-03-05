@@ -50,7 +50,7 @@ export default function About() {
             {/* Team Member */}
             <div className="group bg-gray-800 rounded-lg p-6 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl hover:bg-gray-200 hover:text-gray-900 flex items-center">
               <img
-                src="/path/to/profile1.jpg"
+                src="/avatar.png"
                 alt="Kevin Bett"
                 className="w-16 h-16 rounded-full mr-4"
               />
@@ -63,7 +63,7 @@ export default function About() {
             {/* Another Team Member */}
             <div className="group bg-gray-800 rounded-lg p-6 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl hover:bg-gray-200 hover:text-gray-900 flex items-center">
               <img
-                src="/path/to/profile2.jpg"
+                src="/iR-512x512.png"
                 alt="Emmaculate Mwikali"
                 className="w-16 h-16 rounded-full mr-4"
               />
@@ -76,7 +76,7 @@ export default function About() {
             {/* Another Team Member */}
             <div className="group bg-gray-800 rounded-lg p-6 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl hover:bg-gray-200 hover:text-gray-900 flex items-center">
               <img
-                src="/path/to/profile3.jpg"
+                src="/myImage2.jpg"
                 alt="David Parsley"
                 className="w-16 h-16 rounded-full mr-4"
               />
