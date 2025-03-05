@@ -89,6 +89,7 @@ export default function Navbar() {
                 About
               </Link>
               <a
+                target="_blank"
                 href="mailto:iregisterweb@gmail.com"
                 className="text-white text-lg hover:text-purple-600"
               >
