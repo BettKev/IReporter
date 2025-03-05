@@ -27,7 +27,7 @@ export default function Footer() {
             </a>
           </li>
           <li>
-            <Link to={"https://ireporter-8cyw.onrender.com"} className="hover:underline me-4 md:me-6" target="_blank" rel="noopener noreferrer">API Documentation</Link>
+            <Link to={"https://ireporter-ozkg.onrender.com"} className="hover:underline me-4 md:me-6" target="_blank" rel="noopener noreferrer">API Documentation</Link>
           </li>
           <li>
             <Link to={"https://pzvzxqm0.status.cron-job.org/"} className="hover:underline" target="_blank" rel="noopener noreferrer">Server Status</Link>

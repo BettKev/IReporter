@@ -71,6 +71,8 @@ with app.app_context():
 
     db.session.add_all(users)
     db.session.add_all(admins)
+    db.session.commit()
+    
     db.session.add_all(red_flags)
     db.session.add_all(interventions)
 
