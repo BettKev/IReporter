@@ -72,7 +72,7 @@ def register_user():
 
     # Send Welcome Email
     current_date = datetime.now().strftime("%d-%m-%Y")
-    msg = Message('Welcome to iRegister', sender='ireporterproject@gmail.com', recipients=[email])
+    msg = Message('Welcome to iReporter', sender='ireporterproject@gmail.com', recipients=[email])
 
     msg.html = f"""
     <!DOCTYPE html>

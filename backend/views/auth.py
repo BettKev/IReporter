@@ -86,9 +86,9 @@ def login():
                     </div>
                     <div class="body-content">
                         <p>Hello {user.first_name} {user.last_name},</p>
-                        <p>You have successfully logged in to your iRegister account.</p>
+                        <p>You have successfully logged in to your iReporter account.</p>
                         <p>If you did not initiate this login, please contact us immediately.</p>
-                        <p>Thank you for using iRegister!</p>
+                        <p>Thank you for using iReporter!</p>
                     </div>
                     <div class="footer">
                         <p><i>Sent on: {current_date}</i></p>
@@ -160,9 +160,9 @@ def login():
                     </div>
                     <div class="body-content">
                         <p>Hello {admin.first_name} {admin.last_name},</p>
-                        <p>You have successfully logged in to your iRegister Admin account.</p>
+                        <p>You have successfully logged in to your iReporter Admin account.</p>
                         <p>If you did not initiate this login, please contact us immediately.</p>
-                        <p>Thank you for using iRegister!</p>
+                        <p>Thank you for using iReporter!</p>
                     </div>
                     <div class="footer">
                         <p><i>Sent on: {current_date}</i></p>
@@ -325,7 +325,7 @@ def update_info():
                         {f"<li><strong>Password:</strong> Your password has been updated.</li>" if new_password else ""}
                     </ul>
                     <p>If you did not initiate these changes, please contact us immediately.</p>
-                    <p>Thank you for using iRegister!</p>
+                    <p>Thank you for using iReporter!</p>
                 </div>
                 <div class="footer">
                     <p><i>Sent on: {current_date}</i></p>
@@ -435,7 +435,7 @@ def update_info():
                             {f"<li><strong>Password:</strong> Your password has been updated.</li>" if new_password else ""}
                         </ul>
                         <p>If you did not initiate these changes, please contact us immediately.</p>
-                        <p>Thank you for using iRegister!</p>
+                        <p>Thank you for using iReporter!</p>
                     </div>
                     <div class="footer">
                         <p><i>Sent on: {current_date}</i></p>
@@ -596,7 +596,7 @@ def reset_password():
                         <p>Hello {recipient_name},</p>
                         <p>Your password has been successfully reset.</p>
                         <p>If you did not request this change, please contact us immediately.</p>
-                        <p>Thank you for using iRegister!</p>
+                        <p>Thank you for using iReporter!</p>
                     </div>
                     <div class="footer">
                         <p><i>Sent on: {current_date}</i></p>
