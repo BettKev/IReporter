@@ -80,7 +80,7 @@ def add_intervention():
     db.session.add(new_intervention)
     db.session.commit()
     current_date = datetime.now().strftime("%d-%m-%Y")
-    msg = Message('Intervention Created', sender='iregisterweb@gmail.com', recipients=[user.email])
+    msg = Message('Intervention Created', sender='ireporterproject@gmail.com', recipients=[user.email])
 
     msg.html = f"""
     <!DOCTYPE html>
@@ -329,7 +329,7 @@ def update_intervention(intervention_id):
                 current_date = datetime.now().strftime("%d-%m-%Y")
                 
                 
-                msg = Message('Intervention Status Updated', sender='iregisterweb@gmail.com', recipients=[user_email])
+                msg = Message('Intervention Status Updated', sender='ireporterproject@gmail.com', recipients=[user_email])
 
                 msg.html = f"""
                 <!DOCTYPE html>
@@ -462,7 +462,7 @@ def update_intervention(intervention_id):
 
             current_date = datetime.now().strftime("%d-%m-%Y")
             
-            msg = Message('Intervention Status Updated', sender='iregisterweb@gmail.com', recipients=[user.email])
+            msg = Message('Intervention Status Updated', sender='ireporterproject@gmail.com', recipients=[user.email])
             msg.html = f"""
             <!DOCTYPE html>
             <html lang="en">

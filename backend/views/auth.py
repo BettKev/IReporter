@@ -34,7 +34,7 @@ def login():
             access_token = create_access_token(identity=user.id, additional_claims={'is_user': True}) 
 
             current_date = datetime.now().strftime("%d-%m-%Y")
-            msg = Message('Successful Login', sender='iregisterweb@gmail.com', recipients=[email])
+            msg = Message('Successful Login', sender='ireporterproject@gmail.com', recipients=[email])
 
             msg.html = f"""
             <!DOCTYPE html>
@@ -108,7 +108,7 @@ def login():
         if check_password_hash(admin.password, password):
             access_token = create_access_token(identity=admin.id, additional_claims={'is_admin': True})
             current_date = datetime.now().strftime("%d-%m-%Y")
-            msg = Message('Successful Login', sender='iregisterweb@gmail.com', recipients=[email])
+            msg = Message('Successful Login', sender='ireporterproject@gmail.com', recipients=[email])
 
             msg.html = f"""
             <!DOCTYPE html>
@@ -265,7 +265,7 @@ def update_info():
 
             db.session.commit()
             current_date = datetime.now().strftime("%d-%m-%Y")
-            msg = Message('Account Details Updated', sender='iregisterweb@gmail.com', recipients=[email])
+            msg = Message('Account Details Updated', sender='ireporterproject@gmail.com', recipients=[email])
 
             msg.html = f"""
             <!DOCTYPE html>
@@ -375,7 +375,7 @@ def update_info():
 
             db.session.commit()
             current_date = datetime.now().strftime("%d-%m-%Y")
-            msg = Message('Account Details Updated', sender='iregisterweb@gmail.com', recipients=[email])
+            msg = Message('Account Details Updated', sender='ireporterproject@gmail.com', recipients=[email])
 
             msg.html = f"""
             <!DOCTYPE html>
@@ -495,7 +495,7 @@ def request_password_reset():
 
     reset_link = f"{FRONTEND_URL}/ResetPassword?token={token}"
 
-    msg = Message("Password Reset Request", sender='iregisterweb@gmail.com', recipients=[email])
+    msg = Message("Password Reset Request", sender='ireporterproject@gmail.com', recipients=[email])
     msg.body = f"Click the following link to reset your password: {reset_link}"
     mail = get_mail()
     mail.send(msg)
@@ -543,7 +543,7 @@ def reset_password():
   
   
     current_date = datetime.now().strftime("%d-%m-%Y")
-    msg = Message("Password Has been reset", sender='iregisterweb@gmail.com', recipients=[email])
+    msg = Message("Password Has been reset", sender='ireporterproject@gmail.com', recipients=[email])
     msg.html = f"""
             <!DOCTYPE html>
             <html lang="en">

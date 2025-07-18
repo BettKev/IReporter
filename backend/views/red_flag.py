@@ -65,7 +65,7 @@ def add_red_flag():
     db.session.add(new_red_flag)
     db.session.commit()
     current_date = datetime.now().strftime("%d-%m-%Y")
-    msg = Message('Red Flag Created', sender='iregisterweb@gmail.com', recipients=[user.email])
+    msg = Message('Red Flag Created', sender='ireporterproject@gmail.com', recipients=[user.email])
 
     msg.html = f"""
     <!DOCTYPE html>
@@ -305,7 +305,7 @@ def update_red_flag(red_flag_id):
                 current_date = datetime.now().strftime("%d-%m-%Y")
                 
                 
-                msg = Message('Red Flag Status Updated', sender='iregisterweb@gmail.com', recipients=[user_email])
+                msg = Message('Red Flag Status Updated', sender='ireporterproject@gmail.com', recipients=[user_email])
 
                 msg.html = f"""
                 <!DOCTYPE html>
@@ -411,7 +411,7 @@ def update_red_flag(red_flag_id):
 
             current_date = datetime.now().strftime("%d-%m-%Y")
             
-            msg = Message('Red Flag Status Updated', sender='iregisterweb@gmail.com', recipients=[user.email])
+            msg = Message('Red Flag Status Updated', sender='ireporterproject@gmail.com', recipients=[user.email])
 
             msg.html = f"""
             <!DOCTYPE html>
